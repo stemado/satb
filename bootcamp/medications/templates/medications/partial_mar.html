@@ -1,0 +1,27 @@
+
+{% load i18n %}
+<hr>
+<!-- <span class="pull-right text-muted" id="comment-helper" style="display: none"><small>{% trans 'Press Ctrl + Enter to post' %}</small></span> -->
+<!-- <div class="post-comment clearfix">
+    <form role="form" id="status-form">
+        <input type="hidden" name="medication" value="{{ medication.id }}">
+        <div class="user-portrait clearfix">
+            <img src="{{ user.profile.get_picture }}">
+        </div>
+        <div>
+            <p><strong>Note:</strong>{{ medication.completionNote }} {{medication.completionTime }}</p>
+            <p><strong>Time:</strong>{{ medicaton.completionStatus }}</p>
+            <p><strong>Date:</strong>{{ medicaton.completionDate }}</p>
+            <p><strong>Note:</strong>{{ medicaton.completionNote }}</p>
+        </div>
+    </form>
+</div> -->
+<!-- <button type="button" class="btn btn-default" id="toggleHistory"><strong>History</strong></button> -->
+{% for medication in medication.get_status %}
+<div class="well well-sm hidden" id="comment-list" >
+    <p><strong>Date: {{ medication.completionDate }} </strong> </p>
+    <p><strong>Given: </strong>{{ medication.completionStatus }}</p>
+    <p><strong>Time: </strong> {{ medication.completionTime }}</p>
+    <p><strong>Note: </strong> {{ medication.completionNote }}</p>
+</div>
+{% endfor %}

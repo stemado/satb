@@ -1,0 +1,58 @@
+
+{% extends 'base.html' %} 
+{% load staticfiles %} 
+{% load i18n %} {% block title %} {% endblock %} {% block head %}
+<link href="{% static 'css/residents.css' %}" rel="stylesheet">
+<script src="{% static 'js/residents.js' %}"></script>
+{% endblock head %} {% block main %}
+<main>
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ resident.residentFirstName }} {{ resident.residentLastName }} <small>({{ resident.dnr_status }})</small></h1>
+            <h3><small><a href="{% url 'editPhysicianOrder' resident.pk %}">Edit Physician Order</a></small></h3>
+        </div>
+        <div class="profile">
+            <div class="row">
+                <div class="col-md-3 user-profile">
+                    <img src="http://trybootcamp.vitorfs.com/static/img/user.png" class="user-profile picture">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+        <ul class="stream">
+          
+            
+
+
+<li feed-id="1" csrf="jB7Wo4AwSWhv6z7bb17pTTKjDXgcShojICvPIaPHQbBktAq0uyLQjul3o4r1xtFD">
+  <div class="feed-container">
+    <div class="post">
+      
+      
+      <h3><a href="residents/3/medications/2/">DeoxyCodone (30 MG) </a> <small>43&nbsp;minutes</small></h3>
+      <p>3 Prescritions Due at 16:00 (4:00) PM</p>
+
+      <div class="comments">
+        <form role="form" method="post" action="" onsubmit="return false">
+          <input type="hidden" name="csrfmiddlewaretoken" value="jB7Wo4AwSWhv6z7bb17pTTKjDXgcShojICvPIaPHQbBktAq0uyLQjul3o4r1xtFD" autocomplete="off">
+          <input type="hidden" name="feed" value="1" autocomplete="off">
+          <input type="text" class="form-control input-sm" placeholder="Write a comment..." name="post" maxlength="255" autocomplete="off">
+        </form>
+        <ol class="clearfix">
+          
+        </ol>
+      </div>
+    </div>
+  </div>
+</li>
+
+          
+        </ul>
+            <div class="col-md-10">
+
+            </div>
+        </div>
+    </div>
+    </div>
+</main>
+{% endblock main %}

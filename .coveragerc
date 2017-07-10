@@ -1,0 +1,8 @@
+
+[run]
+include = bootcamp/*
+omit = *migrations*, *tests*
+
+[run]
+include = bootcamp/*
+omit = *migrations*, *tests*

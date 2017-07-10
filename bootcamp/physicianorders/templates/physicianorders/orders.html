@@ -1,0 +1,36 @@
+
+{% extends 'base.html' %} {% load staticfiles %} {% load i18n %} {% block title %} {% trans 'Physician Orders' %} {% endblock %} {% block head %}
+<link href="{% static 'css/residents.css' %}" rel="stylesheet"> {% endblock head %} {% block main %}
+<div class="page-header">
+    <a href="{% url 'createPhysicianOrder' %}" class="btn btn-primary pull-right">
+        <span class="glyphicon glyphicon-plus"></span> {% trans 'Create Physician Order' %}
+    </a>
+    <h1>{% trans 'Physician Orders' %}</h1>
+</div>
+<div class="row">
+    <div class="col-md-10">
+        <section class="residents">
+            {% for order in orders %}
+            <div class="residents">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <img src="http://trybootcamp.vitorfs.com/static/img/user.png" style="width:20px">
+                                <a href="{% url 'editPhysicianOrder' order.pk %}">{{ order.orderMedication }}</a>
+                            </div>
+                            <div class="panel-body">
+                                <p><strong>Date:</strong> {{ order.orderDate }}</p>
+                                <p><strong>Time(s): </strong> {{ order.orderTime }}</p>
+                                <p><strong>Physician:</strong> {{ order.orderPhysician }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <h4 class="no-data">{% trans 'No Physician Orders added yet' %}. <a href="{% url 'createPhysicianOrder' %}">{% trans 'Be the first to create one' %}!</a></h4> {% endfor %}
+        </section>
+    </div>
+</div>
+{% endblock main %}

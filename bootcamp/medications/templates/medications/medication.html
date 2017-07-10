@@ -1,0 +1,55 @@
+
+{% extends 'base.html' %} {% load staticfiles %} {% load i18n %} {% block title %} {% endblock %} {% block head %}
+<link href="{% static 'css/medications.css' %}" rel="stylesheet">
+<script src="{% static 'js/medications.js' %}"></script>
+{% endblock head %} {% block main %}
+<main>
+    <div class="container">
+        <div class="page-header">
+            <h1>{{ medication.medicationName }}</h1>
+            <h2><small> Count:{{ medication.medicationQuantity }} </small></h2>
+            <h3><small><a href="{% url 'editMedication' medication.pk %}">Edit Medication</a></small></h3>
+        </div>
+        <div class="profile">
+            <div class="row">
+                <div class="col-md-3 user-profile">
+                    <img src="http://trybootcamp.vitorfs.com/static/img/user.png" class="user-profile picture">
+                    <h2><small><a href="#">{{ medication.medicationResident }}</a></small></h2>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
+
+                <div class="container">
+                    <h2>Medication History</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Medication</th>
+                                <th>Accepted</th>
+                                <th>Date</th>
+                                <th>Count</th>
+                                <th>Time</th>
+                                <th>Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for medication in medication.get_status %}
+                            <tr>
+                                <td>{{ medication.completionMedication }}</td>
+                                <td>{{ medication.completionStatus }}</td>
+                                <td>{{ medication.completionDate }}</td>
+
+                                <td>{{ medication.completionTime }}</td>
+                                <td>{{ medication.completionNote }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+</main>
+{% endblock main %}

@@ -1,0 +1,1 @@
+#This is where we will move the Managers/Queryset currently housed in Models.py to.

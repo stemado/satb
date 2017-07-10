@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block head %}
+  <script src="{% static 'js/medications.js' %}"></script>
+{% endblock head %}
+
+{% block main %}
+  <ol class="breadcrumb">
+    <li><a href="{% url 'medications' %}">{% trans 'Medications' %}</a></li>
+    <li class="active">{% trans 'Edit Medication' %}</li>
+  </ol>
+  <form action="{% url 'editMedication' form.instance.pk %}" method="post" role="form">
+    {% csrf_token %}
+    {% for field in form.visible_fields %}
+      <div class="form-group{% if field.errors %} has-error{% endif %}">
+        <label for="{{ field.label }}" class="control-label">{{ field.label }}</label>
+
+        {{ field }}
+      
+        {% for error in field.errors %}
+          <label class="control-label">{{ error }}</label>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary publish">{% trans 'Save' %}</button>
+      <a href="{% url 'medications' %}" class="btn btn-default">{% trans 'Cancel' %}</a>
+    </div>
+  </form>
+
+
+{% endblock main %}

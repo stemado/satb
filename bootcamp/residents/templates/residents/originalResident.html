@@ -1,0 +1,76 @@
+{% extends 'base.html' %} {% load staticfiles %} {% load i18n %} {% block title %} {{ resident.residentFirstName }} {{ resident.residentLastName }} {% endblock %} {% block head %}
+<link href="{% static 'css/residents.css' %}" rel="stylesheet">
+<script src="{% static 'js/residents.js' %}"></script>
+{% endblock head %} {% block main %}
+<div class="container">
+        <div class="page-header">
+            <h1>{{ resident.residentFirstName }} {{ resident.residentLastName }} <small>({{ resident.dnr_status }})</small></h1>
+            <h3 class="pull-left"><small><a href="{% url 'edit' resident.pk %}">Edit Resident</a></small></h3>
+            <a href="{% url 'createMedication' resident_id=resident.id %}" class="btn btn-primary pull-right">
+        <span class="glyphicon glyphicon-plus"></span> {% trans 'Add Medication' %}
+    </a>
+        </div>
+        <div class="profile">
+            <div class="row">
+                <div class="col-md-3 user-profile">
+                    <img src="http://trybootcamp.vitorfs.com/static/img/user.png" class="user-profile picture">
+                </div>
+        </div>
+        <div class="col-md-3">
+            <div class="list-group">
+            </div>
+        </div>
+   <!-- Start Here -->
+   <div class="container">
+   <h2 class="text-center"><strong>Medications</strong></h2>
+   </div>
+<div class="container">
+    <div class="row">
+        {% for m in resident.medication_set.all %}
+        <div class="col-md-6">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <img src="http://trybootcamp.vitorfs.com/static/img/user.png" style="width:20px">
+                    <a href="/medications/{{ m.id }}">{{ m.medicationName }} <small>{{ m.medicationDosage }}</small></a>
+                </div>
+                <div class="panel-body">
+                    <p><strong>Frequency:</strong> {{ m.medicationFrequency }}</p>
+                    <p><strong>Type: </strong> {{ m.medicationType }}</p>
+                    <p><strong>Rx Status:</strong> {{ m.medicationDiscontinuedStatus }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+   <!-- End Here -->
+        </div>
+        </div>
+{% endblock main %}
+
+    <!--  <div class="col-md-9">
+            <ul>
+                <div>
+                    {% for m in resident.medication_set.all %}
+                    <div class="post">
+                        <h3><a href="/medications/{{ m.id }}/"> {{ m.medicationName }} </a> <small>({{ m.medicationDosage }})</small></h3>
+                        <p>Next Time Due: {{ m.medicationDistribution }}</p>
+                        <p>Frequency: {{ m.medicationFrequency }}</p>
+                        <p>Type: {{ m.medicationType }}</p>
+                        <p>Status: {{m.medicationDiscontinuedStatus}}
+                        <div class="comments">
+                            <form role="form" method="post" action="" onsubmit="return false">
+                                <input type="hidden" name="csrfmiddlewaretoken" value="jB7Wo4AwSWhv6z7bb17pTTKjDXgcShojICvPIaPHQbBktAq0uyLQjul3o4r1xtFD" autocomplete="off">
+                                <input type="hidden" name="feed" value="1" autocomplete="off">
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </ul>
+            <div class="col-md-10">
+            </div>
+        </div> -->
