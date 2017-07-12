@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 
 import markdown
 from bootcamp.medications.forms import MedicationForm, StatusForm, MedicationStatusForm, StatusFormSet
-from bootcamp.medications.models import Medication, MedicationCompletion
+from bootcamp.medications.models import Medication, MedicationCompletion, TimeMedicationOne
 from bootcamp.decorators import ajax_required
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetView
 import csv
@@ -41,6 +41,7 @@ def medications(request):
     medications = Medication.get_medications()
     active_medications = Medication.get_active_medications()
     overdue_medications = Medication.get_overdue_medications()
+    overdue_medications2 = Medication.get_overdue_medications2()
     return render(request, 'medications/all_medications.html', {'medications': medications,
         'active_medications': active_medications, 'overdue_medications': overdue_medications})
 
@@ -49,8 +50,10 @@ def overdue_medications(request):
     medications = Medication.get_medications()
     active_medications = Medication.get_active_medications()
     overdue_medications = Medication.get_overdue_medications()
+    overdue_medications2 = Medication.get_overdue_medications2()
     return render(request, 'medications/overdue_medications.html', {'medications': medications,
-        'active_medications': active_medications, 'overdue_medications': overdue_medications} )
+        'active_medications': active_medications, 'overdue_medications': overdue_medications, 'overdue_medications2': overdue_medications2})
+
 
 @login_required
 def active_medications(request):
@@ -159,5 +162,3 @@ def pdf_view(request):
     p.showPage()
     p.save()
     return response
-
-

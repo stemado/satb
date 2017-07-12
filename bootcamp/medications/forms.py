@@ -76,7 +76,7 @@ class MedicationForm(forms.ModelForm):
 
     class Meta:
         model = Medication
-        fields = ['medicationResident', 'medicationName', 'medicationDosage', 'medicationFrequency', 'medicationDistribution', 'medicationStartDate', 'medicationTimeSchedule', 'medicationTimeSchedule2', 'medicationTimeSchedule3', 'medicationTimeSchedule4', 'medicationTimeSchedule5', 'medicationTimeSchedule6', 'medicationTimeSchedule7', 'medicationTimeSchedule8', 'medicationTimeSchedule9', 'medicationTimeSchedule10', 'medicationTimeSchedule11', 'medicationTimeSchedule12', 'medicationTimeSchedule24', 'medicationQuantity', 'medicationType', 'medicationStatus', 'medicationDiscontinuedStatus', 'medicationComment']
+        fields = ['medicationResident', 'medicationName', 'medicationDosage', 'medicationFrequency', 'medicationDistribution', 'medicationStartDate', 'medicationTimeSchedule', 'medicationTimeSchedule2', 'medicationQuantity', 'medicationType', 'medicationStatus', 'medicationStatus2', 'medicationDiscontinuedStatus', 'medicationComment']
 
 
 class StatusForm(forms.ModelForm):
@@ -84,7 +84,7 @@ class StatusForm(forms.ModelForm):
 
     class Meta:
         model = MedicationCompletion
-        fields = ['completionStatus', 'completionNote', 'completionMedication']
+        fields = ['completionStatus', 'completionStatus2', 'completionNote', 'completionMedication']
 
 class MedicationStatusForm(forms.ModelForm):
 
