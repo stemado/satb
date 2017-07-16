@@ -1,7 +1,7 @@
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from bootcamp.medications.models import Medication, MedicationCompletion
+from bootcamp.medications.models import Medication, MedicationCompletion, MedicationTime
 from extra_views import InlineFormSet
 from django.forms import ModelForm
 from datetime import datetime
@@ -79,12 +79,17 @@ class MedicationForm(forms.ModelForm):
         fields = ['medicationResident', 'medicationName', 'medicationDosage', 'medicationFrequency', 'medicationDistribution', 'medicationStartDate', 'medicationTimeSchedule', 'medicationTimeSchedule2', 'medicationQuantity', 'medicationType', 'medicationStatus', 'medicationStatus2', 'medicationDiscontinuedStatus', 'medicationComment']
 
 
-class StatusForm(forms.ModelForm):
+# class StatusForm(forms.ModelForm):
 
+#     class Meta:
+#         model = MedicationCompletion
+#         fields = ['completionStatus', 'completionStatus2', 'completionNote', 'completionMedication']
+
+class StatusForm(forms.ModelForm):
 
     class Meta:
         model = MedicationCompletion
-        fields = ['completionStatus', 'completionStatus2', 'completionNote', 'completionMedication']
+        fields = ['completionMedication', 'completionStatus', 'completionNote']
 
 class MedicationStatusForm(forms.ModelForm):
 
@@ -100,4 +105,4 @@ class MedicationStatusForm(forms.ModelForm):
 
 class StatusFormSet(InlineFormSet):
     model = MedicationCompletion
-    max_num =1
+    max_num = 1

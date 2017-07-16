@@ -36,8 +36,8 @@
                     <a href="/residents/{{ medication.medication.medicationResident_id }}">{{ medication.medication.medicationResident }}</a>
                 </div>
                 <div class="panel-body">
-                    <a href="{{medication.medication.id}}" class="center-text"><strong>History</strong></a>
-                    <a href="/medications/{{ medication.medication.id }}"><strong>Medication:</strong> {{ medication.medication.medicationName }}</a>
+                    <a href="/residents/{{medication.medication.medicationResident_id }}" class="center-text"><strong>History</strong></a>
+                    <a href="/medications/{{ medication.id }}"><strong>Medication:</strong> {{ medication.medication.medicationName }}</a>
                     <p><strong>ID:</strong> {{ medication.medication_id }}</p>
                     <p><strong>Accepted:</strong> {{ medication.timeTime }}</p>
                     <p><strong>Count:</strong> {{ medication.medication.medicationQuantity }}</p>

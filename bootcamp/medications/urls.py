@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^testcsv/$', views.csv_view, name='csvView'),
     url(r'^testpdf/$', views.pdf_view, name='pdfView'),
     url(r'^edit_medication/(?P<id>[0-9]+)/$', views.editMedication, name='editMedication'),
-    url(r'^status/(?P<medication_id>[0-9]+)/$', views.acceptRefuse, name='acceptRefuse'),
+    url(r'^status/(?P<medication>[0-9]+)/$', views.acceptRefuse, name='acceptRefuse'),
     url(r'^$', views.active_medications, name='activeMedications'),
 
 ]

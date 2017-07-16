@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 
 import markdown
 from bootcamp.medications.forms import MedicationForm, StatusForm, MedicationStatusForm, StatusFormSet
-from bootcamp.medications.models import Medication, MedicationCompletion, TimeMedicationOne
+from bootcamp.medications.models import Medication, MedicationCompletion, MedicationTime
 from bootcamp.decorators import ajax_required
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetView
 import csv
@@ -41,18 +41,16 @@ def medications(request):
     medications = Medication.get_medications()
     active_medications = Medication.get_active_medications()
     overdue_medications = Medication.get_overdue_medications()
-    overdue_medications2 = Medication.get_overdue_medications2()
     return render(request, 'medications/all_medications.html', {'medications': medications,
         'active_medications': active_medications, 'overdue_medications': overdue_medications})
 
 @login_required
 def overdue_medications(request):
     medications = Medication.get_medications()
+    overdue = Medication.get_overdue_medications()
     active_medications = Medication.get_active_medications()
-    overdue_medications = Medication.get_overdue_medications()
-    overdue_medications2 = Medication.get_overdue_medications2()
     return render(request, 'medications/overdue_medications.html', {'medications': medications,
-        'active_medications': active_medications, 'overdue_medications': overdue_medications, 'overdue_medications2': overdue_medications2})
+        'active_medications': active_medications, 'overdue': overdue})
 
 
 @login_required
@@ -67,7 +65,7 @@ def active_medications(request):
 #Check here to see if this view is correct.
 @login_required
 def medication(request, id):
-    medication = get_object_or_404(Medication, id=id)
+    medication = get_object_or_404(MedicationTime, id=id)
     return render(request, 'medications/medication.html', {'medication': medication})
 
 
@@ -111,7 +109,8 @@ def editMedication(request, id):
     return render(request, 'medications/edit.html', {'form': form})
 
 @login_required
-def acceptRefuse(request, medication_id):
+#THIS WILL HAVE TO BE UPDATED TO MAKE THIS A ONE TO MANY RELATIONSHIP, NOT WITH MEDICATIONS BUT ALL TIME SCHEDULE TABLES 
+def acceptRefuse(request, medication):
 
     if request.method == 'POST':
         form = StatusForm(request.POST)
@@ -121,7 +120,7 @@ def acceptRefuse(request, medication_id):
 
             return redirect('/medications/')
     else:
-        form = StatusForm(initial={'completionMedication': medication_id})
+        form = StatusForm(initial={'completionMedication': medication})
     return render(request, 'medications/medication_status.html/', {'form': form})
 
 

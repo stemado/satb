@@ -2,7 +2,7 @@
  {% extends 'base.html' %} {% load staticfiles %} {% load i18n %} {% load humanize %} {% block title %} {% trans 'MARS' %} {% endblock %} {% block head %}
 <link href="{% static 'css/medications.css' %}" rel="stylesheet"> {% endblock head %} {% block main %}
 <div class="post-comment clearfix">
-    <form action="{% url 'acceptRefuse' medication_id=0 %}" method="POST" role="form">
+    <form action="{% url 'acceptRefuse' medication=0 %}" method="POST" role="form">
         {% csrf_token %} {% for field in form.visible_fields %}
         <div class="form-group{% if field.errors %} has-error{% endif %}">
             <label for="{{ field.label }}" class="control-label">{{ field.label }}</label>

@@ -18,6 +18,8 @@ from django.db.models import signals, Count, Q
 from datetime import timedelta
 from django.utils import timezone
 from django.db.models import signals
+from itertools import chain
+from operator import attrgetter
 
 
 
@@ -25,14 +27,22 @@ from django.db.models import signals
 
 class MedicationQuerySet(models.QuerySet):
 
+    # def medicationDeliveryTime(self):
+
+    #     now = datetime.now()
+    #     hourBefore = now - timedelta(hours=1)
+    #     hourAfter = now + timedelta(hours=1)
+    #     yesterday = now - timedelta(days=1)
+    #     tomorrow = now + timedelta(days=1)
+
+
+    #     return self.filter(medicationTimeSchedule__range=(hourBefore, hourAfter))
+
     def medicationDeliveryTime(self):
 
         now = datetime.now()
         hourBefore = now - timedelta(hours=1)
         hourAfter = now + timedelta(hours=1)
-        yesterday = now - timedelta(days=1)
-        tomorrow = now + timedelta(days=1)
-
 
         return self.filter(medicationTimeSchedule__range=(hourBefore, hourAfter))
 
@@ -109,26 +119,58 @@ class Medication(models.Model):
         verbose_name_plural = _("Medications")
         ordering = ('-medicationName',)
 
+
   
    
 
     def __str__(self):
         return (self.medicationName)
 
+    # def get_medications():
+
+    #     medications = TimeMedicationOne.objects.all()
+    #     return medications
+
+    # def get_medications2():
+    #     medications = TimeMedicationTwo.objects.all()
+    #     return medications
+
     def get_medications():
-        medications = Medication.objects.all().order_by('-medicationResident')
+        a = TimeMedicationOne.objects.filter()
+        b = TimeMedicationTwo.objects.filter()
+        medications = list(chain(a, b))
         return medications
 
+    # def get_overdue_medications():
+    #     medication = Medication.objects.filter(medicationStatus=False).medicationDeliveryOverdue()
+    #     return medication
+
     def get_overdue_medications():
-        medication = Medication.objects.filter(medicationStatus=False).medicationDeliveryOverdue()
+        now = datetime.now()
+        hourAfter = now - timedelta(hours=1, minutes=1)
+        a = TimeMedicationOne.objects.filter(timeStatus2='False', timeTime__lte=hourAfter)
+        b = TimeMedicationTwo.objects.filter(timeStatus2='False', timeTime__lte=hourAfter)
+        medication = list(chain(a,b))
         return medication
+
+    def get_overdue_medication_one():
+        now = datetime.now()
+        hourAfter = now - timedelta(hours=1, minutes=1)
+        medication = TimeMedicationOne.objects.filter(timeStatus2=False, timeTime__lte=hourAfter)
+        return medication
+
 
     def get_overdue_medications2():
         medication = Medication.objects.filter(medicationStatus2=False).medicationDeliveryOverdue2()
         return medication
 
     def get_active_medications():
-        medication = Medication.objects.medicationDeliveryTime().medicationDeliveryStatus()
+        now = datetime.now()
+        hourBefore = now - timedelta(hours=1)
+        hourAfter = now + timedelta(hours=1)
+        a = TimeMedicationOne.objects.filter(timeTime__range=(hourBefore, hourAfter))
+        b = TimeMedicationTwo.objects.filter(timeTime__range=(hourBefore, hourAfter))
+        medication = list(chain(a,b))
         return medication
 
     def get_medication(self):
@@ -139,27 +181,6 @@ class Medication(models.Model):
         return MedicationCompletion.objects.filter(completionMedication=self)
 
 
-
-@python_2_unicode_compatible
-class MedicationCompletion(models.Model):
-
-    BOOL_CHOICES = ((True, 'Accepted'), (False, 'Refused'))
-    MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
-    STATUS_CHOICES = (('Null', 'Null'), ('False', 'False'), ('True', 'True'))
-
-    completionStatus = models.NullBooleanField(verbose_name="Current Status", choices=BOOL_CHOICES, default=None, null=True, blank=True)
-    completionStatus2 = models.CharField(verbose_name="Current Status 2", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
-    completionMissed = models.CharField(verbose_name="Medicaton Missed", choices=MISSED_CHOICES, default='False', max_length=12, null=True, blank=True)
-    completionTime = models.TimeField(verbose_name="Time Given", auto_now_add=True)
-    completionDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
-    completionNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
-    completionMedication = models.ForeignKey(Medication, on_delete=models.CASCADE)
-
-
-    def __str__(self):
-        return (self.completionStatus)
-
-
 @python_2_unicode_compatible
 class TimeMedicationOne(models.Model):
 
@@ -167,12 +188,12 @@ class TimeMedicationOne(models.Model):
     MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
     STATUS_CHOICES = (('Null', 'Null'), ('False', 'False'), ('True', 'True'))
 
-    timeStatus = models.NullBooleanField(verbose_name="Current Status", choices=BOOL_CHOICES, default=None, null=True, blank=True)
-    timeStatus2 = models.CharField(verbose_name="Current Status 2", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
-    timeMissed = models.CharField(verbose_name="Medicaton Missed", choices=MISSED_CHOICES, default='False', max_length=12, null=True, blank=True)
-    timeTime = models.TimeField(verbose_name="Time Given", auto_now_add=True)
-    timeDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
-    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
+    timeTime = models.TimeField(verbose_name="Time Due", null=True, blank=True)
+    timeStatus = models.NullBooleanField(verbose_name="Medication", choices=BOOL_CHOICES, default=None, null=True, blank=True)
+    timeStatus2 = models.CharField(verbose_name="Given", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
+    timeDate = models.DateTimeField(verbose_name="Date Added", auto_now_add=True)
+    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True) 
+    timeModelNumber = models.CharField(verbose_name="Medicaion Model", default=1, max_length=10, null=True, blank=False)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
 
 
@@ -186,12 +207,12 @@ class TimeMedicationTwo(models.Model):
     MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
     STATUS_CHOICES = (('Null', 'Null'), ('False', 'False'), ('True', 'True'))
 
-    timeStatus = models.NullBooleanField(verbose_name="Current Status", choices=BOOL_CHOICES, default=None, null=True, blank=True)
-    timeStatus2 = models.CharField(verbose_name="Current Status 2", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
-    timeMissed = models.CharField(verbose_name="Medicaton Missed", choices=MISSED_CHOICES, default='False', max_length=12, null=True, blank=True)
-    timeTime = models.TimeField(verbose_name="Time Given", auto_now_add=True)
-    timeDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
-    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
+    timeTime = models.TimeField(verbose_name="Time Due", null=True, blank=True)
+    timeStatus = models.NullBooleanField(verbose_name="Medication", choices=BOOL_CHOICES, default=None, null=True, blank=True)
+    timeStatus2 = models.CharField(verbose_name="TimeGivenStatus", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
+    timeDate = models.DateTimeField(verbose_name="Date Added", auto_now_add=True)
+    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True) 
+    timeModelNumber = models.CharField(verbose_name="Medicaion Model", default=2, max_length=10, null=True, blank=False)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
 
 
@@ -205,12 +226,12 @@ class TimeMedicationThree(models.Model):
     MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
     STATUS_CHOICES = (('Null', 'Null'), ('False', 'False'), ('True', 'True'))
 
-    timeStatus = models.NullBooleanField(verbose_name="Current Status", choices=BOOL_CHOICES, default=None, null=True, blank=True)
-    timeStatus2 = models.CharField(verbose_name="Current Status 2", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
-    timeMissed = models.CharField(verbose_name="Medicaton Missed", choices=MISSED_CHOICES, default='False', max_length=12, null=True, blank=True)
-    timeTime = models.TimeField(verbose_name="Time Given", auto_now_add=True)
-    timeDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
-    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
+    timeTime = models.TimeField(verbose_name="Time Due", null=True, blank=True)
+    timeStatus = models.NullBooleanField(verbose_name="Medication", choices=BOOL_CHOICES, default=None, null=True, blank=True)
+    timeStatus2 = models.CharField(verbose_name="Given", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
+    timeDate = models.DateTimeField(verbose_name="Date Added", auto_now_add=True)
+    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True) 
+    timeModelNumber = models.CharField(verbose_name="Medicaion Model", default=3, max_length=10, null=True, blank=False)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
 
 
@@ -224,12 +245,12 @@ class TimeMedicationFour(models.Model):
     MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
     STATUS_CHOICES = (('Null', 'Null'), ('False', 'False'), ('True', 'True'))
 
-    timeStatus = models.NullBooleanField(verbose_name="Current Status", choices=BOOL_CHOICES, default=None, null=True, blank=True)
-    timeStatus2 = models.CharField(verbose_name="Current Status 2", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
-    timeMissed = models.CharField(verbose_name="Medicaton Missed", choices=MISSED_CHOICES, default='False', max_length=12, null=True, blank=True)
-    timeTime = models.TimeField(verbose_name="Time Given", auto_now_add=True)
-    timeDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
-    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
+    timeTime = models.TimeField(verbose_name="Time Due", null=True, blank=True)
+    timeStatus = models.NullBooleanField(verbose_name="Medication", choices=BOOL_CHOICES, default=None, null=True, blank=True)
+    timeStatus2 = models.CharField(verbose_name="Given", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
+    timeDate = models.DateTimeField(verbose_name="Date Added", auto_now_add=True)
+    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True) 
+    timeModelNumber = models.CharField(verbose_name="Medicaion Model", default=4, max_length=10, null=True, blank=False)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
 
 
@@ -243,14 +264,39 @@ class TimeMedicationFive(models.Model):
     MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
     STATUS_CHOICES = (('Null', 'Null'), ('False', 'False'), ('True', 'True'))
 
-    timeStatus = models.NullBooleanField(verbose_name="Current Status", choices=BOOL_CHOICES, default=None, null=True, blank=True)
-    timeStatus2 = models.CharField(verbose_name="Current Status 2", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
-    timeMissed = models.CharField(verbose_name="Medicaton Missed", choices=MISSED_CHOICES, default='False', max_length=12, null=True, blank=True)
-    timeTime = models.TimeField(verbose_name="Time Given", auto_now_add=True)
-    timeDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
-    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
+    timeTime = models.TimeField(verbose_name="Time Due", null=True, blank=True)
+    timeStatus = models.NullBooleanField(verbose_name="Medication", choices=BOOL_CHOICES, default=None, null=True, blank=True)
+    timeStatus2 = models.CharField(verbose_name="Given", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
+    timeDate = models.DateTimeField(verbose_name="Date Added", auto_now_add=True)
+    timeNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True) 
+    timeModelNumber = models.CharField(verbose_name="Medicaion Model", default=4, max_length=10, null=True, blank=False)
     medication = models.ForeignKey(Medication, on_delete=models.CASCADE)
 
 
     def __str__(self):
         return (self.timeStatus)
+
+@python_2_unicode_compatible
+class MedicationCompletion(models.Model):
+
+    BOOL_CHOICES = ((True, 'Accepted'), (False, 'Refused'))
+    MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
+    STATUS_CHOICES = (('Null', 'Null'), ('False', 'False'), ('True', 'True'))
+    TIME_CHOICES = (('0', '0'), ('1', '1'), ('2', '2'), ('3', '3'))
+
+    completionStatus = models.NullBooleanField(verbose_name="Current Status", choices=BOOL_CHOICES, default=None, null=True, blank=True)
+    completionStatus2 = models.CharField(verbose_name="Current Status 2", choices=STATUS_CHOICES, max_length=12, null=True, blank=True)
+    completionMissed = models.CharField(verbose_name="Medicaton Missed", choices=MISSED_CHOICES, default='False', max_length=12, null=True, blank=True)
+    completionTime = models.TimeField(verbose_name="Time Given", auto_now_add=True)
+    completionDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
+    completionNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
+    completionMedication = models.ForeignKey(Medication, on_delete=models.CASCADE)
+    completionMedicationTime = models.CharField(verbose_name="Medication Time Model", choices=TIME_CHOICES, default='0', max_length=10, null=True, blank=True)
+    completionMedicationTimeRecord = models.CharField(verbose_name="Medication Time Record", choices=TIME_CHOICES, default='0', max_length=10, null=True, blank=True)
+    completionTimeThree = models.ForeignKey(TimeMedicationThree, on_delete=models.CASCADE, null=True)
+    completionTimeFour = models.ForeignKey(TimeMedicationFour, on_delete=models.CASCADE, null=True)
+    completionTimeFive = models.ForeignKey(TimeMedicationFive, on_delete=models.CASCADE, null=True)
+
+
+    def __str__(self):
+        return (self.completionStatus)
