@@ -1,4 +1,3 @@
-
 $(function() {
             $(".publish").click(function() {
                 $("input[name='status']").val("P");

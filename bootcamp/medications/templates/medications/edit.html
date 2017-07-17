@@ -2,6 +2,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load i18n %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
 
 {% block head %}
   <script src="{% static 'js/medications.js' %}"></script>
@@ -14,6 +18,7 @@
   </ol>
   <form action="{% url 'editMedication' form.instance.pk %}" method="post" role="form">
     {% csrf_token %}
+    {% bootstrap_form form %}
     {% for field in form.visible_fields %}
       <div class="form-group{% if field.errors %} has-error{% endif %}">
         <label for="{{ field.label }}" class="control-label">{{ field.label }}</label>
@@ -25,9 +30,12 @@
         {% endfor %}
       </div>
     {% endfor %}
+
     <div class="form-group">
+      {% buttons %}
       <button type="submit" class="btn btn-primary publish">{% trans 'Save' %}</button>
       <a href="{% url 'medications' %}" class="btn btn-default">{% trans 'Cancel' %}</a>
+      {% endbuttons %}
     </div>
   </form>
 

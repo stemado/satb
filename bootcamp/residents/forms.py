@@ -34,7 +34,7 @@ class ResidentForm(forms.ModelForm):
 
     class Meta:
         model = Resident
-        fields = ['residentFirstName', 'residentLastName', 'residentSSN', 'residentDOB', 'residentPrimaryPhysician', 'location', 'medicareNumber', 'dnr_status']
+        fields = ['residentFirstName', 'residentLastName', 'residentProfile', 'residentSSN', 'residentDOB', 'residentPrimaryPhysician', 'location', 'medicareNumber', 'dnr_status']
 
 
 class EmergencyContactForm(forms.ModelForm):

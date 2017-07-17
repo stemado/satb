@@ -18,7 +18,8 @@ class Resident(models.Model):
     residentSSN = models.CharField("SSN", default="123456789", max_length=50, null=True, blank=True)
     residentDOB = models.CharField("DOB", default="3/5/1980", max_length=50, null=True, blank=True)
     residentPrimaryPhysician = models.CharField("Primary Physician", default="Dr.John Kellenberger", max_length=50, null=True, blank=True)
-    location = models.CharField( "Room Number", default="Room 8", max_length=50, null=True, blank=True)
+    location = models.CharField( "Room", default="Room 8", max_length=50, null=True, blank=True)
+    residentProfile = models.FileField(upload_to='media/resident_pictures/', null=True, blank=True)
     medicareNumber = models.CharField("Medicare Number", default="ZSY20193992", max_length=20, null=True)
     dnr_status = models.CharField("DNR Status", default="ACTIVE|NOT ACTIVE", max_length=50, null=True, blank=True)
 
@@ -57,6 +58,25 @@ class Resident(models.Model):
 
     def get_contact(self):
         return EmergencyContact.objects.filter(resident=self)
+
+    def get_resident_photo(self):
+        no_picture = 'http://trybootcamp.vitorfs.com/static/img/user.png'
+        try:
+            filename = settings.MEDIA_ROOT + '/resident_pictures/' +\
+                self.user.username + '.jpg'
+            picture_url = settings.MEDIA_URL + 'profile_pictures/' +\
+                self.user.username + '.jpg'
+            if os.path.isfile(filename):
+                return picture_url
+            else:
+                gravatar_url = 'http://www.gravatar.com/avatar/{0}?{1}'.format(
+                    hashlib.md5(self.user.email.lower()).hexdigest(),
+                    urllib.urlencode({'d': no_picture, 's': '256'})
+                    )
+                return gravatar_url
+
+        except Exception:
+            return no_picture
 
 
 @python_2_unicode_compatible

@@ -37,7 +37,7 @@
                         <tbody>
                             {% for completion in medication.get_status.all %}
                             <tr>
-                                <td>{{ completion.completionMedication_id }}</td>
+                                <td>{{ medication.medication.medicationName }}</td>
                                 <td>{{ completion.completionStatus }}</td>
                                 <td>{{ completion.completionDate }}</td>
                                 <td>{{ completion.completionTime }}</td>

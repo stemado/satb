@@ -2,6 +2,10 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% load i18n %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% bootstrap_messages %}
 
 {% block head %}
   <script src="{% static 'js/residents.js' %}"></script>
@@ -14,21 +18,9 @@
   </ol>
   <form action="{% url 'create' %}" method="post" role="form">
     {% csrf_token %}
-    {% for field in form.visible_fields %}
-      <div class="form-group{% if field.errors %} has-error{% endif %}">
-        <label for="{{ field.label }}" class="control-label">{{ field.label }}</label>
-        {% if field.label == 'Content' %}
-          <!-- {% include 'markdown_editor.html' with textarea='id_content' %} -->
-        {% endif %}
-        {{ field }}
-        {% if field.help_text %}
-          <span class="help-block">{{ field.help_text }}</span>
-        {% endif %}
-        {% for error in field.errors %}
-          <label class="control-label">{{ error }}</label>
-        {% endfor %}
-      </div>
-    {% endfor %}
+    {% bootstrap_form form %}
+
+   
     <div class="form-group">
       <button type="button" class="btn btn-primary publish">{% trans 'Create' %}</button>
       <!-- <button type="button" class="btn btn-default draft">{% trans 'Save Draft' %}</button> -->
