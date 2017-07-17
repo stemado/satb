@@ -29,7 +29,8 @@
                                 <th>Medication</th>
                                 <th>Accepted</th>
                                 <th>Date</th>
-                                <th>Time</th>
+                                <th>Time Delivered</th>
+                                <th>Time Due</th>
                                 <th>Note</th>
                             </tr>
                         </thead>
@@ -40,6 +41,7 @@
                                 <td>{{ completion.completionStatus }}</td>
                                 <td>{{ completion.completionDate }}</td>
                                 <td>{{ completion.completionTime }}</td>
+                                <td>{{ completion.completionDue }}</td>
                                 <td>{{ completion.completionNote }}</td>
                             </tr>
                             {% endfor %}

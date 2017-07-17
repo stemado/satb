@@ -76,7 +76,7 @@ class MedicationForm(forms.ModelForm):
 
     class Meta:
         model = Medication
-        fields = ['medicationResident', 'medicationName', 'medicationDosage', 'medicationFrequency', 'medicationDistribution', 'medicationStartDate', 'medicationTimeSchedule', 'medicationTimeSchedule2', 'medicationQuantity', 'medicationType', 'medicationStatus', 'medicationStatus2', 'medicationDiscontinuedStatus', 'medicationComment']
+        fields = ['medicationResident', 'medicationName', 'medicationDosage', 'medicationFrequency', 'medicationDistribution', 'medicationStartDate', 'medicationTimeSchedule', 'medicationTimeSchedule2', 'medicationTimeSchedule3', 'medicationTimeSchedule4', 'medicationTimeSchedule5', 'medicationTimeSchedule6',  'medicationQuantity', 'medicationType', 'medicationStatus', 'medicationStatus2', 'medicationDiscontinuedStatus', 'medicationComment']
 
 
 # class StatusForm(forms.ModelForm):
