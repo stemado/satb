@@ -42,7 +42,6 @@ INSTALLED_APPS = (
     'bootcamp.questions',
     'bootcamp.search',
     'bootstrap3',
-    'django_tables2',
 
 )
 
