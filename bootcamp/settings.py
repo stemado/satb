@@ -5,7 +5,7 @@ from unipath import Path
 
 PROJECT_DIR = Path(__file__).parent
 
-# Quick-start development settings - unsuitable for production
+# Quick-sart development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
 SECRET_KEY = config('SECRET_KEY')
