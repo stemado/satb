@@ -19,7 +19,7 @@ DATABASES = {
     )
 }
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = config('*', cast=Csv())
 
 # Application definition
 
