@@ -3,7 +3,7 @@
 
 CarePLUS is an open source **enterprise medication management and social network** built with [Python][0] using the [Django Web Framework][1].
 
-The project has two basic apps:
+The project has six basic apps:
 
 * Medications (An eMAR solution)
 * Treatment (A eTAR solution (in progress))
