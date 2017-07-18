@@ -88,7 +88,6 @@ class MedicationManager(models.Manager):
 @python_2_unicode_compatible
 class Medication(models.Model):
 
-    STATUS_CHOICES = (('Null', 'Null'), ('False', 'Not Given'), ('True', 'Given'))
     MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
     DISCONTINUED_CHOICES = (('Active', 'Active'), ('Discontinued', 'Discontinued'))
     DISTRUBUTION_CHOICES = (('1', 'Every Day'), ('2', '2 times A Day'), ('3', '3 times a day'), ('4', '4 times a day'), ('5', '5 times a day'), ('6', '6 times a day'), ('7', '7 times a day'), ('8', '8 times a day'), ('9', '9 times a day'), ('10', '10 times a day'), ('11', '11 times a day'), ('12', '12 times a day'), ('24', '24 times a day'))
@@ -99,10 +98,8 @@ class Medication(models.Model):
     medicationFrequency = models.CharField(verbose_name="Frequency", max_length=50, null=True, blank=True)
     medicationDistribution = models.CharField(verbose_name="Distribution", choices=DISTRUBUTION_CHOICES, max_length=50, null=True, blank=True)
     medicationQuantity = models.IntegerField(verbose_name="Quantity", default="30", null=True, blank=True)
-    medicationType = models.CharField(verbose_name="Drug Type", default="Narcotic", max_length=20, null=True, blank=True)
-    medicationStatus = models.CharField(verbose_name="Current Status", choices=STATUS_CHOICES, max_length=10, default=False)
-    medicationStatus2 = models.CharField(verbose_name="Current Status 2", choices=STATUS_CHOICES, max_length=10, default=False)
-    medicationComment = models.CharField(verbose_name="Physician Order|Notes?", max_length=500, null=True, blank=True)
+    medicationType = models.CharField(verbose_name="Drug Type", default="Need Options", max_length=20, null=True, blank=True)
+    medicationComment = models.CharField(verbose_name="Physician Orders", max_length=500, null=True, blank=True)
     medicationStartDate = models.DateField(verbose_name="Medication Start Date", default=datetime.now, blank=True, null=True)
     medicationTimeSchedule = models.TimeField(verbose_name="Time 1",  blank=True, null=True)
     medicationTimeSchedule2 = models.TimeField(verbose_name="Time 2", blank=True, null=True)

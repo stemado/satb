@@ -33,8 +33,9 @@
                     <a href="/residents/{{ overdue.medication.medicationResident_id }}">{{ overdue.medication.medicationResident }}</a>
                 </div>
                 <div class="panel-body">
-                    <a href="{{overdue.medication.id}}" class="center-text"><strong>History</strong></a>
-                    <a href="/medications/{{ overdue.id }}"><strong>Medication:</strong> {{ overdue.medication.medicationName }}</a>
+                    <a href="/medications/{{ overdue.medication.id }}"><strong>Medication:</strong> {{ overdue.medication.medicationName }}</a>
+                    <p><a href="/medications/{{ overdue.medication.id }}" class="center-text"><strong>History</strong></a></p>
+                    
                     <p><strong>Due:</strong> {{ overdue.timeDue }}</p>
                     <p><strong>Count:</strong> {{ overdue.medication.medicationQuantity }}</p>
                     <p><strong>Given Today:</strong> {{ overdue.timeGivenStatus }}</p>

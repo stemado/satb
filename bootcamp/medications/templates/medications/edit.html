@@ -9,6 +9,7 @@
 
 {% block head %}
   <script src="{% static 'js/medications.js' %}"></script>
+  <script src="{% static 'js/custom_medications.js' %}"></script>
 {% endblock head %}
 
 {% block main %}
@@ -19,17 +20,6 @@
   <form action="{% url 'editMedication' form.instance.pk %}" method="post" role="form">
     {% csrf_token %}
     {% bootstrap_form form %}
-    {% for field in form.visible_fields %}
-      <div class="form-group{% if field.errors %} has-error{% endif %}">
-        <label for="{{ field.label }}" class="control-label">{{ field.label }}</label>
-
-        {{ field }}
-      
-        {% for error in field.errors %}
-          <label class="control-label">{{ error }}</label>
-        {% endfor %}
-      </div>
-    {% endfor %}
 
     <div class="form-group">
       {% buttons %}

@@ -1,4 +1,6 @@
 $(document).ready(function(){
+	$('#id_medicationResident').hide()
+	$('label[for="id_medicationResident"]').hide()
 	$('label[for="id_medicationTimeSchedule"]').hide()
 	$('#id_medicationTimeSchedule').hide()
 	$('label[for="id_medicationTimeSchedule2"]').hide()
@@ -11,6 +13,7 @@ $(document).ready(function(){
 	$('#id_medicationTimeSchedule5').hide()
 	$('label[for="id_medicationTimeSchedule6"]').hide()
 	$('#id_medicationTimeSchedule6').hide()
+
 
 	$('#id_medicationDistribution').change(function(){
 		var selectedValue = $(this).val();

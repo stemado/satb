@@ -19,13 +19,13 @@ def check_medication_status(sender, instance, created, **kwargs):
 		c = b.timeGivenStatus = 'True'
 		b.save()
 
-# @receiver(pre_save, sender=MedicationCompletion)
+# @receiver(post_save, sender=MedicationCompletion)
 # def medication_delivered_time(sender, instance, created, **kwargs):
 
 # 	if created:
 # 		b = instance.completionMedication_id
 # 		c = MedicationTime.objects.filter(id=b).values('timeDue')
-# 		MedicationCompletion.objects.filter(id=a).update(completionDue=c)
+# 		MedicationCompletion.objects.filter(id=c).update(completionDue=c)
 
 
 @receiver(post_save, sender=MedicationCompletion)	
