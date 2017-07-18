@@ -11,9 +11,19 @@ from bootcamp.medications.models import Medication, MedicationCompletion, Medica
 from bootcamp.decorators import ajax_required
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetView
 import csv
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.units import inch
+from reportlab.lib.pagesizes import letter, landscape
 from reportlab.pdfgen import canvas
+from reportlab.platypus.tables import Table
+cm = 2.54
+from io import BytesIO
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django_tables2 import RequestConfig
+from bootcamp.medications.tables import MedicationTable
+
 
 
 
@@ -41,8 +51,15 @@ def medications(request):
     medications = Medication.get_medications()
     active_medications = Medication.get_active_medications()
     overdue_medications = Medication.get_overdue_medications()
-    return render(request, 'medications/all_medications.html', {'medications': medications,
-        'active_medications': active_medications, 'overdue_medications': overdue_medications})
+    paginator = Paginator(medications, 10)
+    page = request.GET.get('page')
+    try:
+        users = paginator.page(page)
+    except PageNotAnInteger:
+        users = paginator.page(1)
+    except EmptyPage:
+        users = paginator.page(paginator.num_pages)
+    return render(request, 'medications/all_medications.html', {'users': users, 'medications': medications, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
 
 @login_required
 def overdue_medications(request):
@@ -123,6 +140,11 @@ def acceptRefuse(request, medication):
         form = StatusForm(initial={'completionMedication': medication})
     return render(request, 'medications/medication_status.html/', {'form': form})
 
+@login_required
+def pdfNewView(request):
+    medication  = MedicationTime.get_all_medications()
+    return render(request, 'medications/pdfview.html', {'medication': medication})
+
 
 
 class EditMedicationUpdate(UpdateWithInlinesView):
@@ -145,19 +167,53 @@ def csv_view(request):
     return response
 
 def pdf_view(request):
-
-    # Create the HttpResponse object with the appropriate PDF headers.
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="somefilename.pdf"'
+    response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
 
-    # Create the PDF object, using the response object as its "file."
-    p = canvas.Canvas(response)
+    elements = []
 
-    # Draw things on the PDF. Here's where the PDF generation happens.
-    # See the ReportLab documentation for the full list of functionality.
-    p.drawString(100, 100, "Hello world.")
+    doc = SimpleDocTemplate(response, rightMargin=0, leftMargin=6.5 * cm, topMargin=0.3 * cm, bottomMargin=0)
 
-    # Close the PDF object cleanly, and we're done.
-    p.showPage()
-    p.save()
+    data=[(1, 2, 3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31),(3,4,5,6),(5,6,7,8),(7,8,9,10)]
+    table = Table(data, colWidths=18, rowHeights=20)
+    elements.append(table)
+    doc.build(elements) 
+
     return response
+
+
+
+# def pdf_view(request):
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
+
+#     buffer = BytesIO()
+#     p = canvas.Canvas(buffer)
+
+#     # Start writing the PDF here
+#     p.setLineWidth(.3)
+#     p.setFont('Helvetica', 12)
+ 
+#     p.drawString(30,750,'OFFICIAL COMMUNIQUE')
+#     p.drawString(30,735,'OF ACME INDUSTRIES')
+#     p.drawString(500,750,"12/12/2010")
+#     p.line(480,747,580,747)
+ 
+#     p.drawString(275,725,'AMOUNT OWED:')
+#     p.rect(500,725,"$1,000.00")
+#     p.line(378,723,580,723)
+ 
+#     p.drawString(30,703,'RECEIVED BY:')
+#     p.line(120,700,580,700)
+#     p.drawString(120,703,"JOHN DOE")
+#     p.drawString(100, 100, 'Hello world.')
+#     # End writing
+
+#     p.showPage()
+#     p.save()
+
+#     pdf = buffer.getvalue()
+#     buffer.close()
+#     response.write(pdf)
+
+#     return response

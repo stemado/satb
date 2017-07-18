@@ -127,9 +127,9 @@ class Medication(models.Model):
         return (self)
 
 
-    # def get_medications():
-    #     medications = MedicationTime.objects.all()
-    #     return medications
+    def get_all_medications():
+        medications = MedicationTime.objects.all().order_by('medication_id')
+        return medications
 
     def get_medications():
         medications = Medication.objects.filter(medicationDiscontinuedStatus='Active')

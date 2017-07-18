@@ -9,17 +9,17 @@
             <a href="{% url 'overdueMedications' %}" class="btn btn-danger" role="button">
                 <strong>Overdue</strong>
                 <br>
-                <span>{{ overdue_medications|length }}</span>
+                <span>{{ overdue_medications.count }}</span>
             </a>
             <a href="{% url 'activeMedications' %}" class="btn btn-success" role="button">
                 <strong>Active</strong>
                 <br>
-                <span>{{ active_medications|length }}</span>
+                <span>{{ active_medications.count }}</span>
             </a>
             <a href="{% url 'medications' %}" class="btn btn-default" role="button">
                 <strong>All</strong>
                 <br>
-                <span><p>{{ medications|length }}</p></span>
+                <span><p>{{ medications.count }}</p></span>
             </a>
         </div>
     </div>
@@ -50,4 +50,9 @@
         
     </div>
 </div>
+  <div class="row">
+    <div class="col-md-12">
+      {% include 'paginator.html' with paginator=medication %}
+    </div>
+  </div>
 {% endblock main %}
