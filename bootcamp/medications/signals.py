@@ -35,7 +35,7 @@ def medication_delivered_time(sender, instance, created, **kwargs):
 
 	if created:
 		a = instance.completionMedication_id
-		b = MedicationTime.objects.get(id=a)
+		b = MedicationTime.objects.get(id_in=a)
 		c = b.completionDue = '10:00:00'
 		b.save()
 
