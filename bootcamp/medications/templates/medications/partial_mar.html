@@ -1,5 +1,4 @@
-
-{% load i18n %}
+ {% load i18n %}
 <hr>
 <!-- <span class="pull-right text-muted" id="comment-helper" style="display: none"><small>{% trans 'Press Ctrl + Enter to post' %}</small></span> -->
 <!-- <div class="post-comment clearfix">
@@ -17,11 +16,13 @@
     </form>
 </div> -->
 <!-- <button type="button" class="btn btn-default" id="toggleHistory"><strong>History</strong></button> -->
-{% for medication in medication.get_status %}
-<div class="well well-sm hidden" id="comment-list" >
-    <p><strong>Date: {{ medication.completionDate }} </strong> </p>
-    <p><strong>Given: </strong>{{ medication.completionStatus }}</p>
-    <p><strong>Time: </strong> {{ medication.completionTime }}</p>
-    <p><strong>Note: </strong> {{ medication.completionNote }}</p>
-</div>
+{% for completion in relatedMedication.get_status %}
+<tr>
+    <td>{{ medication.medicationName }}</td>
+    <td>{{ completion.completionTime }}</td>
+    <td>{{ completion.id}}</td>
+    <td>{{ completion.completionTime }}</td>
+    <td>{{ completion.completionDue }}</td>
+    <td>{{ completion.completionNote }}</td>
+</tr>
 {% endfor %}

@@ -52,7 +52,7 @@
                     <tbody>
                         {% for m in resident.medication_set.all %}
                         <tr>
-                            <td><a href="/medications/{{m.id}}/">{{ m.medicationName }}</a></td>
+                            <td><a href="/medications/{{m.pk}}/">{{ m.medicationName }}</a></td>
                             <td>{{ m.medicationFrequency }}</td>
                             <td><small>{{ m.medicationTimeSchedule }}</small></td>
                             <td><small>{{ m.medicationTimeSchedule2 }}</small></td>

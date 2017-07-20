@@ -7,17 +7,17 @@
             <a href="{% url 'overdueMedications' %}" class="btn btn-danger" role="button">
                 <strong>Overdue</strong>
                 <br>
-                <span>{{ overdue|length }}</span>
+                <span>{{ overdue.count }}</span>
             </a>
             <a href="{% url 'activeMedications' %}" class="btn btn-success" role="button">
                 <strong>Active</strong>
                 <br>
-                <span>{{ active_medications|length }}</span>
+                <span>{{ active_medications.count }}</span>
             </a>
             <a href="{% url 'medications' %}" class="btn btn-default" role="button">
                 <strong>All</strong>
                 <br>
-                <span><p>{{ medications|length }}</p></span>
+                <span><p>{{ medications.count }}</p></span>
             </a>
         </div>
     </div>
@@ -30,17 +30,17 @@
             <div class="panel panel-danger">
                 <div class="panel-heading">
                     <img src="http://trybootcamp.vitorfs.com/static/img/user.png" style="width:20px">
-                    <a href="/residents/{{ overdue.medication.medicationResident_id }}">{{ overdue.medication.medicationResident }}</a>
+                    <a href="/residents/{{ overdue.medication.medicationResident_id }}">{{ overdue.timeMedication.medicationResident }}</a>
                 </div>
                 <div class="panel-body">
-                    <a href="/medications/{{ overdue.medication.id }}"><strong>Medication:</strong> {{ overdue.medication.medicationName }}</a>
-                    <p><a href="/medications/{{ overdue.medication.id }}" class="center-text"><strong>History</strong></a></p>
+                    <a href="/medications/{{ overdue.timeMedication_id }}"><strong>Medication:</strong> {{ overdue.timeMedication.medicationName }}</a>
+                    <p><a href="/medications/{{ overdue.timeMedication_id }}" class="center-text"><strong>History</strong></a></p>
                     
                     <p><strong>Due:</strong> {{ overdue.timeDue }}</p>
                     <p><strong>Count:</strong> {{ overdue.medication.medicationQuantity }}</p>
                     <p><strong>Given Today:</strong> {{ overdue.timeGivenStatus }}</p>
                     <p>TimeRecord ID: {{ overdue.id }} </p>
-                    <p>Medication ID: {{ overdue.medication_id }} </p>
+                    <p>Medication ID: {{ overdue.timeMedication.id }} </p>
                     <p>
                     <form action="{% url 'acceptRefuse' overdue.id %}" type=POST>
                         <button type="submit" class="btn btn-success">Give</button>

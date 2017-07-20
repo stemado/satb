@@ -45,8 +45,8 @@ def _active_medications(request, medications):
 @login_required
 def medications(request):
     medications = Medication.get_medications()
-    active_medications = Medication.get_active_medications()
-    overdue_medications = Medication.get_overdue_medications()
+    active_medications = MedicationTime.get_active_medications()
+    overdue_medications = MedicationTime.get_overdue_medications()
     paginator = Paginator(medications, 10)
     page = request.GET.get('page')
     try:
@@ -60,8 +60,8 @@ def medications(request):
 @login_required
 def overdue_medications(request):
     medications = Medication.get_medications()
-    overdue = Medication.get_overdue_medications()
-    active_medications = Medication.get_active_medications()
+    overdue = MedicationTime.get_overdue_medications()
+    active_medications = MedicationTime.get_active_medications()
     return render(request, 'medications/overdue_medications.html', {'medications': medications,
         'active_medications': active_medications, 'overdue': overdue})
 
@@ -69,8 +69,8 @@ def overdue_medications(request):
 @login_required
 def active_medications(request):
     medications = Medication.get_medications()
-    active_medications = Medication.get_active_medications()
-    overdue_medications = Medication.get_overdue_medications()
+    active_medications = MedicationTime.get_active_medications()
+    overdue_medications = MedicationTime.get_overdue_medications()
     return render(request, 'medications/active_medications.html', {'medications': medications,
         'active_medications': active_medications, 'overdue_medications': overdue_medications})
 
@@ -78,8 +78,11 @@ def active_medications(request):
 #Check here to see if this view is correct.
 @login_required
 def medication(request, id):
-    medication = get_object_or_404(MedicationTime, id=id)
-    return render(request, 'medications/medication.html', {'medication': medication})
+    medication = get_object_or_404(Medication, pk=id)
+    time = MedicationTime.objects.filter(timeMedication=id)
+    a = MedicationTime.objects.filter(timeMedication=id).values_list('id', flat=True)
+    completion = MedicationCompletion.objects.filter(completionMedication__in=a)
+    return render(request, 'medications/medication.html', {'medication': medication, 'time': time,'completion': completion})
 
 
 @login_required

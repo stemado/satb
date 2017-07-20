@@ -40,6 +40,24 @@
                     <a href="/medications/{{ medication.id }}"><strong>Medication:</strong> {{ medication.medicationName }}</a>
                     <p><strong>ID:</strong> {{ medication.id }}</p>
                     <p><strong>Count:</strong> {{ medication.medicationQuantity }}</p>
+                    <p><strong>Time(s):</strong></p>
+                    <p><small>
+                    {{ medication.medicationTimeSchedule }}
+                    {% if medication.medicationTimeSchedule2 != None %}
+                    | {{ medication.medicationTimeSchedule2 }}
+                    {% endif %}
+                    {% if medication.medicationTimeSchedule3 != None %}
+                    | {{ medication.medicationTimeSchedule3 }}
+                    {% endif %}
+                    {% if medication.medicationTimeSchedule4 != None %}
+                    | {{ medication.medicationTimeSchedule4 }}
+                    {% endif %}
+                    {% if medication.medicationTimeSchedule5 != None %}
+                    | {{ medication.medicationTimeSchedule5 }}
+                    {% endif %}
+                   </small></p> 
+
+
 
                     <!-- Start partial history mar if needed -->
                     <!-- End partial mar -->
