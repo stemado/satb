@@ -19,25 +19,28 @@ def check_medication_status(sender, instance, created, **kwargs):
 		c = b.timeGivenStatus = 'True'
 		b.save()
 
-@receiver(post_save, sender=MedicationCompletion)
-def medication_delivered_time(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=MedicationCompletion)
+# def f(sender, instance, created, **kwargs):
 
-	if created:
-		a = instance.completionMedication_id
-		b = MedicationTime.objects.values_list('timeDue', flat=True).get(pk=a)
-		c = instance.id
-		# MedicationCompletion.objects.filter(id=c).update(completionDue=c)
-		d = instance.completionDue = b
-		print(d)
+# 	if created:
+# 		a = instance.completionMedication_id
+# 		aa = instance.id
+# 		b = MedicationTime.objects.values_list('timeDue', flat=True).get(pk=a)
+# 		c = MedicationCompletion.objects.get(id=aa)
+# 		# MedicationCompletion.objects.filter(id=c).update(completionDue=c)
+# 		d = c.completionDue = b
+# 		print(d)
 
-@receiver(post_save, sender=MedicationCompletion)
-def medication_delivered_time(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=MedicationCompletion)
+# def medication_delivered_time(sender, instance, created, **kwargs):
 
-	if created:
-		a = instance.completionMedication_id
-		b = MedicationTime.objects.get(id_in=a)
-		c = b.completionDue = '10:00:00'
-		b.save()
+# 	if created:
+# 		a = instance.completionMedication_id
+# 		b = MedicationTime.objects.filter(id=a).values_list('timeDue', flat=True)
+# 		c = MedicationCompletion.objects.filter(id=instance.id)
+# 		instance.completionDue=b
+# 		instance.save()
+
 
 
 @receiver(post_save, sender=MedicationCompletion)	
