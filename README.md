@@ -1,16 +1,18 @@
 
 # CarePLUS
 
-CarePLUS is an open source **enterprise medication management and social network** built with [Python][0] using the [Django Web Framework][1].
+CarePLUS is an open source **small facility medication administration management** built with [Python][0] using the [Django Web Framework][1].
+
+CarePLUS is originally forked from https://github.com/vitorfs/bootcamp/tree/master/bootcamp Bootcamp for the Social Networking portion of the app.
 
 The project has six basic apps:
 
 * Medications (An eMAR solution)
 * Treatment (A eTAR solution (in progress))
 * Residents (A basic resident profile)
-* Feed (A Twitter-like microblog)
-* Articles (A collaborative blog)
-* Question & Answers (A Stack Overflow-like platform)
+* Feed (A Twitter-like microblog) - Fork from Bootcamp
+* Articles (A collaborative blog) - Fork from Bootcamp
+* Question & Answers (A Stack Overflow-like platform) - Fork from Bootcamp
 
 ## Medications App
 
