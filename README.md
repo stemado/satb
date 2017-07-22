@@ -53,6 +53,9 @@ The Q&A app works just like Stack Overflow. You can mark a question as favorite,
 
 Try CarePLUS now at [https://intense-fjord-16575.herokuapp.com/feeds/][2].
 
+Username: demo
+Password: password
+
 [0]: https://www.python.org/
 [1]: https://www.djangoproject.com/
 [2]: https://intense-fjord-16575.herokuapp.com/feeds/
