@@ -23,7 +23,10 @@ django-hvad==1.8.0
 django-libs==1.67.12
 django-mptt==0.8.7
 django-polymorphic==1.0.2
+django-schedule==0.5b0
 django-scheduler==0.8.3
+django-sql-explorer==1.1.1
+django-tables2==1.10.0
 djangorestframework==3.6.3
 easy-thumbnails==2.3
 Flask==0.10.1
@@ -63,10 +66,12 @@ static3==0.7.0
 tox==1.7.2
 twilio==6.0.0
 Twisted==15.3.0
+unicodecsv==0.14.1
 Unidecode==0.4.20
 Unipath==1.1
 urllib3==1.21.1
 virtualenv==15.1.0
+vobject==0.9.5
 Werkzeug==0.12.2
 whitenoise==3.2.2
 WTForms==2.1
