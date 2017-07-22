@@ -1,7 +1,7 @@
-
 import dj_database_url
 from decouple import Csv, config
 from unipath import Path
+from django.contrib import admin
 
 PROJECT_DIR = Path(__file__).parent
 
@@ -25,6 +25,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
 INSTALLED_APPS = (
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -42,6 +43,7 @@ INSTALLED_APPS = (
     'bootcamp.questions',
     'bootcamp.search',
     'bootstrap3',
+    'explorer',
 
 )
 

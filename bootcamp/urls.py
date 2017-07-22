@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from django.contrib import admin
 
 from bootcamp.activities import views as activities_views
 from bootcamp.authentication import views as bootcamp_auth_views
@@ -11,6 +12,7 @@ from bootcamp.search import views as search_views
 
 urlpatterns = [
     url(r'^$', core_views.home, name='home'),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^login', auth_views.login, {'template_name': 'core/cover.html'},
         name='login'),
     url(r'^logout', auth_views.logout, {'next_page': '/'}, name='logout'),
@@ -30,6 +32,7 @@ urlpatterns = [
     url(r'^physicianorders/', include('bootcamp.physicianorders.urls')),
     url(r'^articles/', include('bootcamp.articles.urls')),
     url(r'^messages/', include('bootcamp.messenger.urls')),
+    url(r'^explorer/', include('explorer.urls')),
     url(r'^notifications/$', activities_views.notifications,
         name='notifications'),
     url(r'^notifications/last/$', activities_views.last_notifications,
@@ -39,6 +42,7 @@ urlpatterns = [
     url(r'^search/$', search_views.search, name='search'),
     url(r'^(?P<username>[^/]+)/$', core_views.profile, name='profile'),
     url(r'^i18n/', include('django.conf.urls.i18n', namespace='i18n')),
+
 ]
 
 if settings.DEBUG:

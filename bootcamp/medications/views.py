@@ -82,7 +82,7 @@ def medication(request, id):
     time = MedicationTime.objects.filter(timeMedication=id)
     a = MedicationTime.objects.filter(timeMedication=id).values_list('id', flat=True)
     completion = MedicationCompletion.objects.filter(completionMedication__in=a)
-    return render(request, 'medications/medication.html', {'medication': medication, 'time': time,'completion': completion})
+    return render(request, 'medications/medication.html', {'medication': medication, 'time': time, 'completion': completion})
 
 
 @login_required
@@ -141,7 +141,7 @@ def acceptRefuse(request, medication):
 
 @login_required
 def pdfNewView(request):
-    medication  = MedicationTime.get_all_medications()
+    medication  = Medication.objects.raw('SELECT * FROM medications_medication')
     return render(request, 'medications/pdfview.html', {'medication': medication})
 
 

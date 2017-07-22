@@ -36,19 +36,20 @@
                         </thead>
 
                         <tbody>
-                            {% for m in completion %}
 
+                            {% for m in completion %}
                             <tr>
                                 <td>{{ medication.medicationName }}</td>
                                 <td>{{ m.completionStatus }}</td>
                                 <td>{{ m.completionDate }}</td>
                                 <td>{{ m.completionTime }}</td>
-                                <td>{{ m.completionDue }}</td>
+                                <td>{{ m.completionMedication.timeDue }}</td>
                                 <td>{{ m.completionNote }}</td>
                             </tr>
                             {% endfor %}
 
                         </tbody>
+ 
                     </table>
                 </div>
             </div>

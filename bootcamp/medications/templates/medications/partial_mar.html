@@ -1,28 +1,18 @@
- {% load i18n %}
-<hr>
-<!-- <span class="pull-right text-muted" id="comment-helper" style="display: none"><small>{% trans 'Press Ctrl + Enter to post' %}</small></span> -->
-<!-- <div class="post-comment clearfix">
-    <form role="form" id="status-form">
-        <input type="hidden" name="medication" value="{{ medication.id }}">
-        <div class="user-portrait clearfix">
-            <img src="{{ user.profile.get_picture }}">
-        </div>
-        <div>
-            <p><strong>Note:</strong>{{ medication.completionNote }} {{medication.completionTime }}</p>
-            <p><strong>Time:</strong>{{ medicaton.completionStatus }}</p>
-            <p><strong>Date:</strong>{{ medicaton.completionDate }}</p>
-            <p><strong>Note:</strong>{{ medicaton.completionNote }}</p>
-        </div>
-    </form>
-</div> -->
-<!-- <button type="button" class="btn btn-default" id="toggleHistory"><strong>History</strong></button> -->
-{% for completion in relatedMedication.get_status %}
-<tr>
-    <td>{{ medication.medicationName }}</td>
-    <td>{{ completion.completionTime }}</td>
-    <td>{{ completion.id}}</td>
-    <td>{{ completion.completionTime }}</td>
-    <td>{{ completion.completionDue }}</td>
-    <td>{{ completion.completionNote }}</td>
-</tr>
-{% endfor %}
+<-- Paste this in view if want to use: bracket$ include 'medications/partial_mar.html' with completion=completion %bracket -->
+
+<thead>
+    <tr>
+        <th>Medication</th>
+        <th>Time</th>
+        <th>Completion</th>
+    </tr>
+</thead>
+<tbody>
+    {% for c in completion %}
+    <tr>
+        <td>{{ c.medicationName }}</td>
+        <td>{{ c.completionMedication.timeDue }}</td>
+        <td>{{ c.completionDate }}</td>
+    </tr>
+    {% endfor %}
+</tbody>

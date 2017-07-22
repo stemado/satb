@@ -1,5 +1,4 @@
 from django.conf.urls import include, url
-
 from bootcamp.medications import views
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetView
 
