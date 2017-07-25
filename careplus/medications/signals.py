@@ -29,13 +29,6 @@ def f(sender, instance, **kwargs):
 		c = MedicationCompletion.objects.filter(id=instance.id).update(completionDue = b)
 
 
-# @receiver(post_save, sender=MedicationCompletion)
-# def medication_delivered_time(sender, instance, created, **kwargs):
-
-# 		a = instance.completionMedication_id
-# 		b = MedicationTime.objects.filter(id=a).values_list('timeDue', flat=True)
-# 		MedicationCompletion.objects.filter(id=instance.id).update_or_create(completionDue = b)
-
 
 @receiver(post_save, sender=MedicationCompletion)	
 def update_medication_count(sender, instance, created, **kwargs):	

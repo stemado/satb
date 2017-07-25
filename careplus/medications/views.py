@@ -140,10 +140,12 @@ def acceptRefuse(request, medication):
     return render(request, 'medications/medication_status.html/', {'form': form})
 
 @login_required
-def pdfNewView(request):
-    medication  = Medication.objects.all()
-    record = MedicationCompletion.objects.all()
-    return render(request, 'medications/pdfview.html', {'medication': medication})
+def pdfNewView(request, pdf_id):
+    medication = get_object_or_404(Medication, pk=pdf_id)
+    time = MedicationTime.objects.filter(timeMedication=pdf_id)
+    a = MedicationTime.objects.filter(timeMedication=pdf_id).values_list('id', flat=True)
+    completion = MedicationCompletion.objects.filter(completionMedication__in=a)
+    return render(request, 'medications/medication.html', {'medication': medication, 'time': time, 'completion': completion})
 
 
 
