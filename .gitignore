@@ -60,7 +60,7 @@ media/
 
 .env
 
-venv_bootcamp/
+venv_careplus/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -123,6 +123,6 @@ media/
 
 .env
 
-venv_bootcamp/
+venv_careplus/
 
 staticfiles

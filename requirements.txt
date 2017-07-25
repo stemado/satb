@@ -73,3 +73,5 @@ Werkzeug==0.12.2
 whitenoise==3.2.2
 WTForms==2.1
 zope.interface==4.4.0
+django-easy-pdf==0.2.0
+WeasyPrint>=0.34

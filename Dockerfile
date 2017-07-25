@@ -4,15 +4,15 @@ ENV PYTHONUNBUFFERED 1
 
 ADD ./requirements.txt /requirements.txt
 ADD ./entrypoint.sh /entrypoint.sh
-ADD . /bootcamp
+ADD . /careplus
 
 RUN pip install -r requirements.txt
 
 RUN groupadd -r django && useradd -r -g django django
 
-RUN chown -R django /bootcamp && chmod +x entrypoint.sh && chown django entrypoint.sh
+RUN chown -R django /careplus && chmod +x entrypoint.sh && chown django entrypoint.sh
 
-WORKDIR /bootcamp
+WORKDIR /careplus
 
 ENTRYPOINT ["/entrypoint.sh"]
 
@@ -21,15 +21,15 @@ ENV PYTHONUNBUFFERED 1
 
 ADD ./requirements.txt /requirements.txt
 ADD ./entrypoint.sh /entrypoint.sh
-ADD . /bootcamp
+ADD . /careplus
 
 RUN pip install -r requirements.txt
 
 RUN groupadd -r django && useradd -r -g django django
 
-RUN chown -R django /bootcamp && chmod +x entrypoint.sh && chown django entrypoint.sh
+RUN chown -R django /careplus && chmod +x entrypoint.sh && chown django entrypoint.sh
 
-WORKDIR /bootcamp
+WORKDIR /careplus
 
 ENTRYPOINT ["/entrypoint.sh"]
 

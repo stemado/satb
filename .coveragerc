@@ -1,8 +1,8 @@
 
 [run]
-include = bootcamp/*
+include = careplus/*
 omit = *migrations*, *tests*
 
 [run]
-include = bootcamp/*
+include = careplus/*
 omit = *migrations*, *tests*
