@@ -22,11 +22,12 @@ def check_medication_status(sender, instance, created, **kwargs):
 
 #Finally Works. Just need to get "<QuerySet:[TIME]> value out of it and just keep value. 
 @receiver(post_save, sender=MedicationCompletion)
-def f(sender, instance, **kwargs):
+def f(sender, instance, created, **kwargs):
 
 		a = instance.completionMedication_id
 		b = MedicationTime.objects.filter(id=a).values_list('timeDue', flat=True)
-		c = MedicationCompletion.objects.filter(id=instance.id).update(completionDue = b)
+		MedicationCompletion.objects.filter(id=instance.id).update(completionDue=b[0])
+
 
 
 

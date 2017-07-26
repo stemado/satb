@@ -21,6 +21,8 @@ cm = 2.54
 from io import BytesIO
 from django.dispatch import receiver
 from django.db.models.signals import post_save
+from django.db.models import Q
+from datetime import datetime
 
 
 
@@ -81,7 +83,7 @@ def medication(request, id):
     medication = get_object_or_404(Medication, pk=id)
     time = MedicationTime.objects.filter(timeMedication=id)
     a = MedicationTime.objects.filter(timeMedication=id).values_list('id', flat=True)
-    completion = MedicationCompletion.objects.filter(completionMedication__in=a)
+    completion = MedicationCompletion.objects.filter(completionMedication__in=a).order_by('completionDate')
     return render(request, 'medications/medication.html', {'medication': medication, 'time': time, 'completion': completion})
 
 
@@ -140,12 +142,12 @@ def acceptRefuse(request, medication):
     return render(request, 'medications/medication_status.html/', {'form': form})
 
 @login_required
-def pdfNewView(request, pdf_id):
-    medication = get_object_or_404(Medication, pk=pdf_id)
-    time = MedicationTime.objects.filter(timeMedication=pdf_id)
-    a = MedicationTime.objects.filter(timeMedication=pdf_id).values_list('id', flat=True)
-    completion = MedicationCompletion.objects.filter(completionMedication__in=a)
-    return render(request, 'medications/medication.html', {'medication': medication, 'time': time, 'completion': completion})
+def pdfNewView(request):
+    medication = Medication.objects.filter(medicationResident_id=2)
+    time = MedicationTime.objects.filter(timeMedication_id=36)
+    a = MedicationTime.objects.filter(timeMedication=36).values_list('id', flat=True)
+    completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1')).order_by('-completionDue')
+    return render(request, 'medications/pdfview.html', {'medication': medication, 'time': time, 'completion': completion})
 
 
 

@@ -31,6 +31,7 @@
                                 <th>Date</th>
                                 <th>Time Delivered</th>
                                 <th>Time Due</th>
+                                <th>Missed</th>
                                 <th>Note</th>
                             </tr>
                         </thead>
@@ -43,7 +44,8 @@
                                 <td>{{ m.completionStatus }}</td>
                                 <td>{{ m.completionDate }}</td>
                                 <td>{{ m.completionTime }}</td>
-                                <td>{{ m.completionDue }}
+                                <td>{{ m.completionDue }}</td>
+                                <td>{{ m.completionMissed }}</td>
                                 <td>{{ m.completionNote }}</td>
                             </tr>
                             {% endfor %}
