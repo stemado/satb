@@ -143,9 +143,9 @@ def acceptRefuse(request, medication):
 
 @login_required
 def pdfNewView(request):
-    medication = Medication.objects.filter(medicationResident_id=2)
-    time = MedicationTime.objects.filter(timeMedication_id=36)
-    a = MedicationTime.objects.filter(timeMedication=36).values_list('id', flat=True)
+    medication = Medication.objects.filter(medicationResident_id=1)
+    time = MedicationTime.objects.filter(timeMedication_id=1)
+    a = MedicationTime.objects.filter(timeMedication_id=1).values_list('id', flat=True)
     completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1')).order_by('-completionDue')
     return render(request, 'medications/pdfview.html', {'medication': medication, 'time': time, 'completion': completion})
 
