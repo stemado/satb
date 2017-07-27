@@ -191,7 +191,7 @@ class MedicationTime(models.Model):
         return medication
 
 
-
+#
 
 @python_2_unicode_compatible
 class MedicationCompletion(models.Model):
@@ -209,6 +209,7 @@ class MedicationCompletion(models.Model):
     completionDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
     completionNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
     completionMedication = models.ForeignKey(MedicationTime, related_name="completion", on_delete=models.CASCADE)
+    completionRx = models.ForeignKey(Medication, on_delete=models.CASCADE)
 
     def __str__(self):
         return (self.completionStatus)

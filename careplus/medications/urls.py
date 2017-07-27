@@ -14,7 +14,7 @@ urlpatterns = [
 
     url(r'^testpdf/$', views.pdfNewView, name='pdfview'),
     url(r'^edit_medication/(?P<id>[0-9]+)/$', views.editMedication, name='editMedication'),
-    url(r'^status/(?P<medication>[0-9]+)/$', views.acceptRefuse, name='acceptRefuse'),
+    url(r'^status/(?P<medication>[0-9]+)/(?P<rx>[0-9]+)/$', views.acceptRefuse, name='acceptRefuse'),
     url(r'^$', views.active_medications, name='activeMedications'),
 
 ]

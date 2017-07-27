@@ -42,7 +42,7 @@
                     <p>TimeRecord ID: {{ overdue.id }} </p>
                     <p>Medication ID: {{ overdue.timeMedication.id }} </p>
                     <p>
-                    <form action="{% url 'acceptRefuse' overdue.id %}" type=POST>
+                    <form action="{% url 'acceptRefuse' overdue.id overdue.timeMedication.id %}" type=POST>
                         <button type="submit" class="btn btn-success">Give</button>
                     </form>
                     <!-- Start partial history mar if needed -->

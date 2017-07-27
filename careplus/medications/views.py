@@ -128,7 +128,7 @@ def editMedication(request, id):
 
 @login_required
 #THIS WILL HAVE TO BE UPDATED TO MAKE THIS A ONE TO MANY RELATIONSHIP, NOT WITH MEDICATIONS BUT ALL TIME SCHEDULE TABLES 
-def acceptRefuse(request, medication):
+def acceptRefuse(request, medication, rx):
 
     if request.method == 'POST':
         form = StatusForm(request.POST)
@@ -138,18 +138,22 @@ def acceptRefuse(request, medication):
 
             return redirect('/medications/')
     else:
-        form = StatusForm(initial={'completionMedication': medication})
+        form = StatusForm(initial={'completionMedication': medication, 'completionRx': rx})
     return render(request, 'medications/medication_status.html/', {'form': form})
+
+# @login_required
+# def pdfNewView(request):
+#     medication = Medication.objects.filter(medicationResident_id=1)
+#     time = MedicationTime.objects.filter(timeMedication_id=1)
+#     a = MedicationTime.objects.filter(timeMedication_id=1).values_list('id', flat=True)
+#     completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1')).order_by('-completionDue')
+#     return render(request, 'medications/pdfview.html', {'medication': medication, 'time': time, 'completion': completion})
 
 @login_required
 def pdfNewView(request):
     medication = Medication.objects.filter(medicationResident_id=1)
-    time = MedicationTime.objects.filter(timeMedication_id=1)
-    a = MedicationTime.objects.filter(timeMedication_id=1).values_list('id', flat=True)
-    completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1')).order_by('-completionDue')
-    return render(request, 'medications/pdfview.html', {'medication': medication, 'time': time, 'completion': completion})
-
-
+    completion = MedicationCompletion.objects.filter(Q(completionRx=1) | Q(completionRx=2), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1'))
+    return render(request, 'medications/pdfview.html', {'medication': medication, 'completion': completion})
 
 class EditMedicationUpdate(UpdateWithInlinesView):
     model = Medication

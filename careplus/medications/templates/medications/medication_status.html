@@ -17,7 +17,7 @@
 {% endblock head %} 
 {% block main %}
 <div class="post-comment clearfix">
-    <form action="{% url 'acceptRefuse' medication=0 %}" method="POST" class="form">
+    <form action="{% url 'acceptRefuse' medication=0 rx=0 %}" method="POST" class="form">
         {% csrf_token %} 
         {% bootstrap_form form %}
  
