@@ -166,7 +166,7 @@ class MedicationTime(models.Model):
     timeStatus = models.NullBooleanField(verbose_name="Medication", choices=BOOL_CHOICES, default=None, null=True, blank=True)
     timeGivenStatus = models.CharField(verbose_name="Given", choices=STATUS_CHOICES, default=None,max_length=12, null=True, blank=True)
     timeGivenDate = models.DateTimeField(verbose_name="Date Added", auto_now_add=True)
-    timeGivenNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)
+    timeGivenNote = models.CharField(verbose_name="Notes", max_length=500, null=True, blank=True)
     timeMedication = models.ForeignKey(Medication, on_delete=models.CASCADE) 
 
  

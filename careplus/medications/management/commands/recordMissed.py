@@ -9,7 +9,6 @@ class Command(BaseCommand):
 	def handle(self, *args, **options):
 
 		now = datetime.now()
-		hourAfter = now - timedelta(hours=1, minutes=1)
-		medication = MedicationCompletion.objects.filter(timeGivenStatus='False', timeDue__lte=hourAfter)
-		if medication == True:
+		medication = MedicationCompletion.objects.filter(completionDate=now)
+		if medication == Null:
 			MedicationTime.objects.filter(completion='False', timeDue__lte=hourAfter).update(completionMissed='True')
