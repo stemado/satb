@@ -24,7 +24,7 @@ class StatusForm(forms.ModelForm):
 
     class Meta:
         model = MedicationCompletion
-        fields = ['completionStatus', 'completionNote', 'completionMedication']
+        fields = ['completionStatus', 'completionRx', 'completionNote', 'completionMedication']
 
 class MedicationStatusForm(forms.ModelForm):
 

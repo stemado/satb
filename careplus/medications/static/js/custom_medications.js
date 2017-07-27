@@ -1,4 +1,5 @@
 $(document).ready(function(){
+
 	$('#id_medicationResident').hide()
 	$('label[for="id_medicationResident"]').hide()
 	$('label[for="id_medicationTimeSchedule"]').hide()
@@ -14,7 +15,7 @@ $(document).ready(function(){
 	$('label[for="id_medicationTimeSchedule6"]').hide()
 	$('#id_medicationTimeSchedule6').hide()
 	$('label[for="id_completionMedication"]').hide()
-	$('#id_completionMedication').hide()
+
 
 
 	$('#id_medicationDistribution').change(function(){

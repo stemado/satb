@@ -121,7 +121,7 @@ class Medication(models.Model):
 
   
     def __str__(self):
-        return (self)
+        return (self.medicationName)
 
 
     def get_all_medications():
