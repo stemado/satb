@@ -187,7 +187,7 @@ class MedicationTime(models.Model):
         now = datetime.now()
         hourBefore = now - timedelta(hours=1)
         hourAfter = now + timedelta(hours=1)
-        medication = MedicationTime.objects.filter(timeGivenStatus='False', timeDue__range=(hourBefore, hourAfter))
+        medication = MedicationTime.objects.filter(timeGivenStatus='False', timeDue__range=(hourAfter, hourBefore))
         return medication
 
 
