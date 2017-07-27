@@ -42,7 +42,7 @@
                     <p><strong>Count:</strong> {{ medication.medication.medicationQuantity }}</p>
                     <p><strong>(Given?):</strong> {{ medication.timeGivenStatus }}</p>
                     <p><strong>Given Today:</strong> {{ medication.timeStatus }}</p>
-                    <form action="{% url 'acceptRefuse' medication.id overdue.timeMedication_id %}" type=POST>
+                    <form action="{% url 'acceptRefuse' medication.id medication.medication.id %}" type=POST>
                         <button type="submit" class="btn btn-success">Give</button>
                     </form>
                     <!-- Start partial history mar if needed -->
