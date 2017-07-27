@@ -60,10 +60,10 @@
                         </thead>
 
                         <thead>
-
+                            {% for l in medication %}
                             <tr>
-                                <td>{% for l in medication %} {{ l.medicationName }} {% endfor %}</td>
-                                
+
+                            <td>{{ l.medicationName }}</td>
                                 {% for m in completion %}
                                     {% if m.completionMissed == 'False' %}
                                     <td class="table-success">X</td>
@@ -71,6 +71,8 @@
                                     <td class="table-warning">M</td>
                                     {% endif %}
                                 {% endfor %}
+                            </tr>
+                            {% endfor %}
 
                         </thead>
  
