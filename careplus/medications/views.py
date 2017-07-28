@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 
 import markdown
 from careplus.medications.forms import MedicationForm, StatusForm, MedicationStatusForm, StatusFormSet
+from careplus.residents.models import Resident
 from careplus.medications.models import Medication, MedicationCompletion, MedicationTime
 from careplus.decorators import ajax_required
 from extra_views import CreateWithInlinesView, UpdateWithInlinesView, InlineFormSetView
@@ -152,8 +153,9 @@ def acceptRefuse(request, medication, rx):
 @login_required
 def pdfNewView(request):
     medication = Medication.objects.filter(medicationResident_id=1)
+    resident = Resident.objects.filter(id=1)[0]
     completion = MedicationCompletion.objects.filter(Q(completionRx=1) | Q(completionRx=2), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1'))
-    return render(request, 'medications/pdfview.html', {'medication': medication, 'completion': completion})
+    return render(request, 'medications/pdfview.html', {'medication': medication, 'completion': completion, 'resident': resident})
 
 class EditMedicationUpdate(UpdateWithInlinesView):
     model = Medication
