@@ -151,11 +151,17 @@ def acceptRefuse(request, medication, rx):
 #     return render(request, 'medications/pdfview.html', {'medication': medication, 'time': time, 'completion': completion})
 
 @login_required
+#Don't forget to add back 'time':, time to variables
 def pdfNewView(request):
+    # resident = Resident.objects.get(id=1)
+    # medication = resident.medication_set.all()
+    # med = Medication.objects.filter()
+
     medication = Medication.objects.filter(medicationResident_id=1)
+    time = MedicationTime.objects.filter(Q(timeMedication_id=1) | Q(timeMedication_id=2) | Q(timeMedication_id=3)).order_by('id')
     resident = Resident.objects.filter(id=1)[0]
-    completion = MedicationCompletion.objects.filter(Q(completionRx=1) | Q(completionRx=2), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1'))
-    return render(request, 'medications/pdfview.html', {'medication': medication, 'completion': completion, 'resident': resident})
+    completion = MedicationCompletion.objects.filter(Q(completionRx_id=1) | Q(completionRx_id=2), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1'))
+    return render(request, 'medications/pdfview.html', {'medication': medication, 'time': time, 'completion': completion, 'resident': resident})
 
 class EditMedicationUpdate(UpdateWithInlinesView):
     model = Medication

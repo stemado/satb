@@ -7,19 +7,17 @@
             <div class="col-md-10">
                 <div class="container">
                     <table class="table table-bordered">
-                    <h1 class="text-center">Medication Administration Record</h1>
-                    <br>
+                        <h1 class="text-center">Medication Administration Record</h1>
+                        <br>
                         <thead>
-                        <tr>
-
-                            <th>MO/YR: 07/2017</th>
-                            <th>Start/Stop Date</th>
-                            <th>Facility Name: Hillside Guest Home</th>
-                        </tr>
+                            <tr>
+                                <th>MO/YR: 07/2017</th>
+                                <th>Start/Stop Date</th>
+                                <th>Facility Name: Hillside Guest Home</th>
+                            </tr>
                         </thead>
-                        </table>
+                    </table>
                     <table class="table table-bordered">
-
                         <thead>
                             <tr>
                                 <th>Medication</th>
@@ -57,41 +55,34 @@
                                 <th>31</th>
                             </tr>
                         </thead>
-                        {% for l in medication %}
-                        {% for m in l.medicationtime_set.all %}
+
+
                         <tr>
-                            <td>{{ l.medicationName }}</td>
+                                                {% for t in time %}
+                            <td>{{ t.timeMedication }}</td>
 
-                            <td>{{ m.timeDue }}</td>
+                            <td>{{ t.timeDue }} </td>
+                            {% for m in t.completion.all %}
+                            <td>AD</td>
+                            {% endfor %} 
+                        </tr>
+                        {% endfor %}
 
-                            {% for n in l.medicationcompletion_set.all %}
-                                {% if n.completionMissed == 'False' %}
-                                    <td class="table-success">X</td>
-                                {% else %}
-                                    <td class="table-warning">M</td>
-                                {% endif %} 
-                            {% endfor %}
-
-                            </tr>
-                            {% endfor %}
-                            {% endfor %}
-                            <tr>
-                            </table>
+                    </table>
                     <table class="table table-bordered">
-
-
                         <tr valign="top">
-
                             <th>Diagnosis</th>
                             <th>DIET</th>
-                            <th>Comments<br></th>
+                            <th>Comments
+                                <br>
+                            </th>
                         </tr>
-
-
                         <tr valign="top">
-
                             <th>Allergies</th>
-                            <th>PhysicianName<br><br><br>Phone Number</th>
+                            <th>PhysicianName
+                                <br>
+                                <br>
+                                <br>Phone Number</th>
                             <th><small>A. Put initials in apppropriate box when medication is given <br>B. Circle initials when not given <br>C. State reason for refusal /omission on back of form. <br>D. PRN Medications: Reason given and results must be noted on back of form. <br>E. Legend: S=School; H=Home visit; W=Work; P=Program<small></th>
                         </table>
 

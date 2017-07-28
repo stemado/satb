@@ -191,7 +191,6 @@ class MedicationTime(models.Model):
         return medication
 
 
-#
 
 @python_2_unicode_compatible
 class MedicationCompletion(models.Model):
