@@ -17,6 +17,8 @@
                             </tr>
                         </thead>
                     </table>
+        
+                    {% for m in medication %}
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -40,7 +42,7 @@
                                 <th>16</th>
                                 <th>17</th>
                                 <th>18</th>
-                                <th>19 </th>
+                                <th>19</th>
                                 <th>20</th>
                                 <th>21</th>
                                 <th>22</th>
@@ -55,11 +57,10 @@
                                 <th>31</th>
                             </tr>
                         </thead>
+                            <tr>
 
+                            {% for t in time %}
 
-                        <tr>
-                                                {% for t in time %}
-                            <td>{{ t.timeMedication }}</td>
 
                             <td>{{ t.timeDue }} </td>
                             {% for m in t.completion.all %}
@@ -67,8 +68,9 @@
                             {% endfor %} 
                         </tr>
                         {% endfor %}
-
                     </table>
+                    {% endfor %}
+
                     <table class="table table-bordered">
                         <tr valign="top">
                             <th>Diagnosis</th>
