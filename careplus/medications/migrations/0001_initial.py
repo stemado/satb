@@ -81,9 +81,5 @@ class Migration(migrations.Migration):
             name='completionMedication',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='completion', to='medications.MedicationTime'),
         ),
-        migrations.AddField(
-            model_name='medicationcompletion',
-            name='completionRx',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='medications.Medication'),
-        ),
+
     ]
