@@ -61,6 +61,9 @@ class Migration(migrations.Migration):
                 ('completionDue', models.TimeField(blank=True, null=True, verbose_name='Time Due')),
                 ('completionDate', models.DateField(auto_now_add=True, verbose_name='Date Given')),
                 ('completionNote', models.CharField(blank=True, max_length=500, null=True, verbose_name='Note')),
+                ('completionMedication', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='completion', to='medications.MedicationTime')),
+                ('completionRx', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='medications.Medication')),
+            
             ],
         ),
         migrations.CreateModel(
@@ -76,10 +79,4 @@ class Migration(migrations.Migration):
                 ('timeMedication', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='medications.Medication')),
             ],
         ),
-        migrations.AddField(
-            model_name='medicationcompletion',
-            name='completionMedication',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='completion', to='medications.MedicationTime'),
-        ),
-
     ]

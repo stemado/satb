@@ -176,6 +176,9 @@ class MedicationTime(models.Model):
     def get_status(self):
         return MedicationCompletion.objects.filter(completionMedication=self)
 
+    def get_all_times():
+        medication = MedicationTime.completion.all()
+        return medication
 
     def get_overdue_medications():
         now = datetime.now()
