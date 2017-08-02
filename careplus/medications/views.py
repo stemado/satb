@@ -72,10 +72,10 @@ def overdue_medications(request):
 @login_required
 def active_medications(request):
     medications = Medication.get_medications()
-    active_medications = MedicationTime.get_active_medications()
+    active = MedicationTime.get_active_medications()
     overdue_medications = MedicationTime.get_overdue_medications()
     return render(request, 'medications/active_medications.html', {'medications': medications,
-        'active_medications': active_medications, 'overdue_medications': overdue_medications})
+        'active': active, 'overdue_medications': overdue_medications})
 
 
 #Check here to see if this view is correct.

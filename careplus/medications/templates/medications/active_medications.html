@@ -13,7 +13,7 @@
             <a href="{% url 'activeMedications' %}" class="btn btn-success" role="button">
                 <strong>Active</strong>
                 <br>
-                <span>{{ active_medications.count }}</span>
+                <span>{{ active.count }}</span>
             </a>
             <a href="{% url 'medications' %}" class="btn btn-default" role="button">
                 <strong>All</strong>
@@ -26,23 +26,23 @@
 <hr />
 <div class="container">
     <div class="row">
-        {% for medication in active_medications %}
+        {% for m in active %}
         <div class="col-md-4">
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <img src="http://trybootcamp.vitorfs.com/static/img/user.png" style="width:20px">
-                    <a href="/residents/{{ medication.medicationResident_id }}">{{ medication.medication.medicationResident }}</a>
+                    <a href="/residents/{{ medication.medicationResident_id }}">{{ m.medication.medicationResident }}</a>
                 </div>
                 <div class="panel-body">
-                    <a href="{{medication.medication.id}}" class="center-text"><strong>History</strong></a>
-                    <a href="/medications/{{ medication.medication.id }}"><strong>Medication:</strong> {{ medication.medication.medicationName }}</a>
-                    <p><strong>Rx ID:</strong> {{ medication.medication_id }}</p>
-                    <p><strong>Record ID:</strong> {{ medication.id }}</p>
-                    <p><strong>Accepted:</strong> {{ medication.timeDue }}</p>
-                    <p><strong>Count:</strong> {{ medication.medication.medicationQuantity }}</p>
-                    <p><strong>(Given?):</strong> {{ medication.timeGivenStatus }}</p>
-                    <p><strong>Given Today:</strong> {{ medication.timeStatus }}</p>
-                    <form action="{% url 'acceptRefuse' medication.id medication.timeMedication_id %}" type=POST>
+                    <a href="{{m.medication.id}}" class="center-text"><strong>History</strong></a>
+                    <a href="/medications/{{ m.medication.id }}"><strong>Medication:</strong> {{ m.medication.medicationName }}</a>
+                    <p><strong>Rx ID:</strong> {{ m.medication_id }}</p>
+                    <p><strong>Record ID:</strong> {{ m.id }}</p>
+                    <p><strong>Accepted:</strong> {{ m.timeDue }}</p>
+                    <p><strong>Count:</strong> {{ m.medication.medicationQuantity }}</p>
+                    <p><strong>(Given?):</strong> {{ m.timeGivenStatus }}</p>
+                    <p><strong>Given Today:</strong> {{ m.timeStatus }}</p>
+                    <form action="{% url 'acceptRefuse' m.id m.timeMedication_id %}" type=POST>
                         <button type="submit" class="btn btn-success">Give</button>
                     </form>
                     <!-- Start partial history mar if needed -->

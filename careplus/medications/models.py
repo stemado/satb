@@ -161,7 +161,7 @@ class MedicationTime(models.Model):
     MISSED_CHOICES = (('False', 'False'), ('True', 'True'))
     STATUS_CHOICES = (('Null', 'Null'), ('False', 'False'), ('True', 'True'))
 
-    timeDue = models.CharField(verbose_name="Time Due", max_length=30, null=True, blank=True)
+    timeDue = models.TimeField(verbose_name="Time Due", null=True, blank=True)
     timeDelivered = models.TimeField(verbose_name="Time Delivered", null=True, blank=True)
     timeStatus = models.NullBooleanField(verbose_name="Medication", choices=BOOL_CHOICES, default=None, null=True, blank=True)
     timeGivenStatus = models.CharField(verbose_name="Given", choices=STATUS_CHOICES, default=None,max_length=12, null=True, blank=True)
@@ -190,7 +190,7 @@ class MedicationTime(models.Model):
         now = datetime.now()
         hourBefore = now - timedelta(hours=1)
         hourAfter = now + timedelta(hours=1)
-        medication = MedicationTime.objects.filter(timeGivenStatus='False', timeDue__range=(hourAfter, hourBefore))
+        medication = MedicationTime.objects.filter(timeGivenStatus='False', timeDue__range=(hourBefore, hourAfter))
         return medication
 
 
