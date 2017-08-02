@@ -9,6 +9,7 @@ from datetime import datetime
 
 class MedicationForm(forms.ModelForm):
 
+
     class Meta:
         model = Medication
         fields = ['medicationName', 'medicationDosage', 'medicationFrequency', 'medicationStartDate', 'medicationDistribution',  'medicationTimeSchedule', 'medicationTimeSchedule2', 'medicationTimeSchedule3', 'medicationTimeSchedule4', 'medicationTimeSchedule5', 'medicationTimeSchedule6',  'medicationQuantity', 'medicationType', 'medicationDiscontinuedStatus', 'medicationComment', 'medicationResident']
@@ -21,6 +22,7 @@ class MedicationForm(forms.ModelForm):
 #         fields = ['completionStatus', 'completionStatus2', 'completionNote', 'completionMedication']
 
 class StatusForm(forms.ModelForm):
+
 
     class Meta:
         model = MedicationCompletion

@@ -123,6 +123,11 @@ class Medication(models.Model):
     def __str__(self):
         return (self.medicationName)
 
+    # def completion_medication_set():
+    #     a = Medication.objects.filter(medicationResident=1)
+    #     b = a.medicationtime_set.all()
+    #     medication = b.completion.all()
+    #     return medication
 
     def get_all_medications():
         medications = MedicationTime.objects.all().order_by('medication_id')

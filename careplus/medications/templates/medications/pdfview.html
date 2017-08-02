@@ -22,7 +22,7 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Medication</th>
+                                <th>Medication: {{ m.medicationName }}</th>
                                 <th>Hour</th>
                                 <th>1</th>
                                 <th>2</th>
@@ -58,16 +58,24 @@
                             </tr>
                         </thead>
                             <tr>
+                            {% for s in m.medicationtime_set.all %}
 
-                            {% for t in time %}
-
-
-                            <td>{{ t.timeDue }} </td>
-                            {% for m in t.completion.all %}
-                            <td>AD</td>
-                            {% endfor %} 
+                            <td>{{ m.medicationComment }}</td>
+                            <td>{{ s.timeDue }} </td>
+                            {% for d in s.completion.all %}
+                            <!--Below is for Debugging-->
+                            <!-- <td><small>{{d.completionDate}}|{{d.completionTime}}|{{s}}|{{d.completionMedication_id}}|{{d.completionRx_id}}<small></td> -->
+                            {% if d.completionStatus == 'Refused' %}
+                            <td>O</td>
+                            {% elif d.completionMissed == True %}
+                            <td>M</td>
+                            {% else %}
+                            <td>AK</td>
+                            {% endif %}
+                            {% endfor %}
                         </tr>
                         {% endfor %}
+
                     </table>
                     {% endfor %}
 
