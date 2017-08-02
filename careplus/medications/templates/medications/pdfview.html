@@ -11,74 +11,85 @@
                         <br>
                         <thead>
                             <tr>
-                                <th>MO/YR: 07/2017</th>
+                                <th>MO/YR: <small>07/2017<small></th>
                                 <th>Start/Stop Date</th>
-                                <th>Facility Name: Hillside Guest Home</th>
+                                <th>Facility Name: <small>Hillside Guest Home</small></th>
                             </tr>
                         </thead>
                     </table>
         
                     {% for m in medication %}
+                    <div class="col-xs-2">
+                    <div class="table-responsive">
+                    <table class="table table-bordered">
+                    <div class="row"><small>Medication: {{m.medicationName}}<small></div>
+                    <div class="row"><small>Physician Order: {{m.medicationComment}}</small></div>
+                    <div class="row"><small>Doses Left: {{m.medicationQuantity}}</small></div>
+                    </table>
+                    </div>
+                    </div>
+                    <div class="col-xs-10">
+                    <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>Medication: {{ m.medicationName }}</th>
-                                <th>Hour</th>
-                                <th>1</th>
-                                <th>2</th>
-                                <th>3 </th>
-                                <th>4</th>
-                                <th>5</th>
-                                <th>6</th>
-                                <th>7</th>
-                                <th>8</th>
-                                <th>9</th>
-                                <th>10</th>
-                                <th>11</th>
-                                <th>12</th>
-                                <th>13</th>
-                                <th>14</th>
-                                <th>15</th>
-                                <th>16</th>
-                                <th>17</th>
-                                <th>18</th>
-                                <th>19</th>
-                                <th>20</th>
-                                <th>21</th>
-                                <th>22</th>
-                                <th>23</th>
-                                <th>24</th>
-                                <th>25</th>
-                                <th>26</th>
-                                <th>27</th>
-                                <th>28</th>
-                                <th>29</th>
-                                <th>30</th>
-                                <th>31</th>
+                                <th><small>Time Due<small></th>
+                                <th><small>1</small></th>
+                                <th><small>2</small></th>
+                                <th><small>3</small></th>
+                                <th><small>4</small></th>
+                                <th><small>5</small></th>
+                                <th><small>6</small></th>
+                                <th><small>7</small></th>
+                                <th><small>8</small></th>
+                                <th><small>9</small></th>
+                                <th><small>10</small></th>
+                                <th><small>11</small></th>
+                                <th><small>12</small></th>
+                                <th><small>13</small></th>
+                                <th><small>14</small></th>
+                                <th><small>15</small></th>
+                                <th><small>16</small></th>
+                                <th><small>17</small></th>
+                                <th><small>18</small></th>
+                                <th><small>19</small></th>
+                                <th><small>20</small></th>
+                                <th><small>21</small></th>
+                                <th><small>22</small></th>
+                                <th><small>23</small></th>
+                                <th><small>24</small></th>
+                                <th><small>25</small></th>
+                                <th><small>26</small></th>
+                                <th><small>27</small></th>
+                                <th><small>28</small></th>
+                                <th><small>29</small></th>
+                                <th><small>30</small></th>
+                                <th><small>31</small></th>
                             </tr>
                         </thead>
                             <tr>
                             {% for s in m.medicationtime_set.all %}
 
-                            <td>{{ m.medicationComment }}</td>
-                            <td>{{ s.timeDue }} </td>
+
+                            <td><small>{{ s.timeDue }}</small></td>
                             {% for d in s.completion.all %}
                             <!--Below is for Debugging-->
                             <!-- <td><small>{{d.completionDate}}|{{d.completionTime}}|{{s}}|{{d.completionMedication_id}}|{{d.completionRx_id}}<small></td> -->
                             {% if d.completionStatus == 'Refused' %}
-                            <td>O</td>
+                            <td><small>O</small></td>
                             {% elif d.completionMissed == True %}
-                            <td>M</td>
+                            <td><small>M</small></td>
                             {% else %}
-                            <td>AK</td>
+                            <td><small>AK</small></td>
                             {% endif %}
                             {% endfor %}
                         </tr>
                         {% endfor %}
 
                     </table>
+                    </div>
+                    </div>
                     {% endfor %}
-
                     <table class="table table-bordered">
                         <tr valign="top">
                             <th>Diagnosis</th>
@@ -88,11 +99,10 @@
                             </th>
                         </tr>
                         <tr valign="top">
-                            <th>Allergies</th>
-                            <th>PhysicianName
+                            <th><small>Allergies</small></th>
+                            <th><small>PhysicianName: {{resident.residentPrimaryPhysician}}</small>
                                 <br>
-                                <br>
-                                <br>Phone Number</th>
+                                <br><small>Phone Number</small></th>
                             <th><small>A. Put initials in apppropriate box when medication is given <br>B. Circle initials when not given <br>C. State reason for refusal /omission on back of form. <br>D. PRN Medications: Reason given and results must be noted on back of form. <br>E. Legend: S=School; H=Home visit; W=Work; P=Program<small></th>
                         </table>
 
@@ -100,13 +110,14 @@
                         <table style="border-spacing: 0px;"class="table table-bordered">
                         <tr valign="top">
                             <!-- Need ability to use just straight query. Making me put in for loop at present, which wont' work -->
-                            <th>NAME: <br><br>{{ resident }}</th>
-                            <th>Record #: <br><br> {{ resident.id }}</th>
-                            <th>Date of Birth: <br><br> {{ resident.residentDOB }}</td>
-                            <td>Sex: <br><br>Male</td>
+                            <th>NAME: <br><small>{{ resident }}</small></th>
+                            <th>Record #: <br><small>{{ resident.id }}</small></th>
+                            <th>Date of Birth: <br><small>{{ resident.residentDOB }}</small></td>
+                            <td>Sex: <br><small>Male></small></td>
 
                         </tr>
                     </table>
+
                 </div>
             </div>
         </div>
