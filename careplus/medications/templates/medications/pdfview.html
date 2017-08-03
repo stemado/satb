@@ -17,78 +17,80 @@
                             </tr>
                         </thead>
                     </table>
-        
                     {% for m in medication %}
+<!--                     <div class="container-fluid" style="border:1px solid #cecece;"> -->
                     <div class="col-xs-2">
-                    <div class="table-responsive">
-                    <table class="table table-bordered">
-                    <div class="row"><small>Medication: {{m.medicationName}}<small></div>
-                    <div class="row"><small>Physician Order: {{m.medicationComment}}</small></div>
-                    <div class="row"><small>Doses Left: {{m.medicationQuantity}}</small></div>
-                    </table>
+                        <div class="table">
+                            <table class="table table-bordered">
+                                <div class="row"><strong>{{m.medicationName}} </strong>  </div>
+                                <div class="row">{{m.medicationDistribution}}, {{m.medicationDosage}} </div>
+                                <div class="row"><strong>Physician Order:</strong> {{m.medicationComment}} </div>
+                                <div class="row"><strong>Doses Left:</strong> {{m.medicationQuantity}} <strong>Refills Left:</strong>3</div>
+                                <br>
+                                <div class="row"><strong>Rx on </strong>{{ m.medicationDateTimeAdded}}</div>
+                                <div class="row"><strong>By </strong>{{ resident.residentPrimaryPhysician}}</div>
+                            </table>
+                        </div>
                     </div>
-                    </div>
+
                     <div class="col-xs-10">
-                    <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th><small>Time Due<small></th>
+                        <div class="table">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><small>Time Due<small></th>
                                 <th><small>1</small></th>
-                                <th><small>2</small></th>
-                                <th><small>3</small></th>
-                                <th><small>4</small></th>
-                                <th><small>5</small></th>
-                                <th><small>6</small></th>
-                                <th><small>7</small></th>
-                                <th><small>8</small></th>
-                                <th><small>9</small></th>
-                                <th><small>10</small></th>
-                                <th><small>11</small></th>
-                                <th><small>12</small></th>
-                                <th><small>13</small></th>
-                                <th><small>14</small></th>
-                                <th><small>15</small></th>
-                                <th><small>16</small></th>
-                                <th><small>17</small></th>
-                                <th><small>18</small></th>
-                                <th><small>19</small></th>
-                                <th><small>20</small></th>
-                                <th><small>21</small></th>
-                                <th><small>22</small></th>
-                                <th><small>23</small></th>
-                                <th><small>24</small></th>
-                                <th><small>25</small></th>
-                                <th><small>26</small></th>
-                                <th><small>27</small></th>
-                                <th><small>28</small></th>
-                                <th><small>29</small></th>
-                                <th><small>30</small></th>
-                                <th><small>31</small></th>
-                            </tr>
-                        </thead>
-                            <tr>
-                            {% for s in m.medicationtime_set.all %}
-
-
-                            <td><small>{{ s.timeDue }}</small></td>
-                            {% for d in s.completion.all %}
-                            <!--Below is for Debugging-->
-                            <!-- <td><small>{{d.completionDate}}|{{d.completionTime}}|{{s}}|{{d.completionMedication_id}}|{{d.completionRx_id}}<small></td> -->
-                            {% if d.completionStatus == 'Refused' %}
-                            <td><small>O</small></td>
-                            {% elif d.completionMissed == True %}
-                            <td><small>M</small></td>
-                            {% else %}
-                            <td><small>AK</small></td>
-                            {% endif %}
-                            {% endfor %}
-                        </tr>
-                        {% endfor %}
-
-                    </table>
+                                        <th><small>2</small></th>
+                                        <th><small>3</small></th>
+                                        <th><small>4</small></th>
+                                        <th><small>5</small></th>
+                                        <th><small>6</small></th>
+                                        <th><small>7</small></th>
+                                        <th><small>8</small></th>
+                                        <th><small>9</small></th>
+                                        <th><small>10</small></th>
+                                        <th><small>11</small></th>
+                                        <th><small>12</small></th>
+                                        <th><small>13</small></th>
+                                        <th><small>14</small></th>
+                                        <th><small>15</small></th>
+                                        <th><small>16</small></th>
+                                        <th><small>17</small></th>
+                                        <th><small>18</small></th>
+                                        <th><small>19</small></th>
+                                        <th><small>20</small></th>
+                                        <th><small>21</small></th>
+                                        <th><small>22</small></th>
+                                        <th><small>23</small></th>
+                                        <th><small>24</small></th>
+                                        <th><small>25</small></th>
+                                        <th><small>26</small></th>
+                                        <th><small>27</small></th>
+                                        <th><small>28</small></th>
+                                        <th><small>29</small></th>
+                                        <th><small>30</small></th>
+                                        <th><small>31</small></th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    {% for s in m.medicationtime_set.all %}
+                                    <td><small>{{ s.timeDue }}</small></td>
+                                    {% for d in s.completion.all %}
+                                    <!--Below is for Debugging-->
+                                    <!-- <td><small>{{d.completionDate}}|{{d.completionTime}}|{{s}}|{{d.completionMedication_id}}|{{d.completionRx_id}}<small></td> -->
+                                    {% if d.completionStatus == 'Refused' %}
+                                    <td><small>O</small></td>
+                                    {% elif d.completionMissed == True %}
+                                    <td><small>M</small></td>
+                                    {% else %}
+                                    <td><small>AK</small></td>
+                                    {% endif %} {% endfor %}
+                                </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
                     </div>
-                    </div>
+<!--                                         </div> -->
                     {% endfor %}
                     <table class="table table-bordered">
                         <tr valign="top">
@@ -111,13 +113,14 @@
                         <tr valign="top">
                             <!-- Need ability to use just straight query. Making me put in for loop at present, which wont' work -->
                             <th>NAME: <br><small>{{ resident }}</small></th>
-                            <th>Record #: <br><small>{{ resident.id }}</small></th>
-                            <th>Date of Birth: <br><small>{{ resident.residentDOB }}</small></td>
-                            <td>Sex: <br><small>Male></small></td>
-
+                            <th>Record #:
+                                <br><small>{{ resident.id }}</small></th>
+                            <th>Date of Birth:
+                                <br><small>{{ resident.residentDOB }}</small></td>
+                                <td>Sex:
+                                    <br><small>Male></small></td>
                         </tr>
                     </table>
-
                 </div>
             </div>
         </div>
