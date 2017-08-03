@@ -172,6 +172,7 @@ class MedicationTime(models.Model):
     timeGivenStatus = models.CharField(verbose_name="Given", choices=STATUS_CHOICES, default=None,max_length=12, null=True, blank=True)
     timeGivenDate = models.DateTimeField(verbose_name="Date Added", auto_now_add=True)
     timeGivenNote = models.CharField(verbose_name="Notes", max_length=500, null=True, blank=True)
+    timeCreated = models.DateTimeField(verbose_name="Created", auto_now_add=True)
     timeMedication = models.ForeignKey(Medication, on_delete=models.CASCADE) 
 
  
