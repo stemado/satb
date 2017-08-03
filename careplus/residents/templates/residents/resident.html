@@ -2,13 +2,14 @@
 <link href="{% static 'css/residents.css' %}" rel="stylesheet">
 <script src="{% static 'js/residents.js' %}"></script>
 {% endblock head %} {% block main %}
-<div class="container">
-    <div class="page-header">
-        <h1>{{ resident.residentFirstName }} {{ resident.residentLastName }} <small>({{ resident.dnr_status }})</small></h1>
-
         <a href="{% url 'createMedication' resident_id=resident.id %}" class="btn btn-primary pull-right">
             <span class="glyphicon glyphicon-plus"></span> {% trans 'Add Medication' %}
         </a>
+        <a href="http://127.0.0.1:8000/medications/testpdf/{{resident.id}}" class="btn btn-danger pull-right">
+        <span class="glyphicon glyphicon-calendar"></span> {% trans 'Generate MAR' %} </a>
+<div class="container">
+    <div class="page-header">
+        <h1>{{ resident.residentFirstName }} {{ resident.residentLastName }} <small>({{ resident.dnr_status }})</small></h1>
     </div>
 
     <div class="profile">
@@ -20,6 +21,7 @@
         </div>
         <div class="col-md-3">
                 <h3 class="text-center"><small><a href="{% url 'edit' resident.pk %}">Edit Resident</a></small></h3>
+                <h3 class="text-center"><small></small></h3>
          </div>
         <div class="col-md-3">
             <div class="list-group">

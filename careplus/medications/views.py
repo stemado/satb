@@ -152,14 +152,14 @@ def acceptRefuse(request, medication, rx):
 
 @login_required
 #Don't forget to add back 'time':, time to variables
-def pdfNewView(request):
+def pdfNewView(request, mar_id):
     # resident = Resident.objects.get(id=1)
     # medication = resident.medication_set.all()
     # med = Medication.objects.filter()
     # test = Medication.completion_medication_set()
-    medication = Medication.objects.filter(medicationResident_id=1).order_by("medicationName", "id")
+    medication = Medication.objects.filter(medicationResident_id=mar_id).order_by("medicationName", "id")[:5]
     # time = MedicationTime.objects.filter(Q(timeMedication_id=1) | Q(timeMedication_id=2) | Q(timeMedication_id=3)).order_by('id')
-    resident = Resident.objects.filter(id=1)[0]
+    resident = Resident.objects.filter(id=mar_id)[0]
     # rxcompletion = MedicationCompletion.objects.filter(Q(completionRx_id=1) | Q(completionRx_id=2), Q(completionDate__lt='2017-8-1') & Q(completionDate__gt='2017-6-30')).order_by('completionDate')
     paginator = Paginator(medication, 3)
     page = request.GET.get('page')
