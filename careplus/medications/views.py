@@ -50,15 +50,15 @@ def medications(request):
     medications = Medication.get_medications()
     active_medications = MedicationTime.get_active_medications()
     overdue_medications = MedicationTime.get_overdue_medications()
-    paginator = Paginator(medications, 10)
+    paginator = Paginator(medications, 2)
     page = request.GET.get('page')
     try:
-        users = paginator.page(page)
+        meds = paginator.page(page)
     except PageNotAnInteger:
-        users = paginator.page(1)
+        meds = paginator.page(1)
     except EmptyPage:
-        users = paginator.page(paginator.num_pages)
-    return render(request, 'medications/all_medications.html', {'users': users, 'medications': medications, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
+        meds = paginator.page(paginator.num_pages)
+    return render(request, 'medications/all_medications.html', {'meds': meds, 'medications': medications, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
 
 @login_required
 def overdue_medications(request):
@@ -157,11 +157,21 @@ def pdfNewView(request):
     # medication = resident.medication_set.all()
     # med = Medication.objects.filter()
     # test = Medication.completion_medication_set()
-    medication = Medication.objects.filter(medicationResident_id=1)
+    medication = Medication.objects.filter(medicationResident_id=1).order_by("medicationName", "id")
     # time = MedicationTime.objects.filter(Q(timeMedication_id=1) | Q(timeMedication_id=2) | Q(timeMedication_id=3)).order_by('id')
     resident = Resident.objects.filter(id=1)[0]
     # rxcompletion = MedicationCompletion.objects.filter(Q(completionRx_id=1) | Q(completionRx_id=2), Q(completionDate__lt='2017-8-1') & Q(completionDate__gt='2017-6-30')).order_by('completionDate')
-    return render(request, 'medications/pdfview.html', {'medication': medication, 'resident': resident})
+    paginator = Paginator(medication, 3)
+    page = request.GET.get('page')
+    try:
+        meds = paginator.page(page)
+    except PageNotAnInteger:
+        meds = paginator.page(1)
+    except EmptyPage:
+        meds = paginator.page(paginator.num_pages)
+
+
+    return render(request, 'medications/pdfview.html', {'medication': medication, 'resident': resident, 'meds': meds})
 
 class EditMedicationUpdate(UpdateWithInlinesView):
     model = Medication
@@ -198,38 +208,3 @@ def pdf_view(request):
     return response
 
 
-
-# def pdf_view(request):
-#     response = HttpResponse(content_type='application/pdf')
-#     response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
-
-#     buffer = BytesIO()
-#     p = canvas.Canvas(buffer)
-
-#     # Start writing the PDF here
-#     p.setLineWidth(.3)
-#     p.setFont('Helvetica', 12)
- 
-#     p.drawString(30,750,'OFFICIAL COMMUNIQUE')
-#     p.drawString(30,735,'OF ACME INDUSTRIES')
-#     p.drawString(500,750,"12/12/2010")
-#     p.line(480,747,580,747)
- 
-#     p.drawString(275,725,'AMOUNT OWED:')
-#     p.rect(500,725,"$1,000.00")
-#     p.line(378,723,580,723)
- 
-#     p.drawString(30,703,'RECEIVED BY:')
-#     p.line(120,700,580,700)
-#     p.drawString(120,703,"JOHN DOE")
-#     p.drawString(100, 100, 'Hello world.')
-#     # End writing
-
-#     p.showPage()
-#     p.save()
-
-#     pdf = buffer.getvalue()
-#     buffer.close()
-#     response.write(pdf)
-
-#     return response

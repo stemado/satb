@@ -2,44 +2,29 @@
 <link href="{% static 'css/medications.css' %}" rel="stylesheet">
 <link href="{% static 'js/medications.js' %}" rel="stylesheet"> {% endblock head %} {% block main %}
 <main>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-10">
-                <div class="container">
-                <h1 class="text-center">Medication Administration Record</h1>
-<!--                     <table class="table table-bordered">
-                        
-                        <br>
-                        <thead>
-                            <tr>
-                                <th>MO/YR: <small>07/2017<small></th>
-                                <th>Start/Stop Date</th>
-                                <th>Facility Name: <small>Hillside Guest Home</small></th>
-                            </tr>
-                        </thead>
-                    </table> -->
+
+                    <div class="container">
+                    <h1 class="text-center">Medication Administration Record</h1>
+
                     {% for m in medication %}
-<!--                     <div class="container-fluid" style="border:1px solid #cecece;"> -->
-                    <div class="col-xs-2">
+                    <div class="row-fluid">
+                    <div class="col-lg-2">
                         <div class="table">
                             <table class="table table-bordered">
-                                <div class="row"><strong>{{m.medicationName}} </strong>  </div>
+                                <div class="row"><strong>{{m.medicationName}}</strong></div>
                                 <div class="row">{{m.medicationDistribution}}, {{m.medicationDosage}} </div>
-                                <div class="row"><strong>Physician Order:</strong> {{m.medicationComment}} </div>
-                                <div class="row"><strong>Doses Left:</strong> {{m.medicationQuantity}} <strong>Refills Left:</strong>3</div>
-                                <br>
-                                <div class="row"><strong>Rx on </strong>{{ m.medicationDateTimeAdded}}</div>
-                                <div class="row"><strong>By </strong>{{ resident.residentPrimaryPhysician}}</div>
+                                <div class="row"><small>Physician Order: {{m.medicationComment}}</small> </div>
+                                <div class="row"><small>Doses Left: {{m.medicationQuantity}}</small></div>
+
                             </table>
                         </div>
                     </div>
-
-                    <div class="col-xs-10">
+                    <div class="col-lg-10">
                         <div class="table">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th><small>Time Due<small></th>
+                                        <th><small>Time Due</small></th>
                                         <th><small>1</small></th>
                                         <th><small>2</small></th>
                                         <th><small>3</small></th>
@@ -75,23 +60,25 @@
                                 </thead>
                                 <tr>
                                     {% for s in m.medicationtime_set.all %}
-                                    <td><small>{{ s.timeDue }}</small></td>
+                                        <td><small>{{ s.timeDue }}</small></td>
                                     {% for d in s.completion.all %}
                                     <!--Below is for Debugging-->
                                     <!-- <td><small>{{d.completionDate}}|{{d.completionTime}}|{{s}}|{{d.completionMedication_id}}|{{d.completionRx_id}}<small></td> -->
                                     {% if d.completionStatus == 'Refused' %}
-                                    <td><small>O</small></td>
+                                        <td><small>O</small></td>
                                     {% elif d.completionMissed == True %}
-                                    <td><small>M</small></td>
+                                        <td><small>M</small></td>
                                     {% else %}
-                                    <td><small>AK</small></td>
-                                    {% endif %} {% endfor %}
+                                        <td><small>AK</small></td>
+                                    {% endif %} 
+                                    {% endfor %}
+                                                                    {% endfor %}
                                 </tr>
-                                {% endfor %}
+
                             </table>
                         </div>
                     </div>
-<!--                                         </div> -->
+                    </div>
                     {% endfor %}
                     <table class="table table-bordered">
                         <tr valign="top">
@@ -107,23 +94,44 @@
                                 <br>
                                 <br><small>Phone Number</small></th>
                             <th><small>A. Put initials in apppropriate box when medication is given <br>B. Circle initials when not given <br>C. State reason for refusal /omission on back of form. <br>D. PRN Medications: Reason given and results must be noted on back of form. <br>E. Legend: S=School; H=Home visit; W=Work; P=Program<small></th>
-                        </table>
-
                         </tr>
-                        <table style="border-spacing: 0px;"class="table table-bordered">
+                        </table>
+                        <table class="table table-bordered">
                         <tr valign="top">
                             <!-- Need ability to use just straight query. Making me put in for loop at present, which wont' work -->
                             <th>NAME: <br><small>{{ resident }}</small></th>
                             <th>Record #:
                                 <br><small>{{ resident.id }}</small></th>
                             <th>Date of Birth:
-                                <br><small>{{ resident.residentDOB }}</small></td>
-                                <td>Sex:
-                                    <br><small>Male</small></td>
+                                <br><small>{{ resident.residentDOB }}</small></th>
+                            <br>
+                            <td>Sex:
+                                <br><small>Male</small></td>
                         </tr>
                     </table>
                 </div>
-            </div>
-        </div>
-</main>
+  <div class="row">
+    <div class="col-md-12">
+<ul class="pagination">
+  {% if meds.has_previous %}
+    <li><a href="?page={{ meds.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+    <li class="disabled"><span>&laquo;</span></li>
+  {% endif %}
+  {% for i in meds.paginator.page_range %}
+    {% if meds.number == i %}
+      <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+      <li><a href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+  {% endfor %}
+  {% if meds.has_next %}
+    <li><a href="?page={{ meds.next_page_number }}">&raquo;</a></li>
+  {% else %}
+    <li class="disabled"><span>&raquo;</span></li>
+  {% endif %}
+</ul>
+</div>
+</div>
 {% endblock %}
+</main>
