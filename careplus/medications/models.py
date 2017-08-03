@@ -188,6 +188,7 @@ class MedicationTime(models.Model):
 
     def get_overdue_medications():
         now = datetime.now()
+        nextDay = now + timedelta(days=1)
         hourAfter = now - timedelta(hours=1, minutes=1)
         medication = MedicationTime.objects.filter(timeGivenStatus='False', timeDue__lte=hourAfter)
         return medication
