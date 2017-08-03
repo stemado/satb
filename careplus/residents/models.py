@@ -13,11 +13,16 @@ from careplus.activities.models import Activity
 
 @python_2_unicode_compatible
 class Resident(models.Model):
+
+    GENDER = (('Male', 'Male'), ('Female', 'Female'))
+    DNR_STATUS = (('Active', 'Active'), ('Discontinued', 'Discontinued'))
+
     residentFirstName = models.CharField("First Name", default="John", max_length=50, null=True, blank=True)
     residentLastName = models.CharField("Last Name", default="Doe", max_length=50, null=True, blank=True)
     residentSSN = models.CharField("SSN", default="123456789", max_length=50, null=True, blank=True)
     residentDOB = models.CharField("DOB", default="3/5/1980", max_length=50, null=True, blank=True)
     residentPrimaryPhysician = models.CharField("Primary Physician", default="Dr.John Kellenberger", max_length=50, null=True, blank=True)
+    residentGender = models.CharField(verbose_name="Gender", choices=GENDER, max_length=30, null=True, blank=True)
     location = models.CharField( "Room", default="Room 8", max_length=50, null=True, blank=True)
     residentProfile = models.FileField(upload_to='media/resident_pictures/', null=True, blank=True)
     medicareNumber = models.CharField("Medicare Number", default="ZSY20193992", max_length=20, null=True)
