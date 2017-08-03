@@ -51,7 +51,7 @@ def create_medication_time(sender, instance, created, **kwargs):
 		a = instance.id
 		b = instance.medicationTimeSchedule
 		if instance.medicationTimeSchedule != None:
-			MedicationTime.objects.get_or_create(timeStatus=None, timeGivenStatus=False, timeDue=b, timeMedication_id=a, timeGivenNote='Auto Generated')
+			MedicationTime.objects.update_or_create(timeStatus=None, timeGivenStatus=False, timeDue=b, timeMedication_id=a, timeGivenNote='Auto Generated')
 
 
 @receiver(post_save, sender=Medication)
