@@ -20,7 +20,7 @@
 
         </div>
         <div class="col-md-3">
-                <h3 class="text-center"><small><a href="{% url 'edit' resident.pk %}">Edit Resident</a></small></h3>
+                <h3 class="text-left"><small><a href="{% url 'edit' resident.pk %}">Edit Resident</a></small></h3>
          </div>
         <div class="col-md-3">
             <div class="list-group">
@@ -53,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for m in resident.medication_set.all %}
+                        {% for m in meds %}
                         <tr>
                             <td><a href="/medications/{{m.pk}}/">{{ m.medicationName }}</a></td>
                             <td>{{ m.medicationFrequency }}</td>
@@ -69,7 +69,9 @@
                             <td>{{ m.medicationQuantity }}</td>
                         </tr>
                         {% endfor %}
-                        <tbody>
+                        </tbody>
+                        </table>
+
             </div>
             <!-- End Here -->
         </div>
@@ -77,20 +79,20 @@
       <div class="row">
     <div class="col-md-12">
 <ul class="pagination">
-  {% if paginator.has_previous %}
-    <li><a href="?page={{ paginator.previous_page_number }}">&laquo;</a></li>
+  {% if meds.has_previous %}
+    <li><a href="?page={{ meds.previous_page_number }}">&laquo;</a></li>
   {% else %}
     <li class="disabled"><span>&laquo;</span></li>
   {% endif %}
-  {% for i in paginator.paginator.page_range %}
-    {% if paginator.number == i %}
+  {% for i in meds.paginator.page_range %}
+    {% if meds.number == i %}
       <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
     {% else %}
       <li><a href="?page={{ i }}">{{ i }}</a></li>
     {% endif %}
   {% endfor %}
-  {% if paginator.has_next %}
-    <li><a href="?page={{ paginator.next_page_number }}">&raquo;</a></li>
+  {% if meds.has_next %}
+    <li><a href="?page={{ meds.next_page_number }}">&raquo;</a></li>
   {% else %}
     <li class="disabled"><span>&raquo;</span></li>
   {% endif %}

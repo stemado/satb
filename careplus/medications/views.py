@@ -161,7 +161,7 @@ def pdfNewView(request, mar_id):
     # time = MedicationTime.objects.filter(Q(timeMedication_id=1) | Q(timeMedication_id=2) | Q(timeMedication_id=3)).order_by('id')
     resident = Resident.objects.filter(id=mar_id)[0]
     # rxcompletion = MedicationCompletion.objects.filter(Q(completionRx_id=1) | Q(completionRx_id=2), Q(completionDate__lt='2017-8-1') & Q(completionDate__gt='2017-6-30')).order_by('completionDate')
-    paginator = Paginator(medication, 3)
+    paginator = Paginator(medication, 5)
     page = request.GET.get('page')
     try:
         meds = paginator.page(page)

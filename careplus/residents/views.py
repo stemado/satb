@@ -25,7 +25,16 @@ def residents(request):
 @login_required
 def resident(request, id):
     resident = get_object_or_404(Resident, id=id)
-    return render(request, 'residents/resident.html', {'resident': resident})
+    medications = resident.medication_set.all()
+    paginator = Paginator(medications, 10)
+    page = request.GET.get('page')
+    try:
+        meds = paginator.page(page)
+    except PageNotAnInteger:
+        meds = paginator.page(1)
+    except EmptyPage:
+        meds = paginator.page(paginator.num_pages)
+    return render(request, 'residents/resident.html', {'resident': resident, 'medications': medications, 'meds': meds})
 
 
 @login_required
