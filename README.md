@@ -16,7 +16,20 @@ The project has six basic apps:
 
 ## Medications App
 
-The Medications app has medication active notices, overdue notices, reporting and eMAR record reports.
+The Medications app is the meat of the application.
+
+Shows Active Medications (determined by medications due 1 hour before and after being due.
+
+Marks medication as "Overdue"if medication is delivefed after 1st hour of beinf due.
+
+If medication is overdue, placed in separate overdue category.
+
+eMAR Reporing per month (see /medications/testpdf/ for example - expect to have completed next week.
+
+If Medication is not delivered by 12:01 PM, then record is automatically generated marking medication as "Missed" and will display an M on the MAR.
+
+
+notices, reporting and eMAR record reports.
 
 ## Treatments App
 
