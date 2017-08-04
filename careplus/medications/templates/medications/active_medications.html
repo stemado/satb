@@ -31,17 +31,15 @@
             <div class="panel panel-success">
                 <div class="panel-heading">
                     <img src="http://trybootcamp.vitorfs.com/static/img/user.png" style="width:20px">
-                    <a href="/residents/{{ medication.medicationResident_id }}">{{ m.medication.medicationResident }}</a>
+                    <a href="/residents/{{ m.timeMedication.medicationResident_id }}">{{ m.timeMedication.medicationResident }}</a>
                 </div>
                 <div class="panel-body">
-                    <a href="{{m.medication.id}}" class="center-text"><strong>History</strong></a>
-                    <a href="/medications/{{ m.medication.id }}"><strong>Medication:</strong> {{ m.medication.medicationName }}</a>
-                    <p><strong>Rx ID:</strong> {{ m.medication_id }}</p>
-                    <p><strong>Record ID:</strong> {{ m.id }}</p>
-                    <p><strong>Accepted:</strong> {{ m.timeDue }}</p>
-                    <p><strong>Count:</strong> {{ m.medication.medicationQuantity }}</p>
-                    <p><strong>(Given?):</strong> {{ m.timeGivenStatus }}</p>
-                    <p><strong>Given Today:</strong> {{ m.timeStatus }}</p>
+                    <a href="{{m.timeMedication.id}}" class="center-text"><strong>History</strong></a>
+                    <a href="/medications/{{ m.timeMedication.id }}"><strong>Medication:</strong> {{ m.timeMedication.medicationName }}</a>
+<!--                     <p><strong>Rx ID:</strong> {{ m.timeMedication_id }}</p> -->
+<!--                     <p><strong>Record ID:</strong> {{ m.id }}</p> -->
+                    <p><strong>Due:</strong> {{ m.timeDue }}</p>
+                    <p><strong>Count:</strong> {{ m.timeMedication.medicationQuantity }}</p>
                     <form action="{% url 'acceptRefuse' m.id m.timeMedication_id %}" type=POST>
                         <button type="submit" class="btn btn-success">Give</button>
                     </form>
