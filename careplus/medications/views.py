@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 
+import hashlib
 
 import markdown
 from careplus.medications.forms import MedicationForm, StatusForm, MedicationStatusForm, StatusFormSet
@@ -128,11 +129,13 @@ def editMedication(request, id):
     return render(request, 'medications/edit.html', {'form': form})
 
 @login_required
-#THIS WILL HAVE TO BE UPDATED TO MAKE THIS A ONE TO MANY RELATIONSHIP, NOT WITH MEDICATIONS BUT ALL TIME SCHEDULE TABLES 
 def acceptRefuse(request, medication, rx):
 
     if request.method == 'POST':
         form = StatusForm(request.POST)
+        # check = request.POST.get('csrf_token').encode('utf-8')
+        # hashstring=hashlib.sha1(str(check)).hexdigest()
+        # if request.session.get('sessionform') != hashstring:
         if form.is_valid():
             status = form.save()
             status.save()
@@ -152,12 +155,12 @@ def acceptRefuse(request, medication, rx):
 
 @login_required
 #Don't forget to add back 'time':, time to variables
-def pdfNewView(request, mar_id):
+def mar(request, mar_id):
     # resident = Resident.objects.get(id=1)
     # medication = resident.medication_set.all()
     # med = Medication.objects.filter()
     # test = Medication.completion_medication_set()
-    medication = Medication.objects.filter(medicationResident_id=mar_id).order_by("medicationName", "id")[:5]
+    medication = Medication.objects.filter(medicationResident_id=mar_id).order_by("medicationName", "id")
     # time = MedicationTime.objects.filter(Q(timeMedication_id=1) | Q(timeMedication_id=2) | Q(timeMedication_id=3)).order_by('id')
     resident = Resident.objects.filter(id=mar_id)[0]
     # rxcompletion = MedicationCompletion.objects.filter(Q(completionRx_id=1) | Q(completionRx_id=2), Q(completionDate__lt='2017-8-1') & Q(completionDate__gt='2017-6-30')).order_by('completionDate')
@@ -171,7 +174,7 @@ def pdfNewView(request, mar_id):
         meds = paginator.page(paginator.num_pages)
 
 
-    return render(request, 'medications/pdfview.html', {'medication': medication, 'resident': resident, 'meds': meds})
+    return render(request, 'medications/mar.html', {'medication': medication, 'resident': resident, 'meds': meds})
 
 class EditMedicationUpdate(UpdateWithInlinesView):
     model = Medication

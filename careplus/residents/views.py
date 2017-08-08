@@ -8,6 +8,8 @@ from django.template.loader import render_to_string
 import markdown
 from careplus.residents.forms import ResidentForm, EmergencyContactForm
 from careplus.residents.models import Resident, EmergencyContact
+from careplus.medications.models import Medication, MedicationTime, MedicationCompletion
+
 from careplus.decorators import ajax_required
 
 def _residents(request, residents):
@@ -72,6 +74,38 @@ def edit(request, id):
     else: 
         form = ResidentForm(instance=resident, initial={'residents': residents})
     return render(request, 'residents/edit.html', {'form': form})
+
+@login_required
+def medications(request):
+    medications = Medication.get_medications()
+    active_medications = MedicationTime.get_active_medications()
+    overdue_medications = MedicationTime.get_overdue_medications()
+    paginator = Paginator(medications, 2)
+    page = request.GET.get('page')
+    try:
+        meds = paginator.page(page)
+    except PageNotAnInteger:
+        meds = paginator.page(1)
+    except EmptyPage:
+        meds = paginator.page(paginator.num_pages)
+    return render(request, 'residents/all_medications.html', {'meds': meds, 'medications': medications, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
+
+@login_required
+def overdue_medications(request):
+    medications = Medication.get_medications()
+    overdue = MedicationTime.get_overdue_medications()
+    active_medications = MedicationTime.get_active_medications()
+    return render(request, 'residents/overdue_medications.html', {'medications': medications,
+        'active_medications': active_medications, 'overdue': overdue})
+
+
+@login_required
+def active_medications(request):
+    medications = Medication.get_medications()
+    active = MedicationTime.get_active_medications()
+    overdue_medications = MedicationTime.get_overdue_medications()
+    return render(request, 'residents/active_medications.html', {'medications': medications,
+        'active': active, 'overdue_medications': overdue_medications})
 
 
 @login_required
