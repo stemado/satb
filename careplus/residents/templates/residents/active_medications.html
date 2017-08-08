@@ -4,17 +4,17 @@
 <div class="container">
     <div class="btn-toolbar" role="toolbar">
         <div class="btn-group btn-group-lg btn-group-justified btn-group-fill-height">
-            <a href="{% url 'overdueMedications' %}" class="btn btn-danger" role="button">
+            <a href="{% url 'overdue_medications' resident.id %}" class="btn btn-danger" role="button">
                 <strong>Overdue</strong>
                 <br>
                 <span>{{ overdue_medications.count }}</span>
             </a>
-            <a href="{% url 'activeMedications' %}" class="btn btn-success" role="button">
+            <a href="{% url 'active_medications' resident.id %}" class="btn btn-success" role="button">
                 <strong>Active</strong>
                 <br>
                 <span>{{ active.count }}</span>
             </a>
-            <a href="{% url 'medications' %}" class="btn btn-default" role="button">
+            <a href="{% url 'medications' resident.id %}" class="btn btn-default" role="button">
                 <strong>All</strong>
                 <br>
                 <span><p>{{ medications.count }}</p></span>
@@ -25,7 +25,8 @@
 <hr />
 <div class="container">
     <div class="row">
-        {% for m in active %}
+    {% for l in medications %}
+        {% for m in l.medicationtime_set.get_active_medications %}
         <div class="col-md-4">
             <div class="panel panel-success">
                 <div class="panel-heading">
@@ -47,10 +48,11 @@
                 </div>
             </div>
         </div>
-        {% empty %}
-        <h4 class="no-data">{% trans 'There are no medications due at this time' %}. <a href="{% url 'medications' %}">{% trans 'View All Medications' %}</a></h4>
+
+        {% endfor %}
         {% endfor %}
     </div>
+
 </div>
-{% endblock main %}
+{% endblock head %}
 

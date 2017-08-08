@@ -76,11 +76,12 @@ def edit(request, id):
     return render(request, 'residents/edit.html', {'form': form})
 
 @login_required
-def medications(request):
-    medications = Medication.get_medications()
+def medications(request, id):
+    resident = Resident.objects.get(id=id)
+    medications = Medication.objects.filter(medicationResident_id=id)
     active_medications = MedicationTime.get_active_medications()
     overdue_medications = MedicationTime.get_overdue_medications()
-    paginator = Paginator(medications, 2)
+    paginator = Paginator(medications, 10)
     page = request.GET.get('page')
     try:
         meds = paginator.page(page)
@@ -88,24 +89,26 @@ def medications(request):
         meds = paginator.page(1)
     except EmptyPage:
         meds = paginator.page(paginator.num_pages)
-    return render(request, 'residents/all_medications.html', {'meds': meds, 'medications': medications, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
+    return render(request, 'residents/all_medications.html', {'meds': meds, 'medications': medications, 'resident': resident, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
 
 @login_required
-def overdue_medications(request):
-    medications = Medication.get_medications()
+def overdue_medications(request, id):
+    resident = Resident.objects.get(id=id)
+    medications = Medication.objects.filter(medicationResident_id=id)
     overdue = MedicationTime.get_overdue_medications()
     active_medications = MedicationTime.get_active_medications()
     return render(request, 'residents/overdue_medications.html', {'medications': medications,
-        'active_medications': active_medications, 'overdue': overdue})
+        'active_medications': active_medications,'resident': resident, 'overdue': overdue})
 
 
 @login_required
-def active_medications(request):
-    medications = Medication.get_medications()
+def active_medications(request, id):
+    resident = Resident.objects.get(id=id)
+    medications = Medication.objects.filter(medicationResident_id=id)
     active = MedicationTime.get_active_medications()
     overdue_medications = MedicationTime.get_overdue_medications()
     return render(request, 'residents/active_medications.html', {'medications': medications,
-        'active': active, 'overdue_medications': overdue_medications})
+        'active': active, 'resident': resident, 'overdue_medications': overdue_medications})
 
 
 @login_required

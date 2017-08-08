@@ -1,5 +1,5 @@
 {% load i18n %}
 <div class="list-group">
   <a href="{% url 'resident' resident.pk %}" class="list-group-item{% if active == 'profile' %} active{% endif %}">{% trans 'Profile' %}</a>
-  <a href="{% url 'activeMedications' %}" class="list-group-item{% if active == 'mar' %} active{% endif %}">{% trans 'MAR' %}</a>
+  <a href="{% url 'medications' resident.pk %}" class="list-group-item{% if active == 'mar' %} active{% endif %}">{% trans 'MAR' %}</a>
 </div>
