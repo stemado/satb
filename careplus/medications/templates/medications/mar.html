@@ -81,7 +81,7 @@ table th {
 
 <body>
     {% for m in meds %}
-    <div id="left" class="step" style="padding: 5px; display:inline-table;">
+    <div id="left" class="step" style="padding: 0px; width:20%; height: 5%; display:inline-table;">
         <table class="medicationClass">
             <tr>
                 <td style="border: none;" width="20%">{{m.medicationName}}</td>
@@ -98,45 +98,45 @@ table th {
 
         </table>
     </div>
-    <div id="right" style="padding: 5px; display:inline-table;">
+    <div id="right" style="padding: 0px; width: 10%; height: 5%; display:inline-table;">
         <table>
             <tr>
-                <td>Time Due</td>
-                <td>01</td>
-                <td>02</td>
-                <td>03</td>
-                <td>04</td>
-                <td>05</td>
-                <td>06</td>
-                <td>07</td>
-                <td>08</td>
-                <td>09</td>
-                <td>10</td>
-                <td>11</td>
-                <td>12</td>
-                <td>13</td>
-                <td>14</td>
-                <td>15</td>
-                <td>16</td>
-                <td>17</td>
-                <td>18</td>
-                <td>19</td>
-                <td>20</td>
-                <td>21</td>
-                <td>22</td>
-                <td>23</td>
-                <td>24</td>
-                <td>25</td>
-                <td>26</td>
-                <td>27</td>
-                <td>28</td>
-                <td>29</td>
-                <td>30</td>
-                <td>31</td>
+                <td><small><div style="width: 100px">Time Due</div></small></td>
+                <td><small><div id="one">01</div></small></td>
+                <td><small><div id="two">02</div></small></td>
+                <td><small><div id="three">03</div></small></td>
+                <td><small><div id="four">04</div></small></td>
+                <td><small><div id="five">05</div></small></td>
+                <td><small><div id="six">06</div></small></td>
+                <td><small><div id="seven">07</div></small></td>
+                <td><small><div id="eight">08</div></small></td>
+                <td><small><div id="nine">09</div></small></td>
+                <td><small><div id="ten">10</div></small></td>
+                <td><small><div id="eleven">11</div></small></td>
+                <td><small><div id="twelve">12</div></small></td>
+                <td><small><div id="thirteen">13</small></td>
+                <td><small><div id="fourteen">14</div></small></td>
+                <td><small><div id="fifteen">15</div></small></td>
+                <td><small><div id="sixteen">16</div></small></td>
+                <td><small><div id="seventeen">17</div></small></td>
+                <td><small><div id="eighteen">18</div></small></td>
+                <td><small><div id="nineteen">19</div></small></td>
+                <td><small><div id="twenty">20</div></small></td>
+                <td><small><div id="twentyone">21</div></small></td>
+                <td><small><div id="twentytwo">22</div></small></td>
+                <td><small><div id="twentythree">23</div></small></td>
+                <td><small><div id="twentyfour">24</div></small></td>
+                <td><small><div id="twentyfive">25</div></small></td>
+                <td><small><div id="twentysix">26</div></small></td>
+                <td><small><div id="twentyseven">27</div></small></td>
+                <td><small><div id="twentyeight">28</div></small></td>
+                <td><small><div id="twentynine">29</div></small></td>
+                <td><small><div id="thirty">30</div></small></td>
+                <td><small><div id="thirtyone">31</div></small></td>
             </tr>
             <tr>
                 {% for s in m.medicationtime_set.all|slice:":5" %}
-                <td>{{ s.timeDue }}</td>
+                <td><small>{{ s.timeDue }}</small></td>
 
                 {% for d in s.completion.all %}
                 <!--Below is for Debugging-->
@@ -146,7 +146,8 @@ table th {
                 <!--{% elif d.completionMissed == True %}-->
                 <!--<td>M</td>-->
                 <!--{% else %}-->
-                <td>AK</td>
+
+                <td><small><div id="{{m.medicationStartDate}}"style="font-size:70%">AK</small></div></td>
                 {% endif %} {% endfor %}
             </tr>
 
