@@ -81,7 +81,7 @@ def create_medication_time4(sender, instance, created, **kwargs):
 
 
 #1. Need to add an If statement for when completionStatus = False so medication object is not subtracted
-	if created:
+
 		a = instance.id
 		b = instance.medicationTimeSchedule4
 		if instance.medicationTimeSchedule4 != None:

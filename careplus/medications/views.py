@@ -25,6 +25,11 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.db.models import Q
 from datetime import datetime
+from reportlab.lib.pagesizes import A4, cm 
+from reportlab.platypus import Paragraph, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER 
+from reportlab.lib import colors
 
 
 
@@ -152,6 +157,51 @@ def acceptRefuse(request, medication, rx):
 #     a = MedicationTime.objects.filter(timeMedication_id=1).values_list('id', flat=True)
 #     completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1')).order_by('-completionDue')
 #     return render(request, 'medications/pdfview.html', {'medication': medication, 'time': time, 'completion': completion})
+
+@login_required
+
+def testpdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
+
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer, pagesize=landscape(letter))
+    width, height = A4
+    # Start writing the PDF here
+    p.drawString(100, 100, 'Hello world.')
+    p.drawString(0, 100, '0x100')
+    p.drawString(0, 200, '0x200')
+    p.drawString(500, 500, '500x500')
+    p.drawString(400, 500, '400x500')
+    p.drawString(1000, 0, '500x500')
+    p.drawString(1000, 200, '500x500')
+    def coord(x, y, unit=1):
+        x, y = x * unit, height - y * unit
+        return x, y
+
+    sample = Medication.objects.all()
+    try:
+        for i in sample:
+            medication = str(i.medicationName).encode('utf-8')
+            data = [[medication]]
+    except:
+        pass
+    table = Table(data, colWidths=[4 * cm, 4*cm, 5*cm, 4* cm])
+
+    table.wrapOn(p, width, height)
+    table.wrapOn(p, width, height)
+    table.drawOn(p, *coord(1.8, 9.6, cm))
+
+    # End writing
+    # p.grid([inch, 2*inch, 3*inch, 4*inch], [0.5*inch, inch, 1.5*inch, 2*inch, 2.5*inch])
+    p.showPage()
+    p.save()
+
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+
+    return response
 
 @login_required
 #Don't forget to add back 'time':, time to variables
