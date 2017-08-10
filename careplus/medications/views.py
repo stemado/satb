@@ -195,7 +195,7 @@ def testpdf(request, id):
 
     table = Table(data, colWidths=[100, 30, 50, 19] )
     table.setStyle(TableStyle([
-        ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
+        # ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
         ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
     ]))
     table.wrapOn(p, width, height)
