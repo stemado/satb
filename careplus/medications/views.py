@@ -136,6 +136,7 @@ def editMedication(request, id):
 @login_required
 def acceptRefuse(request, medication, rx):
 
+    date = datetime.now().today()
     if request.method == 'POST':
         form = StatusForm(request.POST)
         # check = request.POST.get('csrf_token').encode('utf-8')
@@ -147,7 +148,7 @@ def acceptRefuse(request, medication, rx):
 
             return redirect('/medications/')
     else:
-        form = StatusForm(initial={'completionMedication': medication, 'completionRx': rx})
+        form = StatusForm(initial={'completionMedication': medication, 'completionRx': rx, 'completionDate': date })
     return render(request, 'medications/medication_status.html/', {'form': form})
 
 # @login_required

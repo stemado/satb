@@ -1,5 +1,7 @@
 $(document).ready(function(){
 
+	$('label[for="id_completionDate"]').hide()
+	$('#id_completionDate').hide()
 	$('label[for="id_completionRx"]').hide()
 	$('#id_completionRx').hide()
 	$('label[for="id_completionMedication"]').hide()

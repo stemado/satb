@@ -61,7 +61,7 @@ def create_medication_time(sender, instance, created, **kwargs):
 
 
 @receiver(post_save, sender=Medication, dispatch_uid='timefix1')
-def create_medication_time_fill(sender, instance, created, **kwargs):
+def create_medication_time_fill(sender, instance, created,  **kwargs):
 
 	if created:
 		x1 = instance.medicationStartDate
