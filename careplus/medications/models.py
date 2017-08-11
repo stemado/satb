@@ -214,7 +214,7 @@ class MedicationCompletion(models.Model):
     completionMissed = models.CharField(verbose_name="Medicaton Missed", choices=MISSED_CHOICES, default='False', max_length=12, null=True, blank=True)
     completionTime = models.TimeField(verbose_name="Time Given", auto_now_add=True)
     completionDue = models.TimeField(verbose_name="Time Due", null=True, blank=True)
-    completionDate = models.DateField(verbose_name="Date Given", auto_now_add=True)
+    completionDate = models.DateField(verbose_name="Date Given")
     completionNote = models.CharField(verbose_name="Note", max_length=500, null=True, blank=True)    
     completionMedication = models.ForeignKey(MedicationTime, related_name="completion", on_delete=models.CASCADE)
     completionRx = models.ForeignKey(Medication, on_delete=models.CASCADE)

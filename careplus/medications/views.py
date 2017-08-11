@@ -90,7 +90,7 @@ def medication(request, id):
     medication = get_object_or_404(Medication, pk=id)
     time = MedicationTime.objects.filter(timeMedication=id)
     a = MedicationTime.objects.filter(timeMedication=id).values_list('id', flat=True)
-    completion = MedicationCompletion.objects.filter(completionMedication__in=a).order_by('completionDate')
+    completion = MedicationCompletion.objects.filter(completionMedication__in=a).order_by('completionDate', 'completionDue')
     return render(request, 'medications/medication.html', {'medication': medication, 'time': time, 'completion': completion})
 
 
