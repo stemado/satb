@@ -145,7 +145,7 @@ table th {
                 {% elif d.completionStatus == True %}
                 <td><small><div id="{{m.medicationStartDate}}"style="font-size:70%">AK</small></div></td>
                 {% else %}
-                <td><small><div id="{{m.medicationStartDate}}"style="font-size:70%">O</small></div></td>
+                <td><i class="glyphicon glyphicon-unchecked"></i></td>
                 {%endif%}
 
                  {% endfor %}
