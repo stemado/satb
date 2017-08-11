@@ -90,6 +90,8 @@ def medication(request, id):
     medication = get_object_or_404(Medication, pk=id)
     time = MedicationTime.objects.filter(timeMedication=id)
     a = MedicationTime.objects.filter(timeMedication=id).values_list('id', flat=True)
+    # Use this when ready for production
+    # completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a) & ~Q(completionStatus=None)).order_by('completionDate', 'completionDue')
     completion = MedicationCompletion.objects.filter(completionMedication__in=a).order_by('completionDate', 'completionDue')
     return render(request, 'medications/medication.html', {'medication': medication, 'time': time, 'completion': completion})
 
@@ -271,4 +273,8 @@ def pdf_view(request):
 
     return response
 
+def deleteMedication(request, id):
+    article = get_object_or_404(Medication, pk=id).delete()
+
+    return redirect ('/medications/')
 

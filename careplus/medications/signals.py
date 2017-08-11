@@ -1,13 +1,11 @@
-
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save, pre_save
-from django.db.models import F
-from django.dispatch import receiver
 from datetime import timedelta
-from datetime import datetime
+from django.db.models import F
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 
 from careplus.medications.models import Medication, MedicationCompletion, MedicationTime
+
 
 ##This may need to go under each Signal for new record time, becuase the completion is for the record time not the medication. 
 
@@ -54,44 +52,57 @@ def create_medication_time(sender, instance, created, **kwargs):
 		time = timezone.now()
 		a = instance.id
 		b = instance.medicationTimeSchedule
+		c = instance.medicationTimeSchedule2
+		d = instance.medicationTimeSchedule3
+		e = instance.medicationTimeSchedule4
+		f = instance.medicationTimeSchedule5
+		g = instance.medicationTimeSchedule6
 		if instance.medicationTimeSchedule != None:
-			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeDue=b, timeCreated=time, timeMedication_id=a, timeGivenNote='Auto Generated')
+			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=b, timeMedication_id=a, timeGivenNote='Auto Generated')
+		if instance.medicationTimeSchedule2 != None:
+			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=c, timeMedication_id=a, timeGivenNote='Auto Generated')
+		if instance.medicationTimeSchedule3 != None:
+			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=d, timeMedication_id=a, timeGivenNote='Auto Generated')
+		if instance.medicationTimeSchedule4 != None:
+			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=e, timeMedication_id=a, timeGivenNote='Auto Generated')
+		if instance.medicationTimeSchedule5 != None:
+			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=f, timeMedication_id=a, timeGivenNote='Auto Generated')
+		if instance.medicationTimeSchedule6 != None:
+			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=g, timeMedication_id=a, timeGivenNote='Auto Generated')
 
 
 
+# @receiver(post_save, sender=Medication, dispatch_uid='medication_time_add_2')
+# def create_medication_time2(sender, instance, created, **kwargs):
 
-@receiver(post_save, sender=Medication, dispatch_uid='timefix1')
+# 	if created:
+# 		time = timezone.now()
+# 		a = instance.id
+# 		b = instance.medicationTimeSchedule2
+# 		if instance.medicationTimeSchedule2 != None:
+# 			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=b, timeMedication_id=a, timeGivenNote='Auto Generated')
+
+
+@receiver(post_save, sender=MedicationTime)
 def create_medication_time_fill(sender, instance, created,  **kwargs):
 
 	if created:
-		x1 = instance.medicationStartDate
-		y1 = x1.strftime('%d')
-		z1 = int(y1)
-		time1 = timezone.now()
-		a1 = instance.id
-		med = MedicationTime.objects.latest('timeCreated')
-		if z1 > 1:
-			while (z1 > 1):
-				z1 = z1 - 1
-				aa = x1 - timedelta(days=z1)
-				if instance.medicationTimeSchedule != None:
-					fill1 = MedicationCompletion(completionStatus=None, completionDate=aa, completionDue=instance.medicationTimeSchedule, completionNote='SYSTEM RX PLACEHOLDER FILL', completionRx_id=instance.id, completionMedication_id=med.id)
-					fill1.save()
-				if instance.medicationTimeSchedule2 != None:
-					fill2 = MedicationCompletion(completionStatus=None, completionDate=aa, completionDue=instance.medicationTimeSchedule2, completionNote='SYSTEM RX PLACEHOLDER FILL', completionRx_id=instance.id, completionMedication_id=med.id)
-					fill2.save()
-
-@receiver(post_save, sender=Medication, dispatch_uid='medication_time_add_2')
-def create_medication_time2(sender, instance, created, **kwargs):
-
-	if created:
+		med = Medication.objects.latest('medicationStartDate')
+		a = med.medicationStartDate
+		b = a.strftime('%d')
+		c = int(b)
 		time = timezone.now()
-		a = instance.id
-		b = instance.medicationTimeSchedule2
-		if instance.medicationTimeSchedule2 != None:
-			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=b, timeMedication_id=a, timeGivenNote='Auto Generated')
+		d = instance.id
+		if c > 1:
+			while (c > 1):
+				c = c - 1
+				aa = a - timedelta(days=c)
+				print("THIS IS FROM SIGNAL" + str(aa))
+				fillRxTime = MedicationCompletion(completionStatus=None, completionDate=aa, completionDue=instance.timeDue, completionNote='SYSTEM RX PLACEHOLDER FILL', completionRx_id=med.id, completionMedication_id=instance.id)
+				fillRxTime.save()
 
-# @receiver(post_save, sender=Medication, dispatch_uid='timefix2')
+
+# @receiver(post_save, sender=MedicationTime, dispatch_uid='timefix2')
 # def create_medication_time_fill2(sender, instance, created, **kwargs):
 
 # 	if created:
@@ -111,32 +122,32 @@ def create_medication_time2(sender, instance, created, **kwargs):
 # 				print("Med_One ID" + str(med_two.id))
 
 
-@receiver(post_save, sender=Medication)
-def create_medication_time3(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Medication)
+# def create_medication_time3(sender, instance, created, **kwargs):
 
-		time = timezone.now()
-		a = instance.id
-		b = instance.medicationTimeSchedule3
-		if instance.medicationTimeSchedule3 != None:
-			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeDue=b, timeCreated=time, timeMedication_id=a, timeGivenNote='Auto Generated')
+# 		time = timezone.now()
+# 		a = instance.id
+# 		b = instance.medicationTimeSchedule3
+# 		if instance.medicationTimeSchedule3 != None:
+# 			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeDue=b, timeCreated=time, timeMedication_id=a, timeGivenNote='Auto Generated')
 
-@receiver(post_save, sender=Medication, dispatch_uid='timefix3')
-def create_medication_time_fill3(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Medication, dispatch_uid='timefix3')
+# def create_medication_time_fill3(sender, instance, created, **kwargs):
 
-	if created:
-		x3 = instance.medicationStartDate
-		y3 = x3.strftime('%d')
-		z3 = int(y3)
-		time3 = timezone.now()
-		a3 = instance.id
-		med_three = MedicationTime.objects.latest('timeCreated')
-		if z3 > 1:
-			while (z3 > 1):
-				z3 = z3 - 1
-				ac = x3 - timedelta(days=z3)
-				MedicationCompletion.objects.create(completionStatus=None, completionDate=ac, completionDue=instance.medicationTimeSchedule3, completionNote='SYSTEM RX PLACEHOLDER FILL', completionRx_id=instance.id, completionMedication_id=med_three.id)
-				print("completionDate" + str(ac))
-				print("Med_One ID" + str(med_three.id))
+# 	if created:
+# 		x3 = instance.medicationStartDate
+# 		y3 = x3.strftime('%d')
+# 		z3 = int(y3)
+# 		time3 = timezone.now()
+# 		a3 = instance.id
+# 		med_three = MedicationTime.objects.latest('timeCreated')
+# 		if z3 > 1:
+# 			while (z3 > 1):
+# 				z3 = z3 - 1
+# 				ac = x3 - timedelta(days=z3)
+# 				MedicationCompletion.objects.create(completionStatus=None, completionDate=ac, completionDue=instance.medicationTimeSchedule3, completionNote='SYSTEM RX PLACEHOLDER FILL', completionRx_id=instance.id, completionMedication_id=med_three.id)
+# 				print("completionDate" + str(ac))
+# 				print("Med_One ID" + str(med_three.id))
 
 
 # @receiver(post_save, sender=Medication)

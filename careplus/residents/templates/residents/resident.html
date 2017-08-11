@@ -2,7 +2,7 @@
 <link href="{% static 'css/residents.css' %}" rel="stylesheet">
 <script src="{% static 'js/residents.js' %}"></script>
 {% endblock head %} {% block main %}
-        <a href="{% url 'createMedication' resident_id=resident.id %}" class="btn btn-primary pull-right">
+        <a href="{% url 'createMedication' resident.id %}" class="btn btn-primary pull-right">
             <span class="glyphicon glyphicon-plus"></span> {% trans 'Add Medication' %}
         </a>
         <a href="/medications/mar/{{resident.id}}" class="btn btn-danger pull-right">

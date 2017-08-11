@@ -76,7 +76,7 @@ def edit(request, id):
     return render(request, 'residents/edit.html', {'form': form})
 
 @login_required
-def medications(request, id):
+def rx_all(request, id):
     resident = Resident.objects.get(id=id)
     medications = Medication.objects.filter(medicationResident_id=id)
     active_medications = MedicationTime.get_active_medications()
@@ -89,25 +89,25 @@ def medications(request, id):
         meds = paginator.page(1)
     except EmptyPage:
         meds = paginator.page(paginator.num_pages)
-    return render(request, 'residents/all_medications.html', {'meds': meds, 'medications': medications, 'resident': resident, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
+    return render(request, 'residents/rx_all.html', {'meds': meds, 'medications': medications, 'resident': resident, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
 
 @login_required
-def overdue_medications(request, id):
+def rx_overdue(request, id):
     resident = Resident.objects.get(id=id)
     medications = Medication.objects.filter(medicationResident_id=id)
     overdue = MedicationTime.get_overdue_medications()
     active_medications = MedicationTime.get_active_medications()
-    return render(request, 'residents/overdue_medications.html', {'medications': medications,
+    return render(request, 'residents/rx_overdue.html', {'medications': medications,
         'active_medications': active_medications,'resident': resident, 'overdue': overdue})
 
 
 @login_required
-def active_medications(request, id):
+def rx_active(request, id):
     resident = Resident.objects.get(id=id)
     medications = Medication.objects.filter(medicationResident_id=id)
     active = MedicationTime.get_active_medications()
     overdue_medications = MedicationTime.get_overdue_medications()
-    return render(request, 'residents/active_medications.html', {'medications': medications,
+    return render(request, 'residents/rx_active.html', {'medications': medications,
         'active': active, 'resident': resident, 'overdue_medications': overdue_medications})
 
 
@@ -128,5 +128,10 @@ def emergencycontact(request):
     else:
         form = ResidentForm()
     return render(request, 'residents/create.html', {'form': form})
+
+def deleteResident(request, id):
+    article = get_object_or_404(Resident, pk=id).delete()
+
+    return redirect ('/residents/')
 
 

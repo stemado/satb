@@ -108,7 +108,7 @@ class Medication(models.Model):
     medicationDateTimeAdded = models.DateTimeField(auto_now_add=True)
     medicationMissed = models.CharField(verbose_name="Medication Missed", choices=MISSED_CHOICES, max_length=12, default='False', blank=True, null=True)
     medicationRecordReset = models.DateTimeField(default=datetime.now, blank=True, null=True)
-    medicationResident = models.ForeignKey('residents.Resident', on_delete=models.CASCADE, verbose_name="Resident Name")
+    medicationResident = models.ForeignKey('residents.Resident', verbose_name="Resident Name", on_delete=models.CASCADE)
     created_by_user = models.ForeignKey(User, null=True, blank=True, related_name="+" )
     
     objects = MedicationQuerySet.as_manager()
@@ -128,6 +128,7 @@ class Medication(models.Model):
     #     b = a.medicationtime_set.all()
     #     medication = b.completion.all()
     #     return medication
+
 
     def get_all_medications():
         medications = MedicationTime.objects.all().order_by('medication_id')

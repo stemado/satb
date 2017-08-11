@@ -139,16 +139,16 @@ table th {
                 <td><small>{{ s.timeDue }}</small></td>
 
                 {% for d in s.completion.all %}
-                <!--Below is for Debugging-->
-                <!-- <td>{{d.completionDate}}|{{d.completionTime}}|{{s}}|{{d.completionMedication_id}}|{{d.completionRx_id}}</td> -->
-                <!--{% if d.completionStatus == 'Refused' %}-->
-                <!--<td>O</td>-->
-                <!--{% elif d.completionMissed == True %}-->
-                <!--<td>M</td>-->
-                <!--{% else %}-->
-
+  
+                {% if d.completionStatus == none %}
+                <td>|<td>
+                {% elif d.completionStatus == True %}
                 <td><small><div id="{{m.medicationStartDate}}"style="font-size:70%">AK</small></div></td>
-                {% endif %} {% endfor %}
+                {% else %}
+                <td><small><div id="{{m.medicationStartDate}}"style="font-size:70%">O</small></div></td>
+                {%endif%}
+
+                 {% endfor %}
             </tr>
 
             {% endfor %}
@@ -185,5 +185,25 @@ table th {
             </tr>
         </table>
     </div>
+    <div class="row">
+    <div class="col-md-12">
+        <ul class="pagination">
+            {% if meds.has_previous %}
+            <li><a href="?page={{ meds.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+            {% endif %} {% for i in meds.paginator.page_range %} {% if meds.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+            </li>
+            {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %} {% endfor %} {% if meds.has_next %}
+            <li><a href="?page={{ meds.next_page_number }}">&raquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
 </body>
 {% endblock %}
