@@ -141,7 +141,7 @@ table th {
                 {% for d in s.completion.all %}
   
                 {% if d.completionStatus == none %}
-                <td>|<td>
+                <td></td>
                 {% elif d.completionStatus == True %}
                 <td><small><div id="{{m.medicationStartDate}}"style="font-size:70%">AK</small></div></td>
                 {% else %}
