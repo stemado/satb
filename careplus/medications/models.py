@@ -20,7 +20,7 @@ from django.utils import timezone
 from django.db.models import signals
 from itertools import chain
 from operator import attrgetter
-
+from django.core.mail import send_mail
 
 class MedicationQuerySet(models.QuerySet):
 
@@ -173,6 +173,7 @@ class MedicationTime(models.Model):
     timeGivenStatus = models.CharField(verbose_name="Given", choices=STATUS_CHOICES, default=None,max_length=12, null=True, blank=True)
     timeGivenDate = models.DateTimeField(verbose_name="Date Added", auto_now_add=True)
     timeGivenNote = models.CharField(verbose_name="Notes", max_length=500, null=True, blank=True)
+    timePRN = models.NullBooleanField(verbose_name="PRN?", default=None, null=True, blank=True)
     timeCreated = models.DateTimeField(verbose_name="Created")
     timeMedication = models.ForeignKey(Medication, on_delete=models.CASCADE)
  

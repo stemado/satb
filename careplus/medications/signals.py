@@ -69,6 +69,8 @@ def create_medication_time(sender, instance, created, **kwargs):
 			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=f, timeMedication_id=a, timeGivenNote='Auto Generated')
 		if instance.medicationTimeSchedule6 != None:
 			MedicationTime.objects.create(timeStatus=None, timeGivenStatus=False, timeCreated=time, timeDue=g, timeMedication_id=a, timeGivenNote='Auto Generated')
+		if instance.medicationDistribution == '0':
+			MedicationTime.objects.create(timeStatus=None, timePRN=True, timeGivenStatus=None, timeCreated=time, timeDue=None, timeMedication_id=a, timeGivenNote='Auto Generated - PRN')
 
 
 

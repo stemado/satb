@@ -1,38 +1,15 @@
-{% load staticfiles %} {% load i18n %} {% load bootstrap3 %} {% bootstrap_css %} {% bootstrap_javascript %} {% bootstrap_messages %} {% block head %} {% endblock head %} {% block main %}
+{% load staticfiles %} {% load i18n %} {% load bootstrap3 %} {% bootstrap_css %} {% bootstrap_javascript %} {% bootstrap_messages %} {% block head %} 
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
+  {% endblock head %} {% block main %}
 <style>
 
-/*#left {
-    width: 25%;
-    height: 100%;
-    position: absolute;
-    z-index: 1;
-}
+.ui-datepicker-calendar {
+    display: none;
+    }
 
-#right {
-    width: 75%;
-    height: 100%;
-    position: absolute;
-    z-index: 1;
-}
-
-#left { left: 0; background-color: #f9f9f9; }
-#right { right: 0; background-color:#000000; }
-
-#wrapper {
-    text-align: center;
-    z-index: 5;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-#container {
-    width: 400px;
-    height: 100%;
-    background-color: #cccccc;
-    margin: 0 auto;
-    text-align: right;
-}
-*/
 .wrap {
     display: table;
     width: 100%;
@@ -79,12 +56,38 @@ table th {
 */
 </style>
 
+<script type="text/javascript">
+$(function() {
+    $('.date-picker').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'MM yy',
+        onClose: function(dateText, inst) { 
+            $(this).datepicker('setDate', new Date(inst.selectedYear, inst.selectedMonth, 1));
+        }
+    });
+});
+</script>
 <body>
-    {% for m in meds %}
-    <div id="left" class="step" style="padding: 0px; width:20%; height: 5%; display:inline-table;">
-        <table class="medicationClass">
+   
+<h4 class="text-center">Medication Administration Record (MAR)</h4>
+<div style="padding:5px; width:100%; display:inline-table;">
+        <table>
             <tr>
-                <td style="border: none;" width="20%">{{m.medicationName}}</td>
+                 <th><label for="startDate">MAR Month:</label>
+    <input name="startDate" id="startDate" class="date-picker" /></th>
+                <th><small>Start/Stop Date:</small></th>
+               <th><small>Facility Name</small></th>
+            </tr>
+        </table>
+    </div>
+    {% for m in meds %}
+    <div id="left" class="step" style=" border: padding: 5px; width:20%; height: 5%; display:inline-table;">
+        <table style="border-bottom: 1px;" class="medicationClass">
+            <tr>
+                <td style="border: none;" width="20%"><strong>{{m.medicationName}}</strong></td>
+
             </tr>
             <tr>
                 <td style="border: none;" width="20%">{{m.medicationDistribution}} Daily, {{m.medicationDosage}}</td>
@@ -98,7 +101,7 @@ table th {
 
         </table>
     </div>
-    <div id="right" style="padding: 0px; width: 10%; height: 5%; display:inline-table;">
+    <div id="right" style="padding: 5px; width: 10%; height: 5%; display:inline-table;">
         <table>
             <tr>
                 <td><small><div style="width: 100px">Time Due</div></small></td>
@@ -154,19 +157,20 @@ table th {
             {% endfor %}
         </table>
     </div>
+    <br>
     {% endfor %}
-    <div style="padding:5px; display:inline-table;">
+    <div style="padding:5px; width:100%; display:inline-table;">
         <table>
             <tr>
-                <th>Diagnosis</th>
-                <th>DIET</th>
-                <th>Comments
+                <th><small>Diagnosis</small></th>
+                <th><small>DIET</small></th>
+                <th><small>Comments
                     <br>
-                </th>
+               </small> </th>
             </tr>
             <tr>
                 <th>Allergies</th>
-                <th>PhysicianName: {{resident.residentPrimaryPhysician}}
+                <th>PhysicianName: <small>{{resident.residentPrimaryPhysician}}<small>
                     <br>
                     <br>Phone Number</th>
                 <th>A. Put initials in apppropriate box when medication is given
@@ -178,13 +182,69 @@ table th {
         </table>
         <table>
             <tr>
-                <th>NAME: {{ resident }}</th>
-                <th>Record #: {{ resident.id }}</th>
-                <th>Date of Birth: {{ resident.residentDOB }}</th>
-                <td>Sex: {{resident.residentGender}}</td>
+                <th>NAME: <small>{{ resident }}<small></th>
+                <th>Record #: <small>{{ resident.id }}</small></th>
+                <th>Date of Birth: <small>{{ resident.residentDOB }}</small></th>
+                <td>Sex: <small>{{resident.residentGender}}</small></td>
             </tr>
         </table>
     </div>
+    <!-- Start Second Page of Report for PRN and Meds Not Administered -->
+<div style="padding:5px; width:100%; display:inline-table;">
+        <table>
+            <tr>
+                 <th><div class="text-center">PRN AND MEDICATIONS NOT ADMINISTERED</th>
+                <th><div style="width:15px">Initials</div></th>
+               <th><div class="text-center"><small>Staff Signature</small></div></th>
+            </tr>
+        </table>
+    </div>
+    <div style="padding:5px; width:100%; display:inline-table;">
+        <table>
+            <tr>
+            <th><div style="width:5px">Date</div></th>
+            <th><div style="width:5px">Hour</div></th>
+            <th><div style="width:5px">Initials</div></th>
+            <th><div style="width:23px">Medication</div></th>
+            <th><div style="width:23px">Reason</div></th>
+            <th><div style="width:23px">Result</div></th>
+            <th><div style="width:10px"></div></th>
+            <th><div style="width:10px"></div></th>
+            <th><div style="width:10px"></div></th>
+
+            </tr>
+            {% for m in meds %}
+            {% for s in m.medicationtime_set.all %}
+            {% for d in s.completion.all %}
+            {% if d.completionMedication.timePRN == True %}
+            <tr>
+            <th>{{d.completionDate}}</th>
+            <th>{{d.completionTime}}</th>
+            <th>AK</th>
+            <th>{{d.completionRx}} |</th>
+            <th>{{d.completionNote}}</th>
+            <th><div style="width:23px">{{d.completionStatus}}</div></th>
+            <th><div style="width:10px">AK</div></th>
+            <th><div style="width:10px">Audrey Kilpatrick</th>
+            {% elif d.completionStatus == False %}
+            <th>{{d.completionDate}}</th>
+            <th>{{d.completionTime}}</th>
+            <th>AK</th>
+            <th>PRN | {{d.completionRx}}</th>
+            <th>{{d.completionNote}}</th>
+            <th><div style="width:23px">{{d.completionStatus}}</div></th>
+            <th><div style="width:10px">AK</div></th>
+            <th><div style="width:10px">Audrey Kilpatrick</th>
+            </tr>
+
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+
+        
     <div class="row">
     <div class="col-md-12">
         <ul class="pagination">
