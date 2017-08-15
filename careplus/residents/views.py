@@ -96,9 +96,10 @@ def rx_all(request, id):
 def rx_overdue(request, id):
     resident = Resident.objects.get(id=id)
     medications = Medication.objects.filter(medicationResident_id=id)
-    overdue = MedicationTime.get_overdue_medications()
-    active_medications = MedicationTime.get_active_medications()
-    prn = MedicationTime.get_prn_medications()
+    a = Medication.objects.filter(medicationResident_id=id).values_list('id', flat=True)
+    overdue = MedicationTime.get_overdue_medications().filter(timeMedication_id__in=a)
+    active_medications = MedicationTime.get_active_medications().filter(timeMedication_id__in=a)
+    prn = MedicationTime.objects.filter(timeMedication_id__in=a, timePRN=True)
     return render(request, 'residents/rx_overdue.html', {'medications': medications,
         'active_medications': active_medications, 'prn': prn, 'resident': resident, 'overdue': overdue})
 
@@ -107,9 +108,10 @@ def rx_overdue(request, id):
 def rx_active(request, id):
     resident = Resident.objects.get(id=id)
     medications = Medication.objects.filter(medicationResident_id=id)
-    active = MedicationTime.get_active_medications()
-    overdue_medications = MedicationTime.get_overdue_medications()
-    prn = MedicationTime.get_prn_medications()
+    a = Medication.objects.filter(medicationResident_id=id).values_list('id', flat=True)
+    active = MedicationTime.get_active_medications().filter(timeMedication_id__in=a)
+    overdue_medications = MedicationTime.get_overdue_medications().filter(timeMedication_id__in=a)
+    prn = MedicationTime.objects.filter(timeMedication_id__in=a, timePRN=True)
     return render(request, 'residents/rx_active.html', {'medications': medications,
         'active': active, 'resident': resident, 'prn': prn, 'overdue_medications': overdue_medications})
 
@@ -119,10 +121,11 @@ def rx_active(request, id):
 @login_required
 def rx_prn(request, id):
     resident = Resident.objects.get(id=id)
-    medications = Medication.objects.filter(medicationResident_id=id).values('id')
-    active = MedicationTime.get_active_medications()
-    overdue_medications = MedicationTime.get_overdue_medications()
-    prn = MedicationTime.objects.filter(timeMedication_id=74, timePRN=True)
+    medications = Medication.objects.filter(medicationResident_id=id)
+    a = Medication.objects.filter(medicationResident_id=id).values_list('id', flat=True)
+    active = MedicationTime.get_active_medications().filter(timeMedication_id__in=a)
+    overdue_medications = MedicationTime.get_overdue_medications().filter(timeMedication_id__in=a)
+    prn = MedicationTime.objects.filter(timeMedication_id__in=a, timePRN=True)
     return render(request, 'residents/rx_prn.html', {'medications': medications,
         'active': active, 'resident': resident, 'prn': prn, 'overdue_medications': overdue_medications})
 
