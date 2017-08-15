@@ -55,22 +55,21 @@
     <hr />
     <div class="container">
         <div class="row">
-            {% for l in medications %} 
-            {% for m in l.medicationtime_set.get_active_medications %}
+            {% for p in prn %}
             <div class="col-md-4">
                 <div class="panel panel-success">
                     <div class="panel-heading">
                         <img src="http://trybootcamp.vitorfs.com/static/img/user.png" style="width:20px">
-                        <a href="/residents/{{ m.timeMedication.medicationResident_id }}">{{ m.timeMedication.medicationResident }}</a>
+                        <a href="/residents/{{ p.timeMedication.medicationResident_id }}">{{ p.timeMedication.medicationResident}}</a>
                     </div>
                     <div class="panel-body">
-                        <a href="{{m.timeMedication.id}}" class="center-text"><strong>History</strong></a>
-                        <a href="/medications/{{ m.timeMedication.id }}"><strong>Medication:</strong> {{ m.timeMedication.medicationName }}</a>
+<!--                         <a href="/medications/{{p.timeMedication.id}}" class="center-text"><strong>History</strong></a> -->
+                        <a href="/medications/{{ p.timeMedication.id }}"><strong>Medication:</strong> {{ p.timeMedication.medicationName }}</a>
                         <!--                     <p><strong>Rx ID:</strong> {{ m.timeMedication_id }}</p> -->
                         <!--                     <p><strong>Record ID:</strong> {{ m.id }}</p> -->
-                        <p><strong>Due:</strong> {{ m.timeDue }}</p>
-                        <p><strong>Count:</strong> {{ m.timeMedication.medicationQuantity }}</p>
-                        <form action="{% url 'acceptRefuse' m.id m.timeMedication_id %}" type=POST>
+<!--                         <p><strong>Due:</strong> {{ m.timeDue }}</p> -->
+                        <p><strong>Count:</strong> {{ p.timeMedication.medicationQuantity }}</p>
+                        <form action="{% url 'acceptRefuse' p.id p.timeMedication_id %}" type=POST>
                             <button type="submit" class="btn btn-success">Give</button>
                         </form>
                         <!-- Start partial history mar if needed -->
@@ -78,7 +77,6 @@
                     </div>
             </div>
         </div>
-        {% endfor %}
         {% endfor %}
     </div>
     </div>

@@ -201,6 +201,10 @@ class MedicationTime(models.Model):
         medication = MedicationTime.objects.filter(timeGivenStatus='False', timeDue__range=(hourBefore, hourAfter))
         return medication
 
+    def get_prn_medications():
+        medication = MedicationTime.objects.filter(timePRN=True)
+        return medication
+
 
 
 @python_2_unicode_compatible

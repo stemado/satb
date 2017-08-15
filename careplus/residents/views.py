@@ -81,6 +81,7 @@ def rx_all(request, id):
     medications = Medication.objects.filter(medicationResident_id=id)
     active_medications = MedicationTime.get_active_medications()
     overdue_medications = MedicationTime.get_overdue_medications()
+    prn = MedicationTime.get_prn_medications()
     paginator = Paginator(medications, 10)
     page = request.GET.get('page')
     try:
@@ -89,7 +90,7 @@ def rx_all(request, id):
         meds = paginator.page(1)
     except EmptyPage:
         meds = paginator.page(paginator.num_pages)
-    return render(request, 'residents/rx_all.html', {'meds': meds, 'medications': medications, 'resident': resident, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
+    return render(request, 'residents/rx_all.html', {'meds': meds, 'medications': medications, 'prn': prn, 'resident': resident, 'active_medications': active_medications, 'overdue_medications': overdue_medications})
 
 @login_required
 def rx_overdue(request, id):
@@ -97,8 +98,9 @@ def rx_overdue(request, id):
     medications = Medication.objects.filter(medicationResident_id=id)
     overdue = MedicationTime.get_overdue_medications()
     active_medications = MedicationTime.get_active_medications()
+    prn = MedicationTime.get_prn_medications()
     return render(request, 'residents/rx_overdue.html', {'medications': medications,
-        'active_medications': active_medications,'resident': resident, 'overdue': overdue})
+        'active_medications': active_medications, 'prn': prn, 'resident': resident, 'overdue': overdue})
 
 
 @login_required
@@ -107,8 +109,23 @@ def rx_active(request, id):
     medications = Medication.objects.filter(medicationResident_id=id)
     active = MedicationTime.get_active_medications()
     overdue_medications = MedicationTime.get_overdue_medications()
+    prn = MedicationTime.get_prn_medications()
     return render(request, 'residents/rx_active.html', {'medications': medications,
-        'active': active, 'resident': resident, 'overdue_medications': overdue_medications})
+        'active': active, 'resident': resident, 'prn': prn, 'overdue_medications': overdue_medications})
+
+
+#NEED TO GET THE MEDICATION ID VARIABLE IN TO THE TIMEMEDICATION_ID OF PRN - HARD CODED MOMENTARILY
+#UPDATE THE OTHER RX_ VIEWS TO CORRECT PRN VARIABLE
+@login_required
+def rx_prn(request, id):
+    resident = Resident.objects.get(id=id)
+    medications = Medication.objects.filter(medicationResident_id=id).values('id')
+    active = MedicationTime.get_active_medications()
+    overdue_medications = MedicationTime.get_overdue_medications()
+    prn = MedicationTime.objects.filter(timeMedication_id=74, timePRN=True)
+    return render(request, 'residents/rx_prn.html', {'medications': medications,
+        'active': active, 'resident': resident, 'prn': prn, 'overdue_medications': overdue_medications})
+
 
 
 @login_required

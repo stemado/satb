@@ -9,6 +9,7 @@ urlpatterns = [
 	url(r'^(?P<id>[0-9]+)/$', views.resident, name='resident'),
     url(r'^rx_active/(?P<id>[0-9]+)/$', views.rx_active, name='rx_active'),
     url(r'^rx_overdue/(?P<id>[0-9]+)/$', views.rx_overdue, name='rx_overdue'),
+    url(r'^rx_prn/(?P<id>[0-9]+)/$', views.rx_prn, name='rx_prn'),
     url(r'^rx_all/(?P<id>[0-9]+)/$', views.rx_all, name='rx_all'),
     url(r'^create/$', views.create, name='create'),
     url(r'^edit/(?P<id>[0-9]+)/$', views.edit, name='edit'),
