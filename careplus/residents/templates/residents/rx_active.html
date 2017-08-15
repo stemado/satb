@@ -56,7 +56,6 @@
     <div class="container">
         <div class="row">
             {% for l in medications %} 
-            {% for m in l.medicationtime_set.get_active_medications %}
             <div class="col-md-4">
                 <div class="panel panel-success">
                     <div class="panel-heading">
