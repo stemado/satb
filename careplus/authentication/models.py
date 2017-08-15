@@ -127,6 +127,20 @@ class Profile(models.Model):
                 to_user=answer.user,
                 answer=answer).delete()
 
+    def notify_new_resident(self, new_resident):
+        if self.user == answer.user:
+            Notification(notification_type=Notification.NEW_RESIDENT,
+                         from_user=self.user,
+                         to_user=answer.user,
+                         new_resident=new_resident).save()
+
+    def unotify_new_resident(self, new_resident):
+        if self.user == answer.user:
+            Notification.objects.filter(
+                notification_type=Notification.NEW_RESIDENT,
+                from_user=self.user,
+                to_user=answer.user,
+                new_resident=new_resident).delete()
 
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -138,3 +152,8 @@ def save_user_profile(sender, instance, **kwargs):
 
 post_save.connect(create_user_profile, sender=User)
 post_save.connect(save_user_profile, sender=User)
+
+class Notification(models.Model):
+    user = models.OneToOneField(User)
+    emailNewResident = models.NullBooleanField(verbose_name="New Resident", default=False)
+    emailNewMedication = models.NullBooleanField(verbose_name="New Medication", default=False)

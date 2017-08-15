@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^settings/save_uploaded_picture/$', core_views.save_uploaded_picture,
         name='save_uploaded_picture'),
     url(r'^settings/password/$', core_views.password, name='password'),
+    url(r'^settings/notification/$', core_views.notification, name='notification'),
     url(r'^network/$', core_views.network, name='network'),
     url(r'^feeds/', include('careplus.feeds.urls')),
     url(r'^questions/', include('careplus.questions.urls')),

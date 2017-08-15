@@ -24,16 +24,16 @@ from django.core.mail import send_mail
 
 class MedicationQuerySet(models.QuerySet):
 
-    # def medicationDeliveryTime(self):
+    def medicationDeliveryTime(self):
 
-    #     now = datetime.now()
-    #     hourBefore = now - timedelta(hours=1)
-    #     hourAfter = now + timedelta(hours=1)
-    #     yesterday = now - timedelta(days=1)
-    #     tomorrow = now + timedelta(days=1)
+        now = datetime.now()
+        hourBefore = now - timedelta(hours=1)
+        hourAfter = now + timedelta(hours=1)
+        yesterday = now - timedelta(days=1)
+        tomorrow = now + timedelta(days=1)
 
 
-    #     return self.filter(medicationTimeSchedule__range=(hourBefore, hourAfter))
+        return self.filter(medicationTimeSchedule__range=(hourBefore, hourAfter))
 
     def medicationDeliveryTime(self):
 
@@ -138,10 +138,8 @@ class Medication(models.Model):
         medications = Medication.objects.filter(medicationDiscontinuedStatus='Active')
         return medications
 
-    # def get_overdue_medications():
-    #     medication = Medication.objects.filter(medicationStatus=False).medicationDeliveryOverdue()
-    #     return medication
 
+    ##Chain Query Examples##
     # def get_overdue_medications():
     #     now = datetime.now()
     #     hourAfter = now - timedelta(hours=1, minutes=1)
