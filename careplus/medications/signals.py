@@ -3,9 +3,9 @@ from django.db.models import F
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
-import sendgrid
-import os
-from sendgrid.helpers.mail import *
+# import sendgrid
+# import os
+# from sendgrid.helpers.mail import *
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from careplus.medications.models import Medication, MedicationCompletion, MedicationTime
