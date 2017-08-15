@@ -99,20 +99,20 @@ def create_medication_time_fill(sender, instance, created,  **kwargs):
 ##########################################
 
 #Send Sendgrid Email - Demo/Test
-@receiver(post_save, sender=Resident)
-def send_resident_update(sender, instance, created, **kwargs):
-	if created:
-			email = 'stemado@outlook.com'
-			subject = 'New Resident Added: ' + instance.residentFirstName + instance.residentLastName
-			content = 'A new resident has added: ' + instance.residentFirstName
-			send_mail(
-				subject, 
-				content, 
-				'no-reply@careplus.com', 
-				[email], 
-				fail_silently=False
-				)
-			print('Email sent successfully!')
+# @receiver(post_save, sender=Resident)
+# def send_resident_update(sender, instance, created, **kwargs):
+# 	if created:
+# 			email = 'stemado@outlook.com'
+# 			subject = 'New Resident Added: ' + instance.residentFirstName + instance.residentLastName
+# 			content = 'A new resident has added: ' + instance.residentFirstName
+# 			send_mail(
+# 				subject, 
+# 				content, 
+# 				'no-reply@careplus.com', 
+# 				[email], 
+# 				fail_silently=False
+# 				)
+# 			print('Email sent successfully!')
 
 
 #Request Refill Signal - Needs some tweaking. 
