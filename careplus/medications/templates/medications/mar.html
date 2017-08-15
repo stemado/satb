@@ -1,5 +1,12 @@
 {% load staticfiles %} {% load i18n %} {% load bootstrap3 %} {% bootstrap_css %} {% bootstrap_javascript %} {% bootstrap_messages %} {% block head %} 
 
+<!--This is the HTMl file taht generates the report for the MAR. I found it was easier to use
+custom CSS and JS on the page to make the creation of the page faster since it has to have a certain look and feel.
+Not 100% ready to my expectations, but it does generate the report, so it passes.-->
+
+<!-- This Script section is for the Month/Year selector for choosing the month of the report you want to generate.
+I will likely move this back to the employee page. Have the "MAR" button drop this date picker down and then that passes
+the values for the month and year to the View and returns the requested form on the MAR page.-->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
@@ -55,7 +62,7 @@ table th {
         }
 */
 </style>
-
+<!-- JS for Datepicker-->
 <script type="text/javascript">
 $(function() {
     $('.date-picker').datepicker( {
@@ -82,6 +89,12 @@ $(function() {
             </tr>
         </table>
     </div>
+
+    <!-- for m in meds is used to create each Medication section.
+    So, for each medication, create a new table section with all of the below that falls with in this div.
+    Also, note: the "meds" is used in the below for loop for pagination which pulls from this same variable and 
+    generates the pagination to show limited records (currently set at 5 in medications/views.py)-->
+
     {% for m in meds %}
     <div id="left" class="step" style=" border: padding: 5px; width:20%; height: 5%; display:inline-table;">
         <table style="border-bottom: 1px;" class="medicationClass">
@@ -138,6 +151,9 @@ $(function() {
                 <td><small><div id="thirtyone">31</div></small></td>
             </tr>
             <tr>
+            <!-- This is a very cumbersome nested loop. The outerloop ("m for meds") but it does call the child object sets ("medicationtime_set") for
+            the Medication (m in meds). This should generate a single query for the MedicationTime objects and (hopefully, but not likely) the MedicationCompletion model as well. 
+            Note: |slice":5" can probably be removed. This was prior to pagination fully working (|slice:":X" is a Django template filter that limits how many records are returned from the queryset, which is not needed for my purpose since pagination takes a similar argument-->
                 {% for s in m.medicationtime_set.all|slice:":5" %}
                 <td><small>{{ s.timeDue }}</small></td>
 

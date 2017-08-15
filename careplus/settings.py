@@ -2,6 +2,7 @@ import dj_database_url
 from decouple import Csv, config
 from unipath import Path
 from django.contrib import admin
+import os
 
 PROJECT_DIR = Path(__file__).parent
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = (
     'careplus.search',
     'bootstrap3',
     'explorer',
+    'sendgrid',
 
 )
 
@@ -123,3 +125,9 @@ ALLOWED_SIGNUP_DOMAINS = ['*']
 
 FILE_UPLOAD_TEMP_DIR = '/tmp/'
 FILE_UPLOAD_PERMISSIONS = 0o644
+
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST= 'smtp.sendgrid.net'
+EMAIL_PORT = 25
+EMAIL_USE_TLS = True
+EMAIL_HOST_PASSWORD = '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'

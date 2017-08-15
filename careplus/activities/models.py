@@ -137,6 +137,13 @@ class Notification(models.Model):
                 self.feed.pk,
                 escape(self.get_summary(self.feed.post))
                 )
+        elif self.notification_type == self.NEW_RESIDENT:
+            return self. _NEW_RESIDENT_TEMPLATE.format(
+                escape(self.from_user.username),
+                escape(self.from_user.profile.get_screen_name()),
+                self.feed.pk,
+                escape(self.get_summary(self.feed.post))
+                )
         else:
             return 'Ooops! Something went wrong.'
 

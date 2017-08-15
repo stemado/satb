@@ -84,7 +84,6 @@ def active_medications(request):
         'active': active, 'overdue_medications': overdue_medications})
 
 
-#Check here to see if this view is correct.
 @login_required
 def medication(request, id):
     medication = get_object_or_404(Medication, pk=id)
@@ -141,9 +140,6 @@ def acceptRefuse(request, medication, rx):
     date = datetime.now().today()
     if request.method == 'POST':
         form = StatusForm(request.POST)
-        # check = request.POST.get('csrf_token').encode('utf-8')
-        # hashstring=hashlib.sha1(str(check)).hexdigest()
-        # if request.session.get('sessionform') != hashstring:
         if form.is_valid():
             status = form.save()
             status.save()
@@ -153,16 +149,14 @@ def acceptRefuse(request, medication, rx):
         form = StatusForm(initial={'completionMedication': medication, 'completionRx': rx, 'completionDate': date })
     return render(request, 'medications/medication_status.html/', {'form': form})
 
-# @login_required
-# def pdfNewView(request):
-#     medication = Medication.objects.filter(medicationResident_id=1)
-#     time = MedicationTime.objects.filter(timeMedication_id=1)
-#     a = MedicationTime.objects.filter(timeMedication_id=1).values_list('id', flat=True)
-#     completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a), Q(completionDate__gt='2017-6-30') & Q(completionDate__lt='2017-8-1')).order_by('-completionDue')
-#     return render(request, 'medications/pdfview.html', {'medication': medication, 'time': time, 'completion': completion})
 
 @login_required
+def deleteMedication(request, id):
+    article = get_object_or_404(Medication, pk=id).delete()
 
+    return redirect ('/medications/')
+
+@login_required
 def testpdf(request, id):
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
@@ -217,16 +211,9 @@ def testpdf(request, id):
     return response
 
 @login_required
-#Don't forget to add back 'time':, time to variables
 def mar(request, mar_id):
-    # resident = Resident.objects.get(id=1)
-    # medication = resident.medication_set.all()
-    # med = Medication.objects.filter()
-    # test = Medication.completion_medication_set()
     medication = Medication.objects.filter(medicationResident_id=mar_id).order_by("medicationName", "id")
-    # time = MedicationTime.objects.filter(Q(timeMedication_id=1) | Q(timeMedication_id=2) | Q(timeMedication_id=3)).order_by('id')
     resident = Resident.objects.filter(id=mar_id)[0]
-    # rxcompletion = MedicationCompletion.objects.filter(Q(completionRx_id=1) | Q(completionRx_id=2), Q(completionDate__lt='2017-8-1') & Q(completionDate__gt='2017-6-30')).order_by('completionDate')
     paginator = Paginator(medication, 5)
     page = request.GET.get('page')
     try:
@@ -273,8 +260,4 @@ def pdf_view(request):
 
     return response
 
-def deleteMedication(request, id):
-    article = get_object_or_404(Medication, pk=id).delete()
-
-    return redirect ('/medications/')
 

@@ -3,11 +3,30 @@ from django.db.models import F
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
-
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
+from django.core.mail import send_mail
+from django.contrib.auth.models import User
 from careplus.medications.models import Medication, MedicationCompletion, MedicationTime
+from careplus.residents.models import Resident
 
 
-##This may need to go under each Signal for new record time, becuase the completion is for the record time not the medication. 
+#Send Sendgrid Email
+@receiver(post_save, sender=Resident)
+def send_resident_update(sender, instance, created, **kwargs):
+	if created:
+			email = 'stemado@outlook.com'
+			subject = 'New Resident Added: ' + instance.residentFirstName + instance.residentLastName
+			content = 'A new resident has added: ' + instance.residentFirstName
+			send_mail(
+				subject, 
+				content, 
+				'no-reply@careplus.com', 
+				[email], 
+				fail_silently=False
+				)
+			print('Email sent successfully!')
 
 
 #This reads when the MedicationComplation form is saved. 
