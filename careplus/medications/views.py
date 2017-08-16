@@ -156,59 +156,6 @@ def deleteMedication(request, id):
 
     return redirect ('/medications/')
 
-@login_required
-def testpdf(request, id):
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'inline; filename="mypdf.pdf"'
-
-    buffer = BytesIO()
-    p = canvas.Canvas(buffer, pagesize=landscape(letter))
-    width, height = landscape(letter)
-    # Start writing the PDF here
-    p.drawString(100, 100, 'Hello world.')
-    def coord(x, y, unit=1):
-        x, y = x * unit, height - y * unit
-        return x, y
-
-##################################################
-#Only part I am concerening myself with right now#
-##################################################
-
-    medication = Medication.objects.filter(medicationResident_id=id)
-    data = []
-    data.append(["Medication Name", "", "Hour", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"])
-
-    for i in medication:
-        row = []
-        row.append(i.medicationName)
-        row.append("")
-        data.append(row)
-        for j in MedicationTime.objects.filter(timeMedication=i.id):
-            row.append(j.timeDue)
-            row.append("AK")
-        data.append(row)
-
-  
-
-    table = Table(data, colWidths=[100, 30, 50, 19] )
-    table.setStyle(TableStyle([
-        # ('INNERGRID', (0, 0), (-1, -1), 0.25, colors.black),
-        ('BOX', (0, 0), (-1, -1), 0.25, colors.black),
-    ]))
-    table.wrapOn(p, width, height)
-    table.drawOn(p, *coord(.5, 9.6, cm))
-
-
-    # End writing
-    # p.grid([inch, 2*inch, 3*inch, 4*inch], [0.5*inch, inch, 1.5*inch, 2*inch, 2.5*inch])
-    p.showPage()
-    p.save()
-
-    pdf = buffer.getvalue()
-    buffer.close()
-    response.write(pdf)
-
-    return response
 
 @login_required
 def mar(request, mar_id):

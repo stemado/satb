@@ -190,7 +190,7 @@ $(function() {
                     <br>
                     <br>Phone Number</th>
                 <th>A. Put initials in apppropriate box when medication is given
-                    <br>B. Circle initials when not given
+                    <br>B. Circle when not given
                     <br>C. State reason for refusal /omission on back of form.
                     <br>D. PRN Medications: Reason given and results must be noted on back of form.
                     <br>E. Legend: S=School; H=Home visit; W=Work; P=Program</th>
@@ -251,6 +251,7 @@ $(function() {
             <th><div style="width:23px">{{d.completionStatus}}</div></th>
             <th><div style="width:10px">AK</div></th>
             <th><div style="width:10px">Audrey Kilpatrick</th>
+            {% else %}
             </tr>
 
             {% endif %}

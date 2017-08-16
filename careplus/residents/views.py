@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 
-
+from datetime import datetime
 import markdown
 from careplus.residents.forms import ResidentForm, EmergencyContactForm
 from careplus.residents.models import Resident, EmergencyContact
@@ -129,7 +129,11 @@ def rx_prn(request, id):
     return render(request, 'residents/rx_prn.html', {'medications': medications,
         'active': active, 'resident': resident, 'prn': prn, 'overdue_medications': overdue_medications})
 
+def medicationList(request, id):
+    resident = Resident.objects.get(id=id)
+    med = Medication.objects.filter(medicationResident_id=id, medicationDiscontinuedStatus = 'Active')
 
+    return render(request, 'residents/med_list.html', {'med': med, 'resident': resident })
 
 @login_required
 def emergencycontact(request):
