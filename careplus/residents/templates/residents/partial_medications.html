@@ -5,6 +5,7 @@
             <thead>
                 <tr>
                     <th>Medication</th>
+                    <th>Dosage</th>
                     <th>Frequency</th>
                     <th>Time 1</th>
                     <th>Time 2</th>
@@ -23,6 +24,7 @@
                 <tr>
                     <td><a href="/medications/{{m.pk}}/">{{ m.medicationName }}</a></td>
                     <td>{{ m.medicationFrequency }}</td>
+                    <td>{{ m.medicationDosage }}</td>
                     <td><small>{{ m.medicationTimeSchedule }}</small></td>
                     <td><small>{{ m.medicationTimeSchedule2 }}</small></td>
                     <td><small>{{ m.medicationTimeSchedule3 }}</small></td>
