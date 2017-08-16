@@ -7,6 +7,7 @@ Not 100% ready to my expectations, but it does generate the report, so it passes
 <!-- This Script section is for the Month/Year selector for choosing the month of the report you want to generate.
 I will likely move this back to the employee page. Have the "MAR" button drop this date picker down and then that passes
 the values for the month and year to the View and returns the requested form on the MAR page.-->
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" type="text/css" media="screen" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/base/jquery-ui.css">
@@ -75,7 +76,22 @@ $(function() {
         }
     });
 });
+
+function printpage() {
+    //Get the print button and put it into a variable
+    var printButton = document.getElementById("printIt");
+    //Set the print button visibility to 'hidden' 
+    printButton.style.visibility = 'hidden';
+    //Print the page content
+    window.print()
+    //Set the print button to 'visible' again 
+    //[Delete this line if you want it to stay hidden after printing]
+    printButton.style.visibility = 'visible';
+}
 </script>
+<form>
+            <input id="printIt" type="button" class="btn btn-danger" value="Print" onClick="printpage()">
+        </form>
 <body>
    
 <h4 class="text-center">Medication Administration Record (MAR)</h4>
