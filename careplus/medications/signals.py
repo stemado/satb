@@ -116,22 +116,24 @@ def create_medication_time_fill(sender, instance, created,  **kwargs):
 
 
 #Request Refill Signal - Needs some tweaking. 
-# @receiver(post_save, sender=MedicationCompletion, dispatch_uid='medication_time_add')
-# def request_medication_refill(sender, instance, created, **kwargs):
+@receiver(post_save, sender=MedicationCompletion, dispatch_uid='medication_refill')
+def request_medication_refill(sender, instance, created, **kwargs):
 
-# 	med = Medication.objects.filter(id=instance.completionRx_id).values('medicationQuantity')
-# 	count = int(med)
-# 	if count[0] < 23:
-# 			email = 'stemado@outlook.com'
-# 			subject = 'Rx Refill Request: '
-# 			content = 'Resident: E.g. John Doe/Medication ' + instance.completionRx
-# 			send_mail(
-# 				subject, 
-# 				content, 
-# 				'no-reply@careplus.com', 
-# 				[email], 
-# 				fail_silently=False
-# 				)
-# 			print('EMAIL SENT!')
-# 	else:
-# 		print('Count is at' + str(med))
+	med = Medication.objects.get(id=instance.completionRx_id)
+	count = med.medicationQuantity
+	print(count)
+	if created:
+		if count > 5:
+			email = 'stemado@outlook.com'
+			subject = 'Rx Refill Request: ' + str(med.medicationResident)
+			content = 'Resident: ' + str(med.medicationResident) + 'needs Medication ' + str(med.medicationName) + ' refilled. Remaining Pill Count: ' + str(med.medicationQuantity)
+			send_mail(
+				subject, 
+				content, 
+				'no-reply@careplus.com', 
+				[email], 
+				fail_silently=False
+				)
+			print('EMAIL SENT!')
+		else:
+			print('It didn not send, home skillet.')

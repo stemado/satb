@@ -3,6 +3,9 @@ from decouple import Csv, config
 from unipath import Path
 from django.contrib import admin
 import os
+import djcelery
+
+djcelery.setup_loader()
 
 PROJECT_DIR = Path(__file__).parent
 
@@ -46,6 +49,7 @@ INSTALLED_APPS = (
     'bootstrap3',
     'explorer',
     'sendgrid',
+    'djcelery',
 
 )
 
@@ -126,3 +130,17 @@ ALLOWED_SIGNUP_DOMAINS = ['*']
 FILE_UPLOAD_TEMP_DIR = '/tmp/'
 FILE_UPLOAD_PERMISSIONS = 0o644
 
+
+#Sendgrid
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = SENDGRID_USERNAME
+EMAIL_HOST_PASSWORD = SENDGRID_PASSWORD
+EMAIL_USE_TLS = False
+
+# CELERY STUFF
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

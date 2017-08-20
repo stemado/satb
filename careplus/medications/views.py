@@ -158,7 +158,7 @@ def deleteMedication(request, id):
 
 
 @login_required
-def mar(request, mar_id):
+def mar(request, mar_id, month, year):
     medication = Medication.objects.filter(medicationResident_id=mar_id).order_by("medicationName", "id")
     resident = Resident.objects.filter(id=mar_id)[0]
     paginator = Paginator(medication, 5)

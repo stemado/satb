@@ -1,7 +1,7 @@
 
 from django import forms
 from django.contrib.auth.models import User
-from careplus.authentication.models import Notification
+# from careplus.activities.models import EmailNotification
 from django.utils.safestring import mark_safe
 
 
@@ -77,22 +77,27 @@ class HorizontalRadioRenderer(forms.RadioSelect.renderer):
   def render(self):
     return mark_safe(u'\n'.join([u'%s\n' % w for w in self]))
 
-class EmailNotificationForm(forms.ModelForm):
+# class EmailNotificationForm(forms.ModelForm):
 
-    CHOICES = [(True, 'Yes',), (False, 'No',)]
+#     CHOICES = [(True, 'Yes',), (False, 'No',)]
 
-    emailNewResident = forms.CharField(
-    widget=forms.RadioSelect(choices=CHOICES, renderer=HorizontalRadioRenderer),
-    label="Resident Added:",
-    required=True)
+#     emailNewResident = forms.CharField(
+#     widget=forms.RadioSelect(choices=CHOICES, renderer=HorizontalRadioRenderer),
+#     label="Resident Added: ",
+#     required=True)
         
-    emailNewMedication = forms.CharField(
-    widget=forms.RadioSelect(choices=CHOICES, renderer=HorizontalRadioRenderer),
-    label="New Medication:",
-    required=True)
+#     emailNewMedication = forms.CharField(
+#     widget=forms.RadioSelect(choices=CHOICES, renderer=HorizontalRadioRenderer),
+#     label="New Medication: ",
+#     required=True)
 
-    class Meta:
+#     emailPharmacy = forms.CharField(
+#     widget=forms.RadioSelect(choices=CHOICES, renderer=HorizontalRadioRenderer),
+#     label="Notify Pharmacy Refill: ",
+#     required=True)
 
-        model = Notification
-        fields = ['emailNewResident', 'emailNewMedication']
+#     class Meta:
+
+#         model = EmailNotification
+#         fields = ['emailNewResident', 'emailNewMedication', 'emailPharmacy', 'user']
 

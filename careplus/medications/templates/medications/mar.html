@@ -88,6 +88,9 @@ function printpage() {
     //[Delete this line if you want it to stay hidden after printing]
     printButton.style.visibility = 'visible';
 }
+
+
+
 </script>
 <form>
             <input id="printIt" type="button" class="btn btn-danger" value="Print" onClick="printpage()">
@@ -215,7 +218,7 @@ function printpage() {
         <table>
             <tr>
                 <th>NAME: <small>{{ resident }}<small></th>
-                <th>Record #: <small>{{ resident.id }}</small></th>
+                <th id="residentID">Record #: <small>{{ resident.id }}</small></th>
                 <th>Date of Birth: <small>{{ resident.residentDOB }}</small></th>
                 <td>Sex: <small>{{resident.residentGender}}</small></td>
             </tr>

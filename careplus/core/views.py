@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import get_object_or_404, redirect, render
 
-from careplus.core.forms import ChangePasswordForm, ProfileForm, EmailNotificationForm
+from careplus.core.forms import ChangePasswordForm, ProfileForm
 from careplus.feeds.models import Feed
 from careplus.feeds.views import FEEDS_NUM_PAGES, feeds
 from careplus.authentication.models import Notification
@@ -163,22 +163,5 @@ def save_uploaded_picture(request):
 
     return redirect('/settings/picture/')
 
-@login_required
-def notification(request):
-    user = request.user
-    notify = Notification.objects.get(user_id=user.notification.user.id)
-    if request.method == 'POST':
-        form = EmailNotificationForm(request.POST)
-        if form.is_valid():
-            user.save()
-            messages.add_message(request,
-                                 messages.SUCCESS,
-                                 'Your notifications were saved successfully.')
-            return redirect('notification')
-    if notify:
-        form = EmailNotificationForm(instance=user, initial={
-            'emailNewResident': user.profile.notification.emailNewResident,
-            'emailNewMedication': user.profile.emailNewMedication
-            })
 
-    return render(request, 'core/notifications.html', {'form': form})
+
