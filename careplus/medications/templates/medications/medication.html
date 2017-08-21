@@ -39,7 +39,7 @@
 
                         <tbody>
 
-                            {% for m in completion %}
+                            {% for m in meds %}
                             <tr>
                                 <td>{{ medication.medicationName }}</td>
                                 <td>{{ m.completionStatus }}</td>
@@ -58,6 +58,26 @@
                 </div>
             </div>
         </div>
+       
 </main>
-
+ <div class="row">
+    <div class="col-md-12">
+        <ul class="pagination">
+            {% if meds.has_previous %}
+            <li><a href="?page={{ meds.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+            {% endif %} {% for i in meds.paginator.page_range %} {% if meds.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+            </li>
+            {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %} {% endfor %} {% if meds.has_next %}
+            <li><a href="?page={{ meds.next_page_number }}">&raquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
 {% endblock main %}

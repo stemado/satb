@@ -36,7 +36,8 @@ def f(sender, instance, created, **kwargs):
 
 
 
-#Subtracts medication count each time medication given.
+#Subtracts medication count each time medication given. Once medication reaches >= 5, then medication signal is fired off with email to pharmacy requesting refill for 
+#patien't medication (tihs will be updated for users to choose how many days until the notificatino is sent (5 by default at ths time.)
 @receiver(post_save, sender=MedicationCompletion)	
 def update_medication_count(sender, instance, created, **kwargs):	
 
@@ -46,6 +47,9 @@ def update_medication_count(sender, instance, created, **kwargs):
 		if instance.completionStatus == True:
 			Medication.objects.filter(id=b).update(medicationQuantity=F('medicationQuantity') -1)
 
+#This code cheks the recent creation of the medication and if any of the medicationTimeSchedule 1-6 are not null,then take the value in there and create a new medicationTime
+#The medicationTime was the easiest way to split the medication in to bite sized chunks of pills to make the MAR work as needed. Note, at the very end, you will see 
+#medicationDistribution = '0', this means the medication is a PRN and only one needs to be created and timeDue is None since it is PRN and must always be present.
 
 @receiver(post_save, sender=Medication, dispatch_uid='medication_time_add')
 def create_medication_time(sender, instance, created, **kwargs):
@@ -75,6 +79,19 @@ def create_medication_time(sender, instance, created, **kwargs):
 			MedicationTime.objects.create(timeStatus=None, timePRN=True, timeGivenStatus=None, timeCreated=time, timeDue=None, timeMedication_id=a, timeGivenNote='Auto Generated - PRN')
 
 
+#This line of code was fun. In order for the MAR form to fill out correctly, I had to have fillers for the dates existed
+#before the medication was started. Example (without this code) if the medication start date waas 7/15/2017, then when the MAR form goes through its loops,
+#the first record would be placed under the 1st of the month. This is incorrect since the medication should start on the 15th of the month. 
+#to solve this, I created this signal which is fired whenever a new medicationTime is created.
+#It (1) gets the startDate of the medication from the medicationTime (2) strips the day from it (3) converts it to an integer (4) checks if the integer (days)
+#is greater than 1 (i.e. the first of the month) (5) if it is, then create c - 1 many records to fill the void.
+#This allows for the loop to fill in the correct dates with the correct dates in the MAR. Problem solved
+#Note, I will probably look back on this in a few months or weeks and think this was a completely stupid way to do this, but it solves my problem at this point.
+#One issue, that Celery may be able to solve, is the Model.objects.latest(). This works great if there isonly one person entering medication, but what
+#happens if two pepole simultaneously enter different medications? Is it possible person a will get person b's latest medication from the DB (note, the latest is to retrieve
+#the most recently created medication. Since the medication kicks off the medicationTime creation signal, and the creation of the medicationTime kicks off this signal,
+#then there is a possibility - it seems - that you could have incorrect medication returned. This, again, is only an issue if there is more than one. For 
+#carePlus home care plus facilities, it shouldn't be given small size of employee base. If we scale this, though, this code will need to be looked further in to.
 
 @receiver(post_save, sender=MedicationTime)
 def create_medication_time_fill(sender, instance, created,  **kwargs):
@@ -98,23 +115,6 @@ def create_medication_time_fill(sender, instance, created,  **kwargs):
 ###########Sendgrid Email Signals#########
 ##########################################
 
-#Send Sendgrid Email - Demo/Test
-# @receiver(post_save, sender=Resident)
-# def send_resident_update(sender, instance, created, **kwargs):
-# 	if created:
-# 			email = 'stemado@outlook.com'
-# 			subject = 'New Resident Added: ' + instance.residentFirstName + instance.residentLastName
-# 			content = 'A new resident has added: ' + instance.residentFirstName
-# 			send_mail(
-# 				subject, 
-# 				content, 
-# 				'no-reply@careplus.com', 
-# 				[email], 
-# 				fail_silently=False
-# 				)
-# 			print('Email sent successfully!')
-
-
 #Request Refill Signal - Needs some tweaking. 
 @receiver(post_save, sender=MedicationCompletion, dispatch_uid='medication_refill')
 def request_medication_refill(sender, instance, created, **kwargs):
@@ -123,10 +123,10 @@ def request_medication_refill(sender, instance, created, **kwargs):
 	count = med.medicationQuantity
 	print(count)
 	if created:
-		if count > 5:
+		if count <= 5:
 			email = 'stemado@outlook.com'
 			subject = 'Rx Refill Request: ' + str(med.medicationResident)
-			content = 'Resident: ' + str(med.medicationResident) + 'needs Medication ' + str(med.medicationName) + ' refilled. Remaining Pill Count: ' + str(med.medicationQuantity)
+			content = "Resident: " + str(med.medicationResident) + "needs Medication " + str(med.medicationName) + " refilled. Remaining Pill Count: " + str(med.medicationQuantity)
 			send_mail(
 				subject, 
 				content, 

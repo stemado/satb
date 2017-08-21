@@ -92,7 +92,15 @@ def medication(request, id):
     # Use this when ready for production
     # completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a) & ~Q(completionStatus=None)).order_by('completionDate', 'completionDue')
     completion = MedicationCompletion.objects.filter(completionMedication__in=a).order_by('completionDate', 'completionDue')
-    return render(request, 'medications/medication.html', {'medication': medication, 'time': time, 'completion': completion})
+    paginator = Paginator(completion, 10)
+    page = request.GET.get('page')
+    try:
+        meds = paginator.page(page)
+    except PageNotAnInteger:
+        meds = paginator.page(1)
+    except EmptyPage:
+        meds = paginator.page(paginator.num_pages)
+    return render(request, 'medications/medication.html', {'medication': medication, 'time': time, 'meds': meds})
 
 
 @login_required
@@ -158,7 +166,7 @@ def deleteMedication(request, id):
 
 
 @login_required
-def mar(request, mar_id, month, year):
+def mar(request, mar_id):
     medication = Medication.objects.filter(medicationResident_id=mar_id).order_by("medicationName", "id")
     resident = Resident.objects.filter(id=mar_id)[0]
     paginator = Paginator(medication, 5)
