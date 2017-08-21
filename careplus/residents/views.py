@@ -27,7 +27,11 @@ def residents(request):
 @login_required
 def resident(request, id):
     resident = get_object_or_404(Resident, id=id)
-    medications = resident.medication_set.all()
+    medications = Medication.objects.filter(medicationResident_id=id)
+    a = Medication.objects.filter(medicationResident_id=id).values_list('id', flat=True)
+    overdue = MedicationTime.get_overdue_medications().filter(timeMedication_id__in=a)
+    active = MedicationTime.get_active_medications().filter(timeMedication_id__in=a)
+    prn = MedicationTime.objects.filter(timeMedication_id__in=a, timePRN=True)
     paginator = Paginator(medications, 10)
     page = request.GET.get('page')
     try:
@@ -36,7 +40,7 @@ def resident(request, id):
         meds = paginator.page(1)
     except EmptyPage:
         meds = paginator.page(paginator.num_pages)
-    return render(request, 'residents/resident.html', {'resident': resident, 'medications': medications, 'meds': meds})
+    return render(request, 'residents/resident.html', {'resident': resident, 'medications': medications, 'overdue': overdue, 'active': active, 'prn': prn, 'meds': meds})
 
 
 @login_required

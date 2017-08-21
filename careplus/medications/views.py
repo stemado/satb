@@ -152,7 +152,7 @@ def acceptRefuse(request, medication, rx):
             status = form.save()
             status.save()
 
-            return redirect('/medications/')
+            return redirect('/residents/4')
     else:
         form = StatusForm(initial={'completionMedication': medication, 'completionRx': rx, 'completionDate': date })
     return render(request, 'medications/medication_status.html/', {'form': form})
