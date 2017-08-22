@@ -7,11 +7,32 @@
         </a>
         <a href="/medications/mar/{{resident.id}}/" class="btn btn-danger pull-right">
         <span class="glyphicon glyphicon-calendar"></span> {% trans 'Generate MAR' %} </a>
+        
 <div class="container">
     <div class="page-header">
         <h1>{{ resident.residentFirstName }} {{ resident.residentLastName }} <small>({{ resident.dnr_status }})</small></h1>
     </div>
-
+    <div class="container">
+        <div class="btn-toolbar" role="toolbar">
+            <div class="btn-group btn-group-lg btn-group-justified btn-group-fill-height">
+                <a href="{% url 'rx_overdue' resident.id %}" class="btn btn-danger" role="button">
+                <strong>Overdue</strong>
+                <br>
+                <span>{{ overdue.count }}</span>
+            </a>
+                <a href="{% url 'rx_active' resident.id %}" class="btn btn-success" role="button">
+                <strong>Active</strong>
+                <br>
+                <span>{{ active.count }}</span>
+            </a>
+                <a href="{% url 'rx_prn' resident.id %}" class="btn btn-primary" role="button">
+                <strong>PRN</strong>
+                <br>
+                <span><p>{{ prn.count }}</p></span>
+            </a>
+            </div>
+        </div>
+    </div>
     <div class="profile">
         <div class="row">
             <div class="col-md-3 user-profile">
@@ -29,27 +50,7 @@
 
         </div>
 
-    <div class="container">
-        <div class="btn-toolbar" role="toolbar">
-            <div class="btn-group btn-group-lg btn-group-justified btn-group-fill-height">
-                <a href="{% url 'rx_overdue' resident.id %}" class="btn btn-danger" role="button">
-                <strong>Overdue</strong>
-                <br>
-                <span>{{ overdue.count }}</span>
-            </a>
-                <a href="{% url 'rx_active' resident.id %}" class="btn btn-success" role="button">
-                <strong>Active</strong>
-                <br>
-                <span>{{ active.count }}</span>
-            </a>
-                <a href="{% url 'rx_prn' resident.id %}" class="btn btn-default" role="button">
-                <strong>PRN</strong>
-                <br>
-                <span><p>{{ prn.count }}</p></span>
-            </a>
-            </div>
-        </div>
-    </div>
+
 
     </div>
 

@@ -12,12 +12,16 @@ from django.template.loader import render_to_string
 from careplus.activities.models import Activity
 from careplus.decorators import ajax_required
 from careplus.feeds.models import Feed
+from careplus.medications.models import Medication, MedicationTime
 
 FEEDS_NUM_PAGES = 10
 
 
 @login_required
 def feeds(request):
+    medications = Medication.get_medications()
+    active = MedicationTime.get_active_medications()
+    overdue = MedicationTime.get_overdue_medications()
     all_feeds = Feed.get_feeds()
     paginator = Paginator(all_feeds, FEEDS_NUM_PAGES)
     feeds = paginator.page(1)
@@ -33,7 +37,7 @@ def feeds(request):
 
 def feed(request, pk):
     feed = get_object_or_404(Feed, pk=pk)
-    return render(request, 'feeds/feed.html', {'feed': feed})
+    return render(request, 'feeds/feed.html', {'feed': feed, 'active': active, 'overdue': overdue, 'medications': medications })
 
 
 @login_required

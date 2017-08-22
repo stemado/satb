@@ -13,6 +13,7 @@ from careplus.residents.models import Resident
 from careplus.medications.tasks import send_test_email
 
 
+
 #This reads when the MedicationComplation form is saved. 
 #When saved, signal is sent and updates the medicationStatus to True. 
 #Meaning this medication has had action taken on it.
@@ -148,3 +149,10 @@ def request_medication_refill(sender, instance, created, **kwargs):
 
 # 	else:
 # 		print('Well, this did not work. Try again tomorrow')
+
+
+#################################################
+############## TWILIO SIGNALS ###################
+#################################################
+
+

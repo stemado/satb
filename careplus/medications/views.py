@@ -31,6 +31,11 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.enums import TA_JUSTIFY, TA_LEFT, TA_CENTER 
 from reportlab.lib import colors
 
+#DELETE THIS AFTER TWILIO TESTING#
+# from django.views.decorators.csrf import csrf_exempt
+# from django_twilio.decorators import twilio_view
+# from twilio.twilml.messaging_response import MessaginResponse
+
 
 
 def _medications(request, medications):
@@ -218,5 +223,6 @@ def pdf_view(request):
     doc.build(elements) 
 
     return response
+
 
 
