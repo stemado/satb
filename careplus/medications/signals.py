@@ -143,7 +143,7 @@ def request_medication_refill(sender, instance, created, **kwargs):
 def new_test_email(sender, instance, created, **kwargs):
 
 	if created:
-		send_test_email.delay()
+		send_test_email.delay(each)
 		print('Celery email is delayed...now what?')
 
 	else:
