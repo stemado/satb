@@ -10,6 +10,7 @@ from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from careplus.medications.models import Medication, MedicationCompletion, MedicationTime
 from careplus.residents.models import Resident
+from careplus.medications.tasks import send_test_email
 
 
 #This reads when the MedicationComplation form is saved. 
@@ -137,3 +138,13 @@ def request_medication_refill(sender, instance, created, **kwargs):
 			print('EMAIL SENT!')
 		else:
 			print('It didn not send, home skillet.')
+
+@receiver(post_save, sender=Medication)
+def new_test_email(sender, instance, created, **kwargs):
+
+	if created:
+		send_test_email.delay()
+		print('Celery email is delayed...now what?')
+
+	else:
+		print('Well, this did not work. Try again tomorrow')
