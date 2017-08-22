@@ -91,7 +91,7 @@ def medication(request, id):
     a = MedicationTime.objects.filter(timeMedication=id).values_list('id', flat=True)
     # Use this when ready for production
     # completion = MedicationCompletion.objects.filter(Q(completionMedication__in=a) & ~Q(completionStatus=None)).order_by('completionDate', 'completionDue')
-    completion = MedicationCompletion.objects.filter(completionMedication__in=a).order_by('completionDate', 'completionDue')
+    completion = MedicationCompletion.objects.filter(completionMedication__in=a).order_by('-completionDate', '-completionTime')
     paginator = Paginator(completion, 10)
     page = request.GET.get('page')
     try:
@@ -144,6 +144,10 @@ def editMedication(request, id):
 
 @login_required
 def acceptRefuse(request, medication, rx):
+    r = Medication.objects.filter(id=rx).values('medicationResident_id')
+    resident = get_object_or_404(Resident, pk=r)
+
+
 
     date = datetime.now().today()
     if request.method == 'POST':
@@ -152,10 +156,10 @@ def acceptRefuse(request, medication, rx):
             status = form.save()
             status.save()
 
-            return redirect('/residents/4')
+            return redirect('/residents/' + str(resident.pk) + '/')
     else:
         form = StatusForm(initial={'completionMedication': medication, 'completionRx': rx, 'completionDate': date })
-    return render(request, 'medications/medication_status.html/', {'form': form})
+    return render(request, 'medications/medication_status.html/', {'form': form, 'resident': resident, 'rx': rx, 'medication': medication})
 
 
 @login_required

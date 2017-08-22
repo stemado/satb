@@ -45,7 +45,11 @@
                                 <td>{{ m.completionStatus }}</td>
                                 <td>{{ m.completionDate }}</td>
                                 <td>{{ m.completionTime }}</td>
+                                {% if m.completionDue == None %}
+                                <td>PRN</td>
+                                {% else %}
                                 <td>{{ m.completionDue }}</td>
+                                {% endif %}
                                 <td>{{ m.completionMissed }}</td>
                                 <td>{{ m.completionNote }}</td>
                                 <td>{{ m.completionMedication_id }}</td>
