@@ -139,12 +139,12 @@ def request_medication_refill(sender, instance, created, **kwargs):
 		else:
 			print('It didn not send, home skillet.')
 
-@receiver(post_save, sender=Medication)
-def new_test_email(sender, instance, created, **kwargs):
+# @receiver(post_save, sender=Medication)
+# def new_test_email(sender, instance, created, **kwargs):
 
-	if created:
-		send_test_email.delay(each)
-		print('Celery email is delayed...now what?')
+# 	if created:
+# 		send_test_email.delay(each)
+# 		print('Celery email is delayed...now what?')
 
-	else:
-		print('Well, this did not work. Try again tomorrow')
+# 	else:
+# 		print('Well, this did not work. Try again tomorrow')
