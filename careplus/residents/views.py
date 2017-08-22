@@ -163,3 +163,12 @@ def deleteResident(request, id):
     return redirect ('/residents/')
 
 
+@login_required
+@ajax_required
+def check_medications(request):
+    resident = Resident.objects.get(id=id)
+    medications = Medication.objects.filter(medicationResident_id=id)
+    a = Medication.objects.filter(medicationResident_id=id).values_list('id', flat=True)
+    # count = MedicationTime.get_overdue_medications().filter(timeMedication_id__in=a).count()
+    count = Resident.objects.all().count()
+    return HttpResponse(count)

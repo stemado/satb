@@ -16,7 +16,7 @@ $(function () {
   });
 
     $(".residents-results li").click(function () {
-    var question = $(this).attr("resident-id");
+    var resident = $(this).attr("resident-id");
     location.href = "/residents/" + resident + "/";
   });
 

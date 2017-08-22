@@ -5,7 +5,7 @@
 {% if results %}
   <ul class="residents-results">
     {% for residents in results %}
-      <li>
+      <li residents-id="{{ resident.pk }}">
         <h5>
           <a href="/residents/{{residents.pk}}/">
             <strong>{{ residents.residentFirstName }} {{ residents.residentLastName }}</strong>

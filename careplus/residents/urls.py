@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^rx_all/(?P<id>[0-9]+)/$', views.rx_all, name='rx_all'),
     url(r'^list/(?P<id>[0-9]+)/$', views.medicationList, name='medicationList'),
     url(r'^create/$', views.create, name='create'),
+    url(r'^check/$', views.check_medications, name='check_medications'),
     url(r'^edit/(?P<id>[0-9]+)/$', views.edit, name='edit'),
     url(r'^emergency/$', views.emergencycontact, name='emergencycontact'),
     url(r'^delete/(?P<id>[0-9]+)/$', views.deleteResident, name='delete_resident'),
