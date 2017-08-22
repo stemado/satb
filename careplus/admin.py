@@ -1,4 +1,4 @@
 from django.contrib import admin
-from careplus.medications.models import MedicationTime
+from careplus.medications.models import Medication
 
-admin.site.register(MedicationTime)
+admin.site.register(Medication)

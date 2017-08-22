@@ -178,10 +178,10 @@ function printpage() {
 
                 {% for d in s.completion.all %}
   
-                {% if d.completionStatus == none %}
+                {% if d.completionStatus == None %}
                 <td></td>
                 {% elif d.completionStatus == True %}
-                <td><small><div id="{{m.medicationStartDate}}"style="font-size:70%">AK</small></div></td>
+                <td><small><div id="{{m.medicationStartDate}}" style="font-size:70%">AK</small></div></td>
                 {% else %}
                 <td><i class="glyphicon glyphicon-unchecked"></i></td>
                 {%endif%}

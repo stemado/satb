@@ -56,7 +56,7 @@
             <div class="panel panel-danger">
                 <div class="panel-heading">
                     <img src="http://trybootcamp.vitorfs.com/static/img/user.png" style="width:20px">
-                    <a href="/residents/{{ overdue.medication.medicationResident_id }}">{{ overdue.timeMedication.medicationResident }}</a>
+                    <a style="color:white" href="/residents/{{ overdue.medication.medicationResident_id }}">{{ overdue.timeMedication.medicationResident }}</a>
                 </div>
                 <div class="panel-body">
                     <a href="/medications/{{ overdue.timeMedication_id }}"><strong>Medication:</strong> {{ overdue.timeMedication.medicationName }}</a>

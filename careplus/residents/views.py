@@ -135,7 +135,7 @@ def rx_prn(request, id):
 
 def medicationList(request, id):
     resident = Resident.objects.get(id=id)
-    med = Medication.objects.filter(medicationResident_id=id, medicationDiscontinuedStatus = 'Active')
+    med = Medication.objects.filter(medicationResident_id=id, medicationDiscontinuedStatus = 'Active').order_by('medicationName')
 
     return render(request, 'residents/med_list.html', {'med': med, 'resident': resident })
 
