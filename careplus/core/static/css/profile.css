@@ -15,22 +15,3 @@
 
 .user-profile ul li {
   list-style: none;
-
-.profile {
-  margin-top: 1em;
-}
-
-.user-profile .picture {
-  width: 200px;
-  border-radius: 5px;
-}
-
-.user-profile ul {
-  padding: 0;
-  margin-top: .6em;
-}
-
-.user-profile ul li {
-  list-style: none;
-
-}

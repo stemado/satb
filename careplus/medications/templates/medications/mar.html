@@ -256,7 +256,7 @@ function printpage() {
             <th>{{d.completionDate}}</th>
             <th>{{d.completionTime}}</th>
             <th>AK</th>
-            <th>{{d.completionRx}} |</th>
+            <th>PRN|{{d.completionRx}} |</th>
             <th>{{d.completionNote}}</th>
             <th><div style="width:23px">{{d.completionStatus}}</div></th>
             <th><div style="width:10px">AK</div></th>
@@ -265,12 +265,13 @@ function printpage() {
             <th>{{d.completionDate}}</th>
             <th>{{d.completionTime}}</th>
             <th>AK</th>
-            <th>PRN | {{d.completionRx}}</th>
+            <th>Missed|{{d.completionRx}}</th>
             <th>{{d.completionNote}}</th>
             <th><div style="width:23px">{{d.completionStatus}}</div></th>
             <th><div style="width:10px">AK</div></th>
             <th><div style="width:10px">Audrey Kilpatrick</th>
-            {% else %}
+            {% elif d.completionStatus == None %}
+            <!-- What do we do if the completionStatus == False? -->
             </tr>
 
             {% endif %}

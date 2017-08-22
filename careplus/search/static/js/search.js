@@ -15,4 +15,9 @@ $(function () {
     location.href = "/questions/" + question + "/";
   });
 
+    $(".residents-results li").click(function () {
+    var question = $(this).attr("resident-id");
+    location.href = "/residents/" + resident + "/";
+  });
+
 });

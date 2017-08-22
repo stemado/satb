@@ -1,0 +1,19 @@
+
+{% load i18n %}
+
+<h2>{% trans 'Residents' %}</h2>
+{% if results %}
+  <ul class="residents-results">
+    {% for residents in results %}
+      <li>
+        <h5>
+          <a href="/residents/{{residents.pk}}/">
+            <strong>{{ residents.residentFirstName }} {{ residents.residentLastName }}</strong>
+          </a>
+        </h5>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <h4 class="no-result">{% trans 'No resident found' %} :(</h4>
+{% endif %}

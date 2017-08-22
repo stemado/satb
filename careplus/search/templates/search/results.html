@@ -43,6 +43,9 @@
         {% include 'search/partial_questions_results.html' with results=results %}
       {% elif active == 'users' %}
         {% include 'search/partial_users_results.html' with results=results %}
+      {% elif active == 'residents' %}
+        {% include 'search/partial_residents_results.html' with results=results %}
       {% endif %}
     </div>
   </div>
+  {% endblock %}

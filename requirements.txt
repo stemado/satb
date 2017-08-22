@@ -4,6 +4,7 @@ appdirs==1.4.3
 beautifulsoup4==4.4.0
 billiard==3.3.0.23
 bleach==1.5.0
+celery==3.1.25
 click==6.7
 defusedxml==0.5.0
 dj-database-url==0.4.1
@@ -27,7 +28,6 @@ django-hvad==1.8.0
 django-libs==1.67.12
 django-mptt==0.8.7
 django-polymorphic==1.0.2
-django-scheduler==0.8.3
 django-sql-explorer==1.1.1
 django-tables2==1.10.0
 djangorestframework==3.6.3
@@ -60,7 +60,7 @@ python-firebase==1.2
 python-http-client==3.0.0
 python3-openid==3.1.0
 pytz==2017.2
-redis==2.10.6
+redis==2.10.3
 reportlab==3.4.0
 requests==2.14.2
 requests-oauthlib==0.8.0

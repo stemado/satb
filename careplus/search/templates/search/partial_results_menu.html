@@ -2,6 +2,10 @@
 {% load i18n %}
 
 <div class="list-group">
+  <a href="{% url 'search' %}?q={{ querystring }}&type=residents" class="list-group-item{% if active == 'residents' %} active{% endif %}">
+    <span>{% trans 'Residents' %}</span>
+    <span class="badge">{{ count.residents }}</span>
+  </a>
   <a href="{% url 'search' %}?q={{ querystring }}&type=feed" class="list-group-item{% if active == 'feed' %} active{% endif %}">
     <span>{% trans 'Feed' %}</span>
     <span class="badge">{{ count.feed }}</span>
