@@ -17,11 +17,12 @@ class ResidentForm(forms.ModelForm):
         self.fields['location'].required = True
         self.fields['medicareNumber'].required = True
         self.fields['dnr_status'].required = True
+        self.fields['residentStatus'].required = True
     
 
     class Meta:
         model = Resident
-        fields = ['residentFirstName', 'residentLastName', 'residentProfile', 'residentSSN', 'residentDOB', 'residentPrimaryPhysician', 'location', 'medicareNumber', 'dnr_status']
+        fields = ['residentFirstName', 'residentLastName', 'residentProfile', 'residentSSN', 'residentDOB', 'residentPrimaryPhysician', 'location', 'medicareNumber', 'dnr_status', 'residentStatus']
 
 
 class EmergencyContactForm(forms.ModelForm):

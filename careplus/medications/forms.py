@@ -8,7 +8,17 @@ from datetime import datetime
 
 
 class MedicationForm(forms.ModelForm):
-
+    def __init__(self, *args, **kwargs):
+        super(MedicationForm, self).__init__(*args, **kwargs)
+        self.fields['medicationName'].required = True
+        self.fields['medicationDosage'].required = True
+        self.fields['medicationFrequency'].required = True
+        self.fields['medicationStartDate'].required = True
+        self.fields['medicationDistribution'].required = True
+        self.fields['medicationDosage'].required = True
+        self.fields['medicationQuantity'].required = True
+        self.fields['medicationType'].required = True
+        self.fields['medicationDiscontinuedStatus'].required = True
 
     class Meta:
         model = Medication
