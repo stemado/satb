@@ -15,7 +15,7 @@ from careplus.activities.models import Activity
 class Resident(models.Model):
 
     GENDER = (('Male', 'Male'), ('Female', 'Female'))
-    DNR_STATUS = (('Active', 'Active'), ('Discontinued', 'Discontinued'))
+    DNR_STATUS = (('Active', 'Active'), ('Inactive', 'Inactive'))
 
     residentFirstName = models.CharField("First Name", default="John", max_length=50, null=True, blank=True)
     residentLastName = models.CharField("Last Name", default="Doe", max_length=50, null=True, blank=True)
@@ -23,10 +23,12 @@ class Resident(models.Model):
     residentDOB = models.CharField("DOB", default="3/5/1980", max_length=50, null=True, blank=True)
     residentPrimaryPhysician = models.CharField("Primary Physician", default="Dr.John Kellenberger", max_length=50, null=True, blank=True)
     residentGender = models.CharField(verbose_name="Gender", choices=GENDER, max_length=30, null=True, blank=True)
+    residentStatus = models.CharField(verbose_name="Status", choices=DNR_STATUS, max_length=30, null=True, blank=True)
     location = models.CharField( "Room", default="Room 8", max_length=50, null=True, blank=True)
     residentProfile = models.FileField(upload_to='media/resident_pictures/', null=True, blank=True)
     medicareNumber = models.CharField("Medicare Number", default="ZSY20193992", max_length=20, null=True)
-    dnr_status = models.CharField("DNR Status", default="ACTIVE|NOT ACTIVE", max_length=50, null=True, blank=True)
+    dnr_status = models.CharField("DNR Status", choices=DNR_STATUS, default='Active', max_length=50, null=True, blank=True)
+
 
     class Meta:
         verbose_name = _("Resident")

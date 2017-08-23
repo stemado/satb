@@ -6,30 +6,17 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class ResidentForm(forms.ModelForm):
-    # residentFirstName = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'}),
-    #     max_length=50)
-    # residentLastName = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'}),
-    #     max_length=50)
-    # residentSSN = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'}),
-    #     max_length=9)
-    # residentDOB = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'}),
-    #     max_length=10)
-    # residentPrimaryPhysician = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'}),
-    #     max_length=50)
-    # location = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'}),
-    #     max_length=15)
-    # medicareNumber = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'}),
-    #     max_length=15)
-    # dnr_status = forms.CharField(
-    #     widget=forms.TextInput(attrs={'class': 'form-control'}),
-    #     max_length=15)
+    def __init__(self, *args, **kwargs):
+        super(ResidentForm, self).__init__(*args, **kwargs)
+        self.fields['residentFirstName'].required = True
+        self.fields['residentLastName'].required = True
+        self.fields['residentProfile'].required = False
+        self.fields['residentSSN'].required = True
+        self.fields['residentDOB'].required = True
+        self.fields['residentPrimaryPhysician'].required = True
+        self.fields['location'].required = True
+        self.fields['medicareNumber'].required = True
+        self.fields['dnr_status'].required = True
     
 
     class Meta:
