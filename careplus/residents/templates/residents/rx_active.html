@@ -33,7 +33,7 @@
                 <a href="{% url 'rx_overdue' resident.id %}" class="btn btn-danger" role="button">
                 <strong>Overdue</strong>
                 <br>
-                <span class="badge" id="overdue-count">0</span>
+                <span class="badge" id="overdue-count">{{ overdue.count }}</span>
             </a>
                 <a href="{% url 'rx_active' resident.id %}" class="btn btn-success" role="button">
                 <strong>Active</strong>
