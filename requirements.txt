@@ -48,7 +48,7 @@ oauthlib==2.0.2
 olefile==0.44
 packaging==16.8
 pbr==3.0.0
-Pillow==4.0.0
+Pillow==8.1.1
 psycopg2==2.6.2
 py==1.4.33
 PyJWT==1.5.0
