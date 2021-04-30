@@ -73,7 +73,7 @@ sqlparse==0.2.3
 static3==0.7.0
 tox==1.7.2
 twilio==6.0.0
-Twisted==15.3.0
+Twisted==20.3.0
 unicodecsv==0.14.1
 Unidecode==0.4.20
 Unipath==1.1
