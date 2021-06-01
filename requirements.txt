@@ -77,7 +77,7 @@ Twisted==15.3.0
 unicodecsv==0.14.1
 Unidecode==0.4.20
 Unipath==1.1
-urllib3==1.21.1
+urllib3==1.26.5
 vine==1.1.4
 virtualenv==15.1.0
 vobject==0.9.5
